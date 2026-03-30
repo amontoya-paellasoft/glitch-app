@@ -2,11 +2,11 @@ import { AgentInterface } from "../models/agent-interface";
 import { MessageInterface } from "../models/message-interface";
 
 export const MOCK_AGENTS: AgentInterface[] = [
-  { id: 'A-ID', name: 'A-Name', role: 'A-Role', emoji: 'A-Emoji', status: 'ocupado', bg: 'pink' },
-  { id: 'B-ID', name: 'B-Name', role: 'B-Role', emoji: 'B-Emoji', status: 'en línea', bg: 'pink' },
-  { id: 'C-ID', name: 'C-Name', role: 'C-Role', emoji: 'C-Emoji', status: 'ausente', bg: 'pink' },
-  { id: 'D-ID', name: 'D-Name', role: 'D-Role', emoji: 'D-Emoji', status: 'ocupado', bg: 'pink' },
-  { id: 'E-ID', name: 'E-Name', role: 'E-Role', emoji: 'E-Emoji', status: 'en línea', bg: 'pink' },
+  { id: 'A-ID', name: 'A-Name', role: 'A-Role', emoji: '🏛️', status: 'ocupado', bg: 'pink' },
+  { id: 'B-ID', name: 'B-Name', role: 'B-Role', emoji: '🔍', status: 'en línea', bg: 'pink' },
+  { id: 'C-ID', name: 'C-Name', role: 'C-Role', emoji: '✨', status: 'ausente', bg: 'pink' },
+  { id: 'D-ID', name: 'D-Name', role: 'D-Role', emoji: '🧪', status: 'ocupado', bg: 'pink' },
+  { id: 'E-ID', name: 'E-Name', role: 'E-Role', emoji: '🦄', status: 'en línea', bg: 'pink' },
 ];
 
 export const MOCK_MESSAGES: MessageInterface[] = [
@@ -21,5 +21,5 @@ export const MOCK_LINKS = [
   { source: 'B-ID', target: 'C-ID', label: 'diseña' },
   { source: 'C-ID', target: 'D-ID', label: 'llama' },
   { source: 'D-ID', target: 'E-ID', label: 'apoya' },
-  { source: 'E-ID', target: 'B-ID', label: 'instruye' },
+  { source: 'E-ID', target: 'C-ID', label: 'instruye' },
 ];

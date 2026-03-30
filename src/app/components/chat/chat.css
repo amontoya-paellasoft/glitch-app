@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.console {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #050505 !important;
+  font-family: monospace;
+  border-left: 1px solid #1a1a1a;
+}
+
+.console-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+}
+
+.console-text {
+  color: #00ff9c;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 156, 0.4);
+}
+
+.console-time {
+  color: #abc2cf;
+  font-weight: bold;
+}
+
+.console-agent {
+  color: #abc2cf;
+  font-weight: bold;
+}
+
+.console-output::after {
+  content: '▌';
+  color: #00ff9c;
+  display: inline-block;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

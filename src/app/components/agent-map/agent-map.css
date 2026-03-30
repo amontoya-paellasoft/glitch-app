@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.graph-container {
+  width: 99%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.node-container {
+  cursor: pointer;
+}
+
+.line {
+  fill: none;
+  stroke: #eeeeee;
+}

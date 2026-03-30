@@ -8,7 +8,7 @@ import { ControlPanel } from './components/control-panel/control-panel';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Header, AgentMap, Chat, ControlPanel],
+  imports: [Header, AgentMap, Chat, ControlPanel],
   template: `
     <div class="workspace">
       <app-header />
