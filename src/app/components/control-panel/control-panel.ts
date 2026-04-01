@@ -1,20 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { WorkspaceService } from '../../services/workspace-service';
 
 @Component({
   selector: 'app-control-panel',
   standalone: true,
-  template: `<div class="panel">Panel de control</div>`,
-  styles: [`
-    .panel {
-      height: 52px;
-      border-top: 0.5px solid var(--border);
-      background: var(--surface2);
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      color: var(--text3);
-      font-size: 12px;
-    }
-  `]
+  template: `<div class="panel">
+    <span class="panel-title">PANEL DE CONTROL</span
+    ><button class="btn-action" (click)="ws.reiniciar()">[ RESTART ]</button>
+    <button class="btn-kill" (click)="ws.cerrarTodas()">[ TERMINATE ALL PROCESSES ]</button>
+  </div>`,
+  styles: [
+    `
+      .panel {
+        height: 52px;
+        background: #050505;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        border-top: 1px solid #1a1a1a;
+      }
+      .panel-title {
+        color: #d4af37;
+        font-family: monospace;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+      .panel-actions {
+        display: flex;
+        gap: 12px;
+      }
+      .btn-action {
+        background: transparent;
+        border: 1px solid #d4af37;
+        color: #d4af37;
+        padding: 6px 14px;
+        font-family: 'Cascadia Code', monospace;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+      }
+      .btn-action:hover {
+        background: #d4af3722;
+        text-shadow: 0 0 8px #d4af37;
+      }
+      .btn-kill {
+        background: transparent;
+        border: 1px solid #ff3333;
+        color: #ff3333;
+        padding: 6px 14px;
+        font-family: 'Cascadia Code', monospace;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+      }
+      .btn-kill:hover {
+        background: #ff333322;
+        text-shadow: 0 0 8px #ff3333;
+      }
+    `,
+  ],
 })
-export class ControlPanel {}
+export class ControlPanel {
+  ws: WorkspaceService = inject(WorkspaceService);
+}

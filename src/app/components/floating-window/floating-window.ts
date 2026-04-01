@@ -8,10 +8,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   imports: [Chat, DragDropModule],
   standalone: true,
   template: `
-  <div class="window-frame" cdkDrag>
+  <div class="window-frame" cdkDrag (mousedown)="ws.focus(agentId)">
       <div class="window-header" cdkDragHandle>
         <span class="title">TERMINAL :: {{ agentId }}</span>
-        <button class="close-btn" (click)="ws.close(agentId)">✕</button>
+        <button class="close-btn" (click)="ws.cerrar(agentId)">✕</button>
       </div>
       <div class="window-content">
         <app-chat [agentId]="agentId"></app-chat>

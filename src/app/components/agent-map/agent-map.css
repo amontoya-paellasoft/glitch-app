@@ -18,12 +18,25 @@
   transition: opacity 0.2s;
 }
 
+
+.flow-line-active {
+  stroke-dasharray: 12 200;
+  stroke-dashoffset: 200;
+  animation: particle 1.2s linear infinite;
+}
+
+@keyframes particle {
+  from { stroke-dashoffset: 200; }
+  to   { stroke-dashoffset: -12; }
+}
+
 .flow-line {
-  stroke-dasharray: 6 5;
-  animation: flowAnim 1.4s linear infinite;
+  stroke-dasharray: 6 8;
+  animation: flowAnim 2s linear infinite;
+  opacity: 0.3;
 }
 
 @keyframes flowAnim {
-  from { stroke-dashoffset: 11; }
+  from { stroke-dashoffset: 14; }
   to   { stroke-dashoffset: 0; }
 }

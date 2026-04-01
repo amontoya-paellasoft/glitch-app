@@ -9,14 +9,14 @@
 html,
 body {
   height: 100%;
-  font-family: system-ui, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #ffff;
   color: #1a1a18;
 }
 
 @font-face {
-  font-family: 'Modern Dos';
-  src: url('/public/fonts/modern-dos.ttf');
-  font-weight: normal;
+  font-family: 'IBMPlex';
+  src: url('/fonts/ibm-plexmono-regular.ttf');
+  font-weight: bold;
   font-style: normal;
 }

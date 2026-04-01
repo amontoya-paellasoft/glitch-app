@@ -2,36 +2,34 @@
   <span class="console-title">
     ▌ {{ agentId ? 'AGENT CONSOLE :: ' + agentId : 'SYSTEM CONSOLE' }}
   </span>
-  <span class="console-status">{{ messagesAgent.length }} EVENTS LOGGED</span>
+  <span class="console-status">{{ messagesAgent.length }} MESSAGES LOGGED</span>
 </div>
 
-<div class="console-output">
+<div class="console-output" #scrollContainer>
   <div class="console-boot">
-    <span>IBM AS/400 · {{ agentId ? 'AGENT' : '' }} SYSTEM v2.1 </span><br />
-    <span>LOADING {{ agentId ? 'PRIVATE COMMUNICATION' : 'SYSTEM' }} MODULE...</span><br />
+    <span>IBM AS/400 · {{ agentId ? 'AGENT' : '' }} SYSTEM v2.1</span><br/>
+    <span>LOADING {{ agentId ? 'PRIVATE COMMUNICATION' : 'SYSTEM' }} MODULE...</span><br/>
     <span>─────────────────────────────────────</span>
   </div>
 
-  @for (m of messagesAgent; track m.id; let isLast = $last) {
-    <div class="console-line" [class.active]="isLast">
-      <span class="console-time">{{ m.timeStamp | date: 'HH:mm:ss' }}</span>
-
+  @for (m of messagesAgent; track m.id) {
+    <div class="console-line">
+      <span class="console-time">{{ m.timeStamp | date:'HH:mm:ss' }}</span>
       @if (!agentId) {
         <span class="console-agent">{{ m.agentId | uppercase }}</span>
       }
       <span class="console-sep">»</span>
-
-      <p class="console-text">{{ m.text }}</p>
+      <span class="console-text">{{ m.text | uppercase }}</span>
     </div>
-
     @if (m.code) {
       <pre class="console-code">{{ m.code }}</pre>
     }
   } @empty {
-    <div>
+    <div class="console-line">
       <span class="console-sep">»</span>
-      <p class="console-agent">No messages sent.</p>
+      <span class="console-agent">NO MESSAGES LOGGED.</span>
     </div>
   }
+
   <span class="console-cursor"></span>
 </div>

@@ -1,8 +1,6 @@
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MOCK_AGENTS, MOCK_MESSAGES } from '../../mock/mock-data';
+import { Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { ChatService } from '../../services/chat-service';
-
 
 @Component({
   selector: 'app-chat',
@@ -13,32 +11,40 @@ import { ChatService } from '../../services/chat-service';
 })
 export class Chat implements OnInit, OnChanges {
   @Input() agentId: string = '';
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
-  private chatServ : ChatService = inject(ChatService);
+  private chatSvc = inject(ChatService);
 
   allMessages: any[] = [];
   messagesAgent: any[] = [];
 
-  ngOnInit() {
-    this.chatServ.messages$.subscribe(m => {
-      this.allMessages = m;
+  ngOnInit(): void {
+    this.chatSvc.mensajes$.subscribe(msgs => {
+      this.allMessages = msgs;
       this.filterMessages();
-    })
+    });
   }
 
-ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['agentId']) {
       this.filterMessages();
     }
   }
 
-  private filterMessages() {
-    if (this.agentId) {
-      // Modo ventana (idAgente)
-      this.messagesAgent = this.allMessages.filter(m => m.agentId === this.agentId);
-    } else {
-      // Modo panel general
-      this.messagesAgent = [...this.allMessages];
-    }
+  private filterMessages(): void {
+    this.messagesAgent = this.agentId
+      ? this.allMessages.filter(m => m.agentId === this.agentId)
+      : [...this.allMessages];
+
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      try {
+        const div = this.scrollContainer.nativeElement;
+        div.scrollTop = div.scrollHeight;
+      } catch {}
+    }, 10);
   }
 }

@@ -1,75 +1,132 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, NgZone, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MOCK_MESSAGES } from '../mock/mock-data';
 import { MessageInterface } from '../models/message-interface';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
+  private ngZone: NgZone = inject(NgZone);
 
-  private messagesSubject = new BehaviorSubject<MessageInterface[]>([]);
-  messages$ = this.messagesSubject.asObservable();
+  // Mensajes BehaviorSubject
+  private mensajesSubject = new BehaviorSubject<MessageInterface[]>([]);
+  mensajes$ = this.mensajesSubject.asObservable();
 
-  private currentIndex = 0;
+  // Para conectar con el mapa de agentes
+  public agenteActId = signal<string | null>(null);
 
-  startSimulation() {
-    this.pushNextMessage();
+  private indiceActual = 0;
+
+  iniciarSimulacion() {
+    this.enviarSiguienteMensaje();
   }
 
- private pushNextMessage() {
-  if (this.currentIndex >= MOCK_MESSAGES.length) return;
+  private enviarSiguienteMensaje() {
+    if (this.indiceActual >= MOCK_MESSAGES.length) return;
 
-  const original = MOCK_MESSAGES[this.currentIndex];
+    const original = MOCK_MESSAGES[this.indiceActual];
 
-  // 👇 mensaje vacío inicial
-  const message: MessageInterface = {
-    ...original,
-    text: '',
-  };
+    const mensaje: any = {
+      ...original,
+      text: '',
+    };
 
-  const currentMessages = this.messagesSubject.value;
+    const mensajesActuales = this.mensajesSubject.value;
 
-  this.messagesSubject.next([
-    ...currentMessages,
-    message
-  ]);
+    this.mensajesSubject.next([...mensajesActuales, mensaje]);
 
-  this.currentIndex++;
+    this.indiceActual++;
 
-  this.typeMessage(message, original.text, () => {
-    const delay = this.getDelayForAgent(original.agentId);
-    setTimeout(() => this.pushNextMessage(), delay);
-  });
-}
+    this.escribirMensaje(mensaje, original.text, original.agentId, () => {
+      const delay = this.obtenerDelayAgente(original.agentId);
+      setTimeout(() => this.enviarSiguienteMensaje(), delay);
+    });
+  }
 
-private typeMessage(
-  message: MessageInterface,
-  fullText: string,
-  callback: () => void
-) {
-  let i = 0;
+  private escribirMensaje(
+    mensaje: MessageInterface,
+    textoCompleto: string,
+    agentId: string,
+    callback: () => void,
+  ) {
+    let i = 0;
+    const velocidad = this.obtenerVelocidad(agentId);
 
-  const interval = setInterval(() => {
-    message.text += fullText[i];
-    i++;
+    // FLUJO DATOS: Encendemos el brillo del nodo al empezar
+    this.agenteActId.set(agentId);
 
-    // 🔄 forzar actualización
-    this.messagesSubject.next([...this.messagesSubject.value]);
+    const escribir = () => {
+      // Ejecutamos el intervalo FUERA de Angular
+      this.ngZone.runOutsideAngular(() => {
+        const intervalo = setInterval(() => {
+          mensaje.text += textoCompleto[i];
+          i++;
 
-    if (i >= fullText.length) {
-      clearInterval(interval);
-      callback();
-    }
-  }, 20); // velocidad escritura
-}
+          // Solo entramos en Angular para actualizar la UI
+          this.ngZone.run(() => {
+            this.mensajesSubject.next([...this.mensajesSubject.value]);
+          });
 
-  private getDelayForAgent(agentId: string) {
-    switch(agentId) {
-      case 'pm': return 1200;
-      case 'fe': return 700;
-      case 'be': return 900;
-      case 'qa': return 600;
-      default: return 1000;
+          // simulamos pausas
+          if (['.', ',', ':'].includes(textoCompleto[i])) {
+            clearInterval(intervalo);
+
+            setTimeout(() => {
+              escribir();
+            }, 200);
+
+            return;
+          }
+
+          if (i >= textoCompleto.length) {
+            clearInterval(intervalo);
+            setTimeout(() => {
+              this.ngZone.run(() => this.agenteActId.set(null));
+            }, 500);
+            callback();
+          }
+        }, velocidad);
+      });
+    };
+
+    escribir();
+  }
+
+  private obtenerVelocidad(agentId: string) {
+    switch (agentId) {
+      case 'pm':
+        return 40;
+      case 'fe':
+        return 25;
+      case 'be':
+        return 30;
+      case 'qa':
+        return 20;
+      default:
+        return 30;
     }
   }
+
+  private obtenerDelayAgente(agentId: string) {
+    switch (agentId) {
+      case 'pm':
+        return 1200;
+      case 'fe':
+        return 700;
+      case 'be':
+        return 900;
+      case 'qa':
+        return 600;
+      default:
+        return 1000;
+    }
+  }
+
+  reiniciar(): void {
+  this.indiceActual = 0;
+  this.mensajesSubject.next([]);
+  this.agenteActId.set(null);
+  this.iniciarSimulacion();
+}
 }

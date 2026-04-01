@@ -11,6 +11,6 @@
       <app-control-panel />
     </div>
 
-    @for (agentId of ws.openWindows(); track agentId) {
+    @for (agentId of ws.ventanasAbiertas(); track agentId) {
   <app-floating-window [agentId]="agentId"></app-floating-window>
 }

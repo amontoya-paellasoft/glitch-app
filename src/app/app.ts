@@ -21,6 +21,6 @@ export class App implements OnInit{
   public chatServ: ChatService = inject(ChatService);
 
   ngOnInit() {
-    this.chatServ.startSimulation();
+    this.chatServ.iniciarSimulacion();
   }
 }

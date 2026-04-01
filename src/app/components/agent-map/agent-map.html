@@ -6,57 +6,98 @@
     [autoZoom]="true"
     [autoCenter]="true"
     [animate]="true"
+    [minZoomLevel]="0.8"
+    [maxZoomLevel]="1"
     [layoutSettings]="layoutSettings"
   >
+    <ng-template #defsTemplate>
+      <svg:filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+        <svg:feGaussianBlur stdDeviation="4" result="blur" />
+        <svg:feMerge>
+          <svg:feMergeNode in="blur" />
+          <svg:feMergeNode in="SourceGraphic" />
+        </svg:feMerge>
+      </svg:filter>
+    </ng-template>
+
     <ng-template #nodeTemplate let-node>
       <svg:g class="node-container" (click)="onNodeClick(node)">
         <svg:rect
-          width="150" height="60" rx="12"
+          width="150"
+          height="60"
+          rx="12"
           fill="#ffffff"
-          stroke="#e0e0e0"
-          stroke-width="1"
-          filter="url(#shadow)"
+          [attr.stroke]="chatServ.agenteActId() === node.id ? '#f5da45' : '#e0e0e0'"
+          [attr.stroke-width]="chatServ.agenteActId() === node.id ? '2.5' : '1'"
+          [attr.filter]="chatServ.agenteActId() === node.id ? 'url(#glow)' : 'none'"
         />
 
-        <!-- franja lateral izquierda -->
-        <svg:rect
-          width="10" height="60" rx="12"
-          fill="#f5da45"
-          opacity="0.8"
-        />
+        <svg:rect width="10" height="60" rx="12" fill="#f5da45" opacity="0.8" />
+
         <svg:text x="16" y="36" font-size="18">{{ node.data.emoji }}</svg:text>
-        <svg:text x="44" y="24"
-          font-weight="600" fill="#0a0a0a"
-          font-size="9" font-family="'Segoe UI', sans-serif">
+
+        <svg:text
+          x="44"
+          y="24"
+          font-weight="600"
+          fill="#0a0a0a"
+          font-size="11"
+          font-family="'Segoe UI', sans-serif"
+        >
           {{ node.label }}
         </svg:text>
-        <svg:text x="44" y="40"
-          fill="#999" font-size="9"
+
+        <svg:text
+          x="44"
+          y="40"
+          fill="#999"
+          font-size="9"
           font-family="'Segoe UI', sans-serif"
-          letter-spacing="0.06em">
+          letter-spacing="0.06em"
+        >
           {{ node.data.role | uppercase }}
         </svg:text>
 
-        <!-- estado -->
-        <svg:circle cx="138" cy="10" r="4"
-          [attr.fill]="node.data.status === 'en línea' ? '#22c55e' :
-                       node.data.status === 'ocupado'  ? '#f59e0b' : '#d1d5db'"
+        <svg:circle
+          cx="138"
+          cy="10"
+          r="4"
+          [attr.fill]="
+            node.data.status === 'en línea'
+              ? '#22c55e'
+              : node.data.status === 'ocupado'
+                ? '#f59e0b'
+                : '#d1d5db'
+          "
         />
       </svg:g>
     </ng-template>
 
-    <!-- label -->
     <ng-template #linkTemplate let-link>
       <svg:g class="edge">
         <svg:path
-          stroke="#f5da45" stroke-width="1.5"
+          [attr.stroke]="isLinkActive(link) ? '#f5da45' : '#d0d0d0'"
+          [attr.stroke-width]="isLinkActive(link) ? '2.5' : '1.5'"
           fill="none"
           marker-end="url(#arrow)"
           [attr.d]="link.line"
         />
+
+        @if (isLinkActive(link)) {
+          <svg:path
+            class="flow-line-active"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-opacity="0.8"
+            fill="none"
+            [attr.d]="link.line"
+          />
+        }
+
         <svg:path
           class="flow-line"
-          stroke="#a3a3a3" stroke-width="1"
+          stroke="#c0c0c0"
+          stroke-width="1"
           fill="none"
           [attr.d]="link.line"
         />
@@ -66,8 +107,10 @@
     <ng-template #linkLabelTemplate let-link>
       <svg:g class="link-label">
         <svg:rect
-          x="-18" y="-8"
-          width="36" height="14"
+          x="-18"
+          y="-8"
+          width="36"
+          height="14"
           rx="3"
           fill="#f5f5f5"
           stroke="#e0e0e0"
@@ -79,11 +122,11 @@
           fill="#999"
           font-size="9"
           font-family="'Segoe UI', sans-serif"
-          letter-spacing="0.04em">
+          letter-spacing="0.04em"
+        >
           {{ link.label }}
         </svg:text>
       </svg:g>
     </ng-template>
-
   </ngx-graph>
 </div>
