@@ -1,0 +1,29 @@
+.window-frame {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: 400px;
+  height: 300px;
+  background: #050505;
+  border: 1px solid #d4af37; /* Tu dorado */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.window-header {
+  background: #1a1a1a;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+  border-bottom: 1px solid #d4af3733;
+}
+
+.window-header:active { cursor: grabbing; }
+
+.title { color: #d4af37; font-size: 10px; font-family: monospace; }
+.window-content { flex: 1; overflow: hidden; }

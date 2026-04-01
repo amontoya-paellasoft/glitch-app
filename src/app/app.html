@@ -10,3 +10,7 @@
       </div>
       <app-control-panel />
     </div>
+
+    @for (agentId of ws.openWindows(); track agentId) {
+  <app-floating-window [agentId]="agentId"></app-floating-window>
+}

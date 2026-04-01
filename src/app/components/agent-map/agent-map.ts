@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { MOCK_AGENTS, MOCK_LINKS } from '../../mock/mock-data';
 import { UpperCasePipe } from '@angular/common';
+import { WorkspaceService } from '../../services/workspace-service';
 
 @Component({
   selector: 'app-agent-map',
@@ -11,6 +12,8 @@ import { UpperCasePipe } from '@angular/common';
   styleUrl: './agent-map.css',
 })
 export class AgentMap {
+  ws: WorkspaceService = inject(WorkspaceService);
+
   nodes = MOCK_AGENTS.map((agent) => ({
     id: agent.id,
     label: agent.name,
@@ -25,4 +28,8 @@ public layoutSettings = {
   marginx: 40,
   marginy: 40,
 };
+
+onNodeClick(node: any) {
+    this.ws.open(node.id);
+  }
 }

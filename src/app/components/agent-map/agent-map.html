@@ -9,7 +9,7 @@
     [layoutSettings]="layoutSettings"
   >
     <ng-template #nodeTemplate let-node>
-      <svg:g class="node-container">
+      <svg:g class="node-container" (click)="onNodeClick(node)">
         <svg:rect
           width="150" height="60" rx="12"
           fill="#ffffff"

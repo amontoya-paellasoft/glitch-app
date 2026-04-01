@@ -1,19 +1,22 @@
- .app-container {
-      display: grid;
-      grid-template-rows: 46px 1fr auto;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .main-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-    }
-    .left-panel {
-      border-right: 1px solid rgba(212, 175, 55, 0.2);
-      overflow: hidden;
-    }
-    .right-panel {
-      background: #050505;
-      overflow: hidden;
-    }
+.app-container {
+  display: grid;
+  grid-template-rows: 46px 1fr auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.left-panel {
+  border-right: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+}
+
+.right-panel {
+  background: #050505;
+  overflow: hidden;
+}
