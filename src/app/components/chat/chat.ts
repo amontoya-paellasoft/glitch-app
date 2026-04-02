@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { ChatService } from '../../services/chat-service';
 
@@ -14,6 +14,8 @@ export class Chat implements OnInit, OnChanges {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   private chatSvc = inject(ChatService);
+    private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+
 
   allMessages: any[] = [];
   messagesAgent: any[] = [];
@@ -22,6 +24,7 @@ export class Chat implements OnInit, OnChanges {
     this.chatSvc.mensajes$.subscribe(msgs => {
       this.allMessages = msgs;
       this.filterMessages();
+      this.cdr.detectChanges(); //Actualiza el texto
     });
   }
 
