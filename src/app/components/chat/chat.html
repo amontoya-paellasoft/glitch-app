@@ -2,7 +2,7 @@
   <span class="console-title">
     ▌ {{ agentId ? 'AGENT CONSOLE :: ' + agentId : 'SYSTEM CONSOLE' }}
   </span>
-  <span class="console-status">{{ messagesAgent.length }} MESSAGES LOGGED</span>
+  <span class="console-status">{{ messagesAgent().length }} MESSAGES LOGGED</span>
 </div>
 
 <div class="console-output" #scrollContainer>
@@ -12,7 +12,7 @@
     <span>─────────────────────────────────────</span>
   </div>
 
-  @for (m of messagesAgent; track m.id) {
+  @for (m of messagesAgent(); track m.id) {
     <div class="console-line">
       <span class="console-time">{{ m.timeStamp | date:'HH:mm:ss' }}</span>
       @if (!agentId) {

@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  ViewChild,
+  signal,
+  computed,
+  effect
+} from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { ChatService } from '../../services/chat-service';
 
@@ -9,45 +18,40 @@ import { ChatService } from '../../services/chat-service';
   imports: [DatePipe, UpperCasePipe],
   styleUrl: './chat.css'
 })
-export class Chat implements OnInit, OnChanges {
-  @Input() agentId: string = '';
+export class Chat {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   private chatSvc = inject(ChatService);
-    private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
+  private agentIdSig = signal<string>('');
 
-  allMessages: any[] = [];
-  messagesAgent: any[] = [];
+  @Input() set agentId(value: string) {
+    this.agentIdSig.set(value);
+  }
 
-  ngOnInit(): void {
-    this.chatSvc.mensajes$.subscribe(msgs => {
-      this.allMessages = msgs;
-      this.filterMessages();
-      this.cdr.detectChanges(); //Actualiza el texto
+  messagesAgent = computed(() => {
+    const msgs = this.chatSvc.mensajes();
+    const agentId = this.agentIdSig();
+
+    return agentId
+      ? msgs.filter(m => m.agentId === agentId)
+      : msgs;
+  });
+
+  constructor() {
+    effect(() => {
+      this.messagesAgent();
+
+      setTimeout(() => this.scrollToBottom(), 0);
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['agentId']) {
-      this.filterMessages();
-    }
-  }
-
-  private filterMessages(): void {
-    this.messagesAgent = this.agentId
-      ? this.allMessages.filter(m => m.agentId === this.agentId)
-      : [...this.allMessages];
-
-    this.scrollToBottom();
-  }
-
   private scrollToBottom(): void {
-    setTimeout(() => {
-      try {
-        const div = this.scrollContainer.nativeElement;
+    try {
+      const div = this.scrollContainer?.nativeElement;
+      if (div) {
         div.scrollTop = div.scrollHeight;
-      } catch {}
-    }, 10);
+      }
+    } catch {}
   }
 }

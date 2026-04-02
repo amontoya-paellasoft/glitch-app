@@ -1,16 +1,15 @@
-import { inject, Injectable, signal, NgZone } from '@angular/core';
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { MOCK_MESSAGES } from '../mock/mock-data';
 import { MessageInterface } from '../models/message-interface';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private ngZone = inject(NgZone);
 
-  private mensajesSubject = new BehaviorSubject<MessageInterface[]>([]);
-  mensajes$ = this.mensajesSubject.asObservable();
+  mensajes = signal<MessageInterface[]>([]);
   public agenteActId = signal<string | null>(null);
+
   private indiceActual = 0;
   private subs: Subscription[] = [];
 
@@ -22,9 +21,9 @@ export class ChatService {
     if (this.indiceActual >= MOCK_MESSAGES.length) return;
 
     const original = MOCK_MESSAGES[this.indiceActual];
-    const mensaje: any = { ...original, text: '' };
+    const mensaje: MessageInterface = { ...original, text: '' };
 
-    this.mensajesSubject.next([...this.mensajesSubject.value, mensaje]);
+    this.mensajes.update(msgs => [...msgs, mensaje]);
     this.indiceActual++;
     this.agenteActId.set(original.agentId);
 
@@ -44,14 +43,20 @@ export class ChatService {
   ): void {
     const velocidad = this.obtenerVelocidad(agentId);
 
-    this.ngZone.run(() => {
-      const sub = interval(velocidad).pipe(
+    const sub = interval(velocidad)
+      .pipe(
         map(i => textoCompleto.substring(0, i + 1)),
         take(textoCompleto.length)
-      ).subscribe({
+      )
+      .subscribe({
         next: (texto) => {
-          mensaje.text = texto;
-          this.mensajesSubject.next([...this.mensajesSubject.value]);
+          this.mensajes.update(msgs =>
+            msgs.map(m =>
+              m.id === mensaje.id
+                ? { ...m, text: texto }
+                : m
+            )
+          );
         },
         complete: () => {
           setTimeout(() => {
@@ -61,29 +66,34 @@ export class ChatService {
         }
       });
 
-      this.subs.push(sub);
-    });
+    this.subs.push(sub);
   }
 
   reiniciar(): void {
     this.subs.forEach(s => s.unsubscribe());
     this.subs = [];
     this.indiceActual = 0;
-    this.mensajesSubject.next([]);
+    this.mensajes.set([]);
     this.agenteActId.set(null);
     this.iniciarSimulacion();
   }
 
   private obtenerVelocidad(agentId: string): number {
     const velocidades: Record<string, number> = {
-      pm: 40, fe: 25, be: 30, qa: 20
+      pm: 40,
+      fe: 25,
+      be: 30,
+      qa: 20
     };
     return velocidades[agentId] ?? 30;
   }
 
   private obtenerDelayAgente(agentId: string): number {
     const delays: Record<string, number> = {
-      pm: 1200, fe: 700, be: 900, qa: 600
+      pm: 1200,
+      fe: 700,
+      be: 900,
+      qa: 600
     };
     return delays[agentId] ?? 1000;
   }

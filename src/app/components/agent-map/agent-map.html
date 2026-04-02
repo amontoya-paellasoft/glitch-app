@@ -6,127 +6,170 @@
     [autoZoom]="true"
     [autoCenter]="true"
     [animate]="true"
-    [minZoomLevel]="0.8"
-    [maxZoomLevel]="1"
+    [minZoomLevel]="0.6"
+    [maxZoomLevel]="1.2"
     [layoutSettings]="layoutSettings"
   >
+
     <ng-template #defsTemplate>
-      <svg:filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-        <svg:feGaussianBlur stdDeviation="4" result="blur" />
+
+      <!-- gradiente nodo -->
+      <svg:linearGradient id="nodeGradient" x1="0" y1="0" x2="1" y2="1">
+        <svg:stop offset="0%" stop-color="#020617"/>
+        <svg:stop offset="100%" stop-color="#1e3a8a"/>
+      </svg:linearGradient>
+
+      <!-- glow suave -->
+      <svg:filter id="glowSoft" x="-50%" y="-50%" width="200%" height="200%">
+        <svg:feGaussianBlur stdDeviation="2" result="blur"/>
         <svg:feMerge>
-          <svg:feMergeNode in="blur" />
-          <svg:feMergeNode in="SourceGraphic" />
+          <svg:feMergeNode in="blur"/>
+          <svg:feMergeNode in="SourceGraphic"/>
         </svg:feMerge>
       </svg:filter>
+
+      <!-- glow fuerte -->
+      <svg:filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+        <svg:feGaussianBlur stdDeviation="6" result="blur"/>
+        <svg:feMerge>
+          <svg:feMergeNode in="blur"/>
+          <svg:feMergeNode in="SourceGraphic"/>
+        </svg:feMerge>
+      </svg:filter>
+
     </ng-template>
 
+    <!-- NODOS -->
     <ng-template #nodeTemplate let-node>
       <svg:g class="node-container" (click)="onNodeClick(node)">
+
+        <!-- fondo -->
         <svg:rect
-          width="150"
-          height="60"
-          rx="12"
-          fill="#ffffff"
-          [attr.stroke]="chatServ.agenteActId() === node.id ? '#f5da45' : '#e0e0e0'"
-          [attr.stroke-width]="chatServ.agenteActId() === node.id ? '2.5' : '1'"
-          [attr.filter]="chatServ.agenteActId() === node.id ? 'url(#glow)' : 'none'"
+          width="190"
+          height="75"
+          rx="16"
+          fill="url(#nodeGradient)"
+          [attr.stroke]="chatServ.agenteActId() === node.id ? '#FFD700' : '#1e40af'"
+          [attr.stroke-width]="chatServ.agenteActId() === node.id ? '2.5' : '1.2'"
+          [attr.filter]="chatServ.agenteActId() === node.id ? 'url(#glowStrong)' : 'url(#glowSoft)'"
         />
 
-        <svg:rect width="10" height="60" rx="12" fill="#f5da45" opacity="0.8" />
+        <!-- barra lateral glow -->
+        <svg:rect
+          width="8"
+          height="65"
+          rx="20"
+          fill="#38bdf8"
+          opacity="0.5"
+        />
 
-        <svg:text x="16" y="36" font-size="18">{{ node.data.emoji }}</svg:text>
+        <!-- emoji -->
+        <svg:text x="18" y="42" font-size="20">
+          {{ node.data.emoji }}
+        </svg:text>
 
+        <!-- nombre -->
         <svg:text
-          x="44"
-          y="24"
+          x="50"
+          y="28"
           font-weight="600"
-          fill="#0a0a0a"
-          font-size="11"
+          fill="#e2e8f0"
+          font-size="12"
           font-family="'Segoe UI', sans-serif"
         >
           {{ node.label }}
         </svg:text>
 
+        <!-- rol -->
         <svg:text
-          x="44"
-          y="40"
-          fill="#999"
-          font-size="9"
+          x="50"
+          y="46"
+          fill="#60a5fa"
+          font-size="10"
           font-family="'Segoe UI', sans-serif"
-          letter-spacing="0.06em"
+          letter-spacing="0.08em"
         >
           {{ node.data.role | uppercase }}
         </svg:text>
 
+        <!-- estado -->
         <svg:circle
-          cx="138"
-          cy="10"
-          r="4"
+          cx="170"
+          cy="12"
+          r="5"
           [attr.fill]="
             node.data.status === 'en línea'
               ? '#22c55e'
               : node.data.status === 'ocupado'
                 ? '#f59e0b'
-                : '#d1d5db'
+                : '#64748b'
           "
         />
+
       </svg:g>
     </ng-template>
 
+    <!-- 🔗 LINKS -->
     <ng-template #linkTemplate let-link>
       <svg:g class="edge">
+
+        <!-- línea base -->
         <svg:path
-          [attr.stroke]="isLinkActive(link) ? '#f5da45' : '#d0d0d0'"
+          [attr.stroke]="isLinkActive(link) ? '#38bdf8' : '#1e293b'"
           [attr.stroke-width]="isLinkActive(link) ? '2.5' : '1.5'"
           fill="none"
           marker-end="url(#arrow)"
           [attr.d]="link.line"
         />
 
+        <!-- animación activa -->
         @if (isLinkActive(link)) {
           <svg:path
             class="flow-line-active"
-            stroke="#ffffff"
+            stroke="#38bdf8"
             stroke-width="2"
-            stroke-opacity="0.8"
             fill="none"
             [attr.d]="link.line"
           />
         }
 
+        <!-- flujo base -->
         <svg:path
           class="flow-line"
-          stroke="#c0c0c0"
+          stroke="#334155"
           stroke-width="1"
           fill="none"
           [attr.d]="link.line"
         />
+
       </svg:g>
     </ng-template>
 
+    <!-- etiquetas -->
     <ng-template #linkLabelTemplate let-link>
       <svg:g class="link-label">
         <svg:rect
-          x="-18"
-          y="-8"
-          width="36"
-          height="14"
-          rx="3"
-          fill="#f5f5f5"
-          stroke="#e0e0e0"
-          stroke-width="0.5"
+          x="-20"
+          y="-9"
+          width="40"
+          height="16"
+          rx="4"
+          fill="#020617"
+          stroke="#1e40af"
+          stroke-width="0.6"
         />
         <svg:text
           text-anchor="middle"
           dominant-baseline="middle"
-          fill="#999"
+          fill="#93c5fd"
           font-size="9"
           font-family="'Segoe UI', sans-serif"
-          letter-spacing="0.04em"
+          letter-spacing="0.05em"
         >
           {{ link.label }}
         </svg:text>
       </svg:g>
     </ng-template>
+
   </ngx-graph>
 </div>
