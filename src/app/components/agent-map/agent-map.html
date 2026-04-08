@@ -22,21 +22,11 @@
             stroke="#D4AF37" stroke-width="0.4"
             stroke-dasharray="2 8" opacity="0.15"/>
 
-    <!-- ══ LINKS ══ -->
+    <!-- LINKS -->
     @for (link of links; track link.source + link.target) {
       <g class="link-group">
 
-        <!-- path base siempre visible -->
-        <path
-          [attr.d]="getLinkPath(link.source, link.target)"
-          fill="none"
-          [attr.stroke]="isLinkActive(link.source, link.target) ? '#C9A227' : '#D4C4A0'"
-          [attr.stroke-width]="isLinkActive(link.source, link.target) ? '2' : '1'"
-          [attr.marker-end]="isLinkActive(link.source, link.target) ?
-            'url(#arrow-gold)' : 'url(#arrow-idle)'"
-        />
-
-        <!-- chevron animado — solo cuando activo -->
+        <!-- chevron animado -->
         @if (isLinkActive(link.source, link.target)) {
           <path
             [attr.d]="getLinkPath(link.source, link.target)"
@@ -48,33 +38,10 @@
             marker-end="url(#arrow-gold)"
           />
         }
-
-        <!-- dash reposo -->
-        @if (!hayMensajeActivo()) {
-          <path
-            [attr.d]="getLinkPath(link.source, link.target)"
-            fill="none"
-            stroke="#C4A882"
-            stroke-width="1"
-            class="flow-line"
-          />
-        }
-
-        <!-- label -->
-        <text
-          [attr.x]="(cx(getNode(link.source)!) + cx(getNode(link.target)!)) / 2"
-          [attr.y]="(cy(getNode(link.source)!) + cy(getNode(link.target)!)) / 2 - 10"
-          text-anchor="middle"
-          font-size="8"
-          font-family="'Segoe UI', sans-serif"
-          fill="#9B7A4A"
-          letter-spacing="0.05em"
-        >{{ link.label }}</text>
-
       </g>
     }
 
-    <!-- ══ BROADCAST LINES ══ -->
+    <!-- Msgs All -->
     @for (target of broadcastTargets(); track target.id) {
       @if (getNode(mensajeActivo()!.from)) {
         <path
@@ -89,7 +56,7 @@
       }
     }
 
-    <!-- ══ NODOS ══ -->
+    <!-- NODOS -->
     @for (node of nodes; track node.id) {
       <g class="node-container" (click)="onNodeClick(node)"
          [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
@@ -100,19 +67,13 @@
           </clipPath>
         </defs>
 
-        <!-- halo hablando -->
+        <!-- halo -->
         @if (isNodeSpeaking(node.id)) {
           <rect [attr.x]="-5" [attr.y]="-5"
                 [attr.width]="NODE_W + 10" [attr.height]="NODE_H + 10"
                 rx="10" fill="#D4AF37" opacity="0.15"/>
         }
 
-        <!-- halo escuchando -->
-        @if (isNodeListening(node.id)) {
-          <rect [attr.x]="-5" [attr.y]="-5"
-                [attr.width]="NODE_W + 10" [attr.height]="NODE_H + 10"
-                rx="10" fill="#6B9E68" opacity="0.12"/>
-        }
 
         <!-- cuerpo -->
         <rect
@@ -124,20 +85,20 @@
                                isNodeListening(node.id) ? '1.5' : '1'"
         />
 
-        <!-- acento lateral -->
+        <!-- color lateral -->
         <rect width="6" [attr.height]="NODE_H"
               [attr.clip-path]="'url(#clip-' + node.id + ')'"
               [attr.fill]="node.data.status === 'en línea' ? '#6B9E68' :
                            node.data.status === 'ocupado'  ? '#C9882A' : '#B4B2A9'"/>
 
         <!-- badge estado -->
-        <rect x="96" y="8" width="58" height="14" rx="7"
+        <rect x="110" y="8" width="45" height="14" rx="7"
               [attr.fill]="node.data.status === 'en línea' ? '#EAF3DE' :
                            node.data.status === 'ocupado'  ? '#FAEEDA' : '#F1EFE8'"
               [attr.stroke]="node.data.status === 'en línea' ? '#97C459' :
                              node.data.status === 'ocupado'  ? '#EF9F27' : '#B4B2A9'"
               stroke-width="0.5"/>
-        <circle cx="106" cy="15" r="3"
+        <circle cx="116" cy="15" r="3"
                 [attr.fill]="node.data.status === 'en línea' ? '#4A8A47' :
                              node.data.status === 'ocupado'  ? '#C9882A' : '#888780'"/>
         <text x="137" y="15" text-anchor="middle" dominant-baseline="middle"
@@ -148,19 +109,19 @@
         </text>
 
         <!-- emoji -->
-        <text x="11" y="40" font-size="16">{{ node.data.emoji }}</text>
+        <text x="11" y="25" font-size="16">{{ node.data.emoji }}</text>
 
         <!-- nombre -->
-        <text x="36" y="30" font-size="11" font-weight="600"
+        <text x="35" y="25" font-size="11" font-weight="bold"
               font-family="'Segoe UI', sans-serif"
               [attr.fill]="isNodeSpeaking(node.id) ? '#5C3D00' : '#3D3020'">
           {{ node.label }}
         </text>
 
         <!-- rol -->
-        <text x="36" y="46" font-size="8"
+        <text x="36" y="40" font-size="9"
               font-family="'Segoe UI', sans-serif"
-              fill="#9B7A4A" letter-spacing="0.08em">
+              fill="#9B7A4A" letter-spacing="0.05">
           {{ node.data.role | uppercase }}
         </text>
 
