@@ -8,7 +8,23 @@
 
 .main-content {
   overflow: hidden;
+  height: 100%;
+}
 
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.left-panel {
+  border-right: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+}
+
+.right-panel {
+  background: #050505;
+  overflow: hidden;
 }
 
 ::ng-deep .as-split-gutter {

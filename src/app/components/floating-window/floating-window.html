@@ -1,1 +1,18 @@
 
+<div
+  class="window-frame"
+  [class.general]="esGeneral"
+  [class.privada]="!esGeneral"
+  cdkDrag
+  (mousedown)="ws.focus(agentId)"
+>
+  <div class="window-header" cdkDragHandle>
+    <span class="title">
+      {{ agentId ? 'TERMINAL :: ' + agentId : 'SYSTEM CONSOLE' }}
+    </span>
+    <button class="close-btn" (click)="ws.cerrar(agentId)">✕</button>
+  </div>
+  <div class="window-content">
+    <app-chat [agentId]="agentId" />
+  </div>
+</div>

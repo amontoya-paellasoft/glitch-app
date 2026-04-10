@@ -31,6 +31,13 @@
   opacity: 0.85;
 }
 
+.node-hit-area {
+  cursor: grab;
+}
+.node-hit-area:active {
+  cursor: grabbing;
+}
+
 .flow-line-active {
   stroke-dasharray: 10 180;
   stroke-dashoffset: 180;

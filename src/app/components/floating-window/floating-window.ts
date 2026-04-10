@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit, ElementRef } from '@angular/core';
 import { Chat } from '../chat/chat';
 import { WorkspaceService } from '../../services/workspace-service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -7,21 +7,22 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   selector: 'app-floating-window',
   imports: [Chat, DragDropModule],
   standalone: true,
-  template: `
-  <div class="window-frame" cdkDrag (mousedown)="ws.focus(agentId)">
-      <div class="window-header" cdkDragHandle>
-        <span class="title">TERMINAL :: {{ agentId }}</span>
-        <button class="close-btn" (click)="ws.cerrar(agentId)">✕</button>
-      </div>
-      <div class="window-content">
-        <app-chat [agentId]="agentId"></app-chat>
-      </div>
-    </div>
-  `,
+  templateUrl: './floating-window.html',
   styleUrl: './floating-window.css',
 })
-export class FloatingWindow {
-@Input() agentId!: string;
-  ws : WorkspaceService = inject(WorkspaceService);
+export class FloatingWindow implements OnInit {
+  @Input() agentId!: string;
+  ws = inject(WorkspaceService);
+  private el = inject(ElementRef);
 
+  get esGeneral(): boolean {
+    return this.agentId === '';
+  }
+
+  ngOnInit(): void {
+    // Añade la clase al :host según el tipo de ventana
+    this.el.nativeElement.classList.add(
+      this.esGeneral ? 'general' : 'privada'
+    );
+  }
 }

@@ -36,7 +36,6 @@ export class ChatService {
 
   private readonly USER_ID = 'us';
 
-
   // MÉTODOS
 
   enviarMensajeUsuario(text: string, contexto: string): void {
@@ -54,7 +53,7 @@ export class ChatService {
       text,
       timeStamp: new Date(),
     };
-    this.mensajeActivo.set({ from: this.USER_ID, to: esPrivado ? contexto : 'all'});
+    this.mensajeActivo.set({ from: this.USER_ID, to: esPrivado ? contexto : 'all' });
     this.agregarMensajeAConversacion(msgUsuario);
 
     if (esPrivado) {
@@ -204,17 +203,31 @@ export class ChatService {
   private agregarMensajeAConversacion(mensaje: MessageInterface): void {
     const convs = this.conversacionesSubject.value;
 
+    // Para mensajes privados del usuario, encontramos la conv exacta
+    const convIdUsuario =
+      mensaje.from === this.USER_ID && mensaje.visibility === 'private'
+        ? this.resolverConvId(mensaje.to)
+        : null;
+
     const actualizadas = convs.map((conv) => {
-      const pertenece =
-        conv.type === 'public'
-          ? mensaje.visibility === 'public'
-          : mensaje.visibility === 'private' &&
-            conv.participants.includes(mensaje.to) &&
-            (conv.participants.includes(mensaje.from) || mensaje.from === this.USER_ID);
+      let pertenece: boolean;
+
+      if (conv.type === 'public') {
+        // Mensajes públicos
+        pertenece = mensaje.visibility === 'public';
+      } else if (convIdUsuario !== null) {
+        // Mensaje privado del usuario
+        pertenece = conv.id === convIdUsuario;
+      } else {
+        // Mensaje privado entre agentes
+        pertenece =
+          mensaje.visibility === 'private' &&
+          conv.participants.includes(mensaje.from) &&
+          conv.participants.includes(mensaje.to);
+      }
 
       if (!pertenece) return conv;
 
-      // Si el mensaje ya existe en la conversación, no lo añadas de nuevo
       const yaExiste = conv.messages.some((m) => m.id === mensaje.id);
       if (yaExiste) return conv;
 

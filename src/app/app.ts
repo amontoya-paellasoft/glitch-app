@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Header } from './components/structure/header/header';
 import { AgentMap } from './components/agent-map/agent-map';
-import { Chat } from './components/chat/chat';
 import { ControlPanel } from './components/control-panel/control-panel';
 import { AngularSplitModule, SplitGutterInteractionEvent } from 'angular-split';
 import { WorkspaceService } from './services/workspace-service';
@@ -11,7 +10,7 @@ import { ChatService } from './services/chat-service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, AgentMap, Chat, ControlPanel, AngularSplitModule, FloatingWindow],
+  imports: [Header, AgentMap, ControlPanel, AngularSplitModule, FloatingWindow],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -25,10 +24,15 @@ export class App implements OnInit {
     // JSONparse convierte el string en un array [n,n]
     if (guardado) this.sizePaneles = JSON.parse(guardado);
     this.chatServ.iniciarSimulacion();
+    this.ws.abrir({ agentId: '' });
   }
 
   onSplitFin(event: SplitGutterInteractionEvent): void {
     // Cada vez que el usuario suelta el divisor, guardamos los tamaños nuevos
     localStorage.setItem('glitch-split', JSON.stringify(event.sizes));
+  }
+
+  get windowWidth(): number {
+    return window.innerWidth;
   }
 }

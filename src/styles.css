@@ -27,3 +27,10 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'vt323';
+  src: url('/fonts/vt323-regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

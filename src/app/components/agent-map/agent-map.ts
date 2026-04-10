@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, ElementRef, inject, ViewChild } from '@angular/core';
 import { MOCK_AGENTS, MOCK_LINKS } from '../../mock/mock-data';
 import { UpperCasePipe, LowerCasePipe } from '@angular/common';
 import { WorkspaceService } from '../../services/workspace-service';
@@ -13,6 +13,9 @@ import { NodePosition } from '../../models/conversation-interface';
   styleUrl: './agent-map.css',
 })
 export class AgentMap {
+  // Referencia al elemento <svg>
+  @ViewChild('svgRef') svgRef!: ElementRef<SVGSVGElement>;
+
   ws: WorkspaceService = inject(WorkspaceService);
   chatServ: ChatService = inject(ChatService);
 
@@ -31,6 +34,12 @@ export class AgentMap {
   readonly NODE_H = 56;
   readonly NODE_W_USER = 200;
   readonly NODE_H_USER = 80;
+
+  // Estado del drag
+  private nodoDragging: NodePosition | null = null;
+  private estado: 'reposo' | 'arrastrando' = 'reposo';
+  private offsetX = 0;
+  private offsetY = 0;
 
   nodes: NodePosition[] = MOCK_AGENTS.map((agent) => {
     const positions: Record<string, { x: number; y: number }> = {
@@ -127,7 +136,54 @@ export class AgentMap {
     return this.nodes.filter((n) => n.id !== msg.from);
   });
 
+  // Convierte coordenadas del ratón a coordenadas del viewBox SVG
+  private getSVGPoint(event: MouseEvent): { x: number; y: number } {
+    const svg = this.svgRef.nativeElement;
+    const pt = svg.createSVGPoint();
+    pt.x = event.clientX;
+    pt.y = event.clientY;
+    const svgP = pt.matrixTransform(svg.getScreenCTM()!.inverse());
+    return { x: svgP.x, y: svgP.y };
+  }
+
+  // 1 — El usuario aprieta el botón del ratón
+  onDragInicio(event: MouseEvent, node: NodePosition): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.estado = 'arrastrando';
+    this.nodoDragging = node;
+
+    const pt = this.getSVGPoint(event);
+    this.offsetX = pt.x - node.x;
+    this.offsetY = pt.y - node.y;
+  }
+
+  // 2 — El ratón se mueve (escuchado en el SVG con (mousemove))
+  onDragMover(event: MouseEvent): void {
+    if (this.estado !== 'arrastrando' || !this.nodoDragging) return;
+
+    const pt = this.getSVGPoint(event);
+    this.nodoDragging.x = pt.x - this.offsetX;
+    this.nodoDragging.y = pt.y - this.offsetY;
+
+    const g = this.svgRef.nativeElement.querySelector(`[data-node-id="${this.nodoDragging.id}"]`);
+    if (g) {
+      g.setAttribute('transform', `translate(${this.nodoDragging.x},${this.nodoDragging.y})`);
+    }
+  }
+
+  // 3 — El usuario suelta el botón
+  onDragFin(): void {
+    if (this.estado !== 'arrastrando') return;
+    this.estado = 'reposo';
+    this.nodes = [...this.nodes]; // actualiza los paths
+    this.nodoDragging = null;
+  }
+
+  // 4 — Click: solo actúa si NO estábamos arrastrando
   onNodeClick(node: NodePosition): void {
+    if (this.estado === 'arrastrando') return;
     this.ws.abrir({ agentId: node.id });
   }
 }

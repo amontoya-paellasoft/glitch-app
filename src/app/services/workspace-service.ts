@@ -32,7 +32,7 @@ export class WorkspaceService {
   }
 
   reiniciar(): void {
-    this.cerrarTodas();
     this.chatServ.reiniciar();
+    this.abrir({agentId: ''});
   }
 }
