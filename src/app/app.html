@@ -1,11 +1,4 @@
 <div class="app-container">
   <app-header />
-  <div class="main-content">
-    <app-agent-map />
-  </div>
-  <app-control-panel />
-
-  @for (agentId of ws.ventanasAbiertas(); track agentId) {
-    <app-floating-window [agentId]="agentId" />
-  }
+  <router-outlet />
 </div>

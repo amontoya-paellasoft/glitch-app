@@ -1,0 +1,173 @@
+<div class="todo-main-container d-flex flex-column h-100 bg-white position-relative">
+  <!-- Header con Botón de Nueva Tarea -->
+  <div class="p-4 border-bottom border-1 d-flex justify-content-between align-items-center" style="background: #0f172a; border-color: #334155 !important;">
+    <h2 class="m-0 fw-bold" style="font-size: 1.5rem; color: #e2e8f0; margin-left: 1rem; margin-top: 0.5rem;">Task Board</h2>
+    <button class="btn-retro" (click)="showForm = !showForm">
+      {{ showForm ? '✕ Close' : '+ New Task' }}
+    </button>
+  </div>
+
+  <!-- Formulario Flotante Modal -->
+  @if (showForm) {
+    <div class="view-overlay" (click)="showForm = false">
+      <div class="detail-panel shadow-lg" (click)="$event.stopPropagation()" style="max-width: 600px;">
+        <!-- Header -->
+        <div class="detail-header" style="background: #06b6d4; padding: 1.5rem;">
+          <div>
+            <h2 class="detail-title" style="color: #0f172a; margin: 0; font-size: 1.5rem; font-weight: 700;">New Task</h2>
+          </div>
+          <button type="button" class="btn-close" (click)="showForm = false" aria-label="Close" style="width: 2rem; height: 2rem; background: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0f172a; font-weight: bold; font-size: 1.2rem;">×</button>
+        </div>
+
+        <!-- Body -->
+        <div class="detail-body" style="overflow: auto; max-height: none;">
+          <form [formGroup]="taskForm" (ngSubmit)="addTask()" class="retro-form p-0" style="background: transparent; border: none;">
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <label class="form-label-retro" style="display: block; margin-bottom: 0.75rem;">Title</label>
+                <input formControlName="title" type="text" class="form-control-retro w-100" placeholder="Task title" maxlength="30" style="width: 100%;">
+              </div>
+              <div>
+                <label class="form-label-retro" style="display: block; margin-bottom: 0.75rem;">Description</label>
+                <input formControlName="shortDescription" type="text" class="form-control-retro w-100" placeholder="Brief description" maxlength="50" style="width: 100%;">
+              </div>
+              <div>
+                <label class="form-label-retro" style="display: block; margin-bottom: 0.75rem;">Details</label>
+                <textarea formControlName="extendedDescription" class="form-control-retro w-100" placeholder="Detailed information..." rows="4" style="width: 100%; resize: none;"></textarea>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label class="form-label-retro" style="display: block; margin-bottom: 0.75rem;">Priority</label>
+                  <select formControlName="priority" class="form-control-retro w-100" style="width: 100%;">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label-retro" style="display: block; margin-bottom: 0.75rem;">Due Date</label>
+                  <input formControlName="dueDate" type="date" class="form-control-retro w-100" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #334155;">
+              <button type="button" class="btn-retro" (click)="showForm = false" style="background: #475569; color: white;">Cancel</button>
+              <button type="submit" [disabled]="taskForm.invalid" class="btn-retro">Add Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Tablero -->
+  <div class="todo-wrapper">
+    @for (column of columns; track column.id; let colIndex = $index) {
+      <div class="column-container">
+        <div class="column-header d-flex justify-content-between align-items-center">
+          <span style="color: #e2e8f0; font-size: 0.875rem; font-weight: 600;">{{ column.name }}</span>
+          <span class="badge" style="background-color: #334155; color: #cbd5e1; font-size: 0.75rem; font-weight: 600; padding: 0.375rem 0.75rem; border-radius: 4px;">{{ column.tasks.length }}</span>
+        </div>
+
+        <div class="task-list">
+          @for (task of column.tasks; track task.id) {
+            <div class="todo-card" [class.selected]="selectedTaskId === task.id" (click)="selectTask(task.id)">
+              <div class="card-content">
+                <div class="fw-bold mb-2" style="color: #e2e8f0; font-size: 0.95rem;">
+                  {{ task.title }}
+                </div>
+                <p class="mb-4" style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.3; padding-bottom: 0.75rem;">
+                  {{ task.shortDescription }}
+                </p>
+
+                <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>🕐</span>
+                  <span>{{ (task.dueDate | date:'dd/MM') || '—' }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="priority-tag" 
+                        [class.priority-low]="task.priority === 'Low'"
+                        [class.priority-medium]="task.priority === 'Medium'"
+                        [class.priority-high]="task.priority === 'High'">
+                    {{ task.priority }}
+                  </span>
+                </div>
+
+                @if (selectedTaskId === task.id) {
+                  <div class="d-flex gap-2 mt-3 pt-2" style="justify-content: space-between; align-items: center;" (click)="$event.stopPropagation()">
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-sm" style="border: 1px solid #334155; color: #94a3b8; padding: 0.375rem 0.75rem; border-radius: 6px; background: #0f172a; font-size: 0.75rem; font-weight: 600;" [disabled]="colIndex === 0" (click)="moveTask(task.id, 'prev')">«</button>
+                      <button class="btn btn-sm" style="border: 1px solid #334155; color: #94a3b8; padding: 0.375rem 0.75rem; border-radius: 6px; background: #0f172a; font-size: 0.75rem; font-weight: 600;" [disabled]="colIndex === columns.length - 1" (click)="moveTask(task.id, 'next')">»</button>
+                    </div>
+                    <button class="btn btn-sm" style="background: #06b6d4; color: #0f172a; padding: 0.375rem 1rem; border-radius: 6px; border: none; font-size: 0.75rem; font-weight: 600;" (click)="openView(task)">View</button>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- PANEL DE INFORMACIÓN EXTENDIDA MODERNO -->
+  @if (viewedTask) {
+    <div class="view-overlay" (click)="closeView()">
+      <div class="detail-panel shadow-lg" (click)="$event.stopPropagation()">
+        <!-- Header -->
+        <div class="detail-header" style="background: #06b6d4; padding: 1.5rem;">
+          <div>
+            <h2 class="detail-title" style="color: #0f172a; margin: 0; font-size: 1.5rem; font-weight: 700;">Task Details</h2>
+            <div class="task-meta" style="color: #1e293b; font-size: 0.875rem; margin-top: 0.25rem;">ID: {{ viewedTask.id }}</div>
+          </div>
+          <button type="button" class="btn-close" (click)="closeView()" aria-label="Close" style="width: 2rem; height: 2rem; background: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0f172a; font-weight: bold; font-size: 1.2rem;">×</button>
+        </div>
+
+        <!-- Body -->
+        <div class="detail-body">
+          <div class="info-card" style="background: #1e293b; border: 1px solid #334155; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+            <div class="info-label" style="color: #06b6d4; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">Title</div>
+            <div class="info-content fw-bold" style="color: #e2e8f0; font-size: 1.1rem;">{{ viewedTask.title }}</div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="info-card" style="background: #1e293b; border: 1px solid #334155; padding: 1rem; border-radius: 8px;">
+                <div class="info-label" style="color: #06b6d4; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">Created</div>
+                <div class="info-content small" style="color: #cbd5e1;">{{ viewedTask.createdAt | date:'short' }}</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="info-card" style="background: #1e293b; border: 1px solid #334155; padding: 1rem; border-radius: 8px;">
+                <div class="info-label" style="color: #06b6d4; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">Due Date</div>
+                <div class="info-content small" style="color: #cbd5e1;">{{ (viewedTask.dueDate | date:'short') || 'No deadline' }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card" style="background: #1e293b; border: 1px solid #334155; padding: 1rem; border-radius: 8px; margin-top: 1rem; margin-bottom: 1rem;">
+            <div class="info-label" style="color: #06b6d4; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">Description</div>
+            <div class="info-content" style="white-space: pre-wrap; font-size: 0.95rem; color: #cbd5e1;">
+              {{ viewedTask.extendedDescription }}
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #334155;">
+            <div class="priority-badge-retro"
+                 [class.priority-low]="viewedTask.priority === 'Low'"
+                 [class.priority-medium]="viewedTask.priority === 'Medium'"
+                 [class.priority-high]="viewedTask.priority === 'High'"
+                 style="background: #1e293b; border: 1px solid #334155; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem;">
+              <span class="info-label m-0" style="color: #06b6d4; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Priority:</span>
+              <span style="color: #cbd5e1; margin-left: 0.5rem;">{{ viewedTask.priority }}</span>
+            </div>
+            <div class="d-flex justify-content-end">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
