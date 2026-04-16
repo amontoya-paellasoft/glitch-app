@@ -1,15 +1,60 @@
 :host {
   display: block;
-  height: calc(100vh - 46px);
+  min-height: calc(100vh - 46px);
   width: 100%;
-  overflow: hidden;
   background: #0f172a;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  overflow-y: auto; /* Scroll vertical para ver todas las tareas */
+  overflow-x: hidden; /* Evitar scroll horizontal de la página */
 }
 
 .todo-main-container {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #334155;
+  background: #0f172a;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+
+.header-left h2 {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.header-left .btn-retro {
+  margin: 0;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.85rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 1;
+  width: auto;
+}
+
+
 
 /* --- FORMULARIO SIMPLE --- */
 .retro-form {
@@ -66,17 +111,16 @@
 
 /* --- TABLERO SIMPLE --- */
 .todo-wrapper {
-  flex: 1;
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: nowrap !important; /* Todas las columnas en una única fila */
   align-items: flex-start !important;
   padding: 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
   gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
@@ -86,13 +130,12 @@
 .column-container {
   display: flex;
   flex-direction: column;
-  min-width: 200px;
-  flex: 1;
-  height: 100%;
+  flex: 1; /* Todas las columnas crecen por igual para ocupar el ancho */
+  min-width: 180px; /* Ancho mínimo para mantener legibilidad */
+  height: auto; /* Altura automática para crecer con las tareas */
   background: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
-  flex-shrink: 0;
   overflow: hidden;
   transition: border-color 0.2s ease;
 }
@@ -102,45 +145,111 @@
 }
 
 .column-header {
-  padding: 1.5rem;
+  padding: 1rem 1.25rem;
   background: #0f172a;
   color: #e2e8f0;
   border-bottom: 1px solid #334155;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.column-title {
+  font-weight: 700;
+  font-size: 0.75rem; /* Un poco más pequeño */
+  text-transform: uppercase;
+  letter-spacing: 1.5px; /* Más espaciado entre letras */
+  color: #94a3b8; /* Color un poco más suave para el título */
+}
+
+.column-counter {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b; /* Color tenue */
+  opacity: 0.7;
+}
+
 .task-list {
-  flex-grow: 1;
-  padding: 1.5rem;
+  padding: 1rem;
   background-color: transparent;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  height: auto;
+  overflow: visible; /* Permitir que el contenido fluya verticalmente */
 }
 
 .todo-card {
   background: #1e293b;
   border: 1px solid #334155;
   border-radius: 6px;
-  padding: 1.25rem;
   margin: 0 0 1rem 0;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-left-width: 4px; /* Barra lateral por defecto */
 }
+
+.priority-border-low { border-left-color: #10b981 !important; }
+.priority-border-medium { border-left-color: #f59e0b !important; }
+.priority-border-high { border-left-color: #ef4444 !important; }
 
 .todo-card:hover {
   border-color: #06b6d4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .todo-card.selected {
-  background: #065f73;
   border-color: #06b6d4;
-  color: #ffffff;
+  box-shadow: 0 0 0 1px #06b6d4;
+}
+
+.todo-card-header {
+  background: #334155; /* Color más claro para destacar */
+  padding: 0.75rem 1rem;
+  color: #f8fafc;
+  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-bottom: 1px solid transparent; /* Eliminamos la barra manteniendo dimensiones */
+}
+
+.selected .todo-card-header {
+  background: #06b6d4;
+  color: #0f172a;
+}
+
+.todo-card-body {
+  padding: 1rem;
+  flex-grow: 1;
+}
+
+/* --- EMPTY STATES --- */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  opacity: 0.3;
+  user-select: none;
+  pointer-events: none;
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  filter: grayscale(1);
+}
+
+.empty-state-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  text-align: center;
 }
 
 /* --- PANEL DE INFORMACIÓN EXTENDIDA --- */
@@ -187,7 +296,8 @@
 
 .detail-body {
   padding: 2rem;
-  overflow: hidden;
+  overflow: auto;
+  max-height: calc(90vh - 100px);
   background: #1e293b;
 }
 
@@ -268,4 +378,3 @@
 .btn-close-retro:hover {
   background: #0891b2;
 }
-

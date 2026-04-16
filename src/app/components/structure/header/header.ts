@@ -1,6 +1,7 @@
 // header.component.ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslationService, Language } from '../../../Service/Translation/translation-service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,12 @@ import { RouterModule } from '@angular/router';
         <button class="nav-btn" routerLink="/to-do" routerLinkActive="active">To-Do</button>
       </nav>
 
-      <span class="sprint-badge">Sprint 1</span>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <button class="lang-btn" (click)="toggleLanguage()">
+          {{ translationService.currentLang() === 'es' ? 'EN' : 'ES' }}
+        </button>
+        <span class="sprint-badge">Sprint 1</span>
+      </div>
     </header>
   `,
   styles: [`
@@ -54,8 +60,20 @@ import { RouterModule } from '@angular/router';
       border-color: var(--accent);
     }
 
+    .lang-btn {
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { opacity: 0.8; }
+
     .sprint-badge {
-      margin-left: auto;
       font-size: 11px; font-weight: 500;
       padding: 3px 10px;
       border-radius: 20px;
@@ -64,4 +82,11 @@ import { RouterModule } from '@angular/router';
     }
   `]
 })
-export class Header {}
+export class Header {
+  public translationService = inject(TranslationService);
+
+  toggleLanguage() {
+    const nextLang: Language = this.translationService.currentLang() === 'es' ? 'en' : 'es';
+    this.translationService.setLanguage(nextLang);
+  }
+}
