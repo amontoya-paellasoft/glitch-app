@@ -1,0 +1,30 @@
+<div class="search-container">
+  <!-- Barra de búsqueda -->
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input 
+      type="text" 
+      class="search-input" 
+      [(ngModel)]="searchTerm" 
+      (ngModelChange)="onSearchChange()" 
+      placeholder="Search tasks..."
+    >
+  </div>
+
+  <!-- Filtros de Prioridad -->
+  <div class="priority-filters ms-3">
+    <span class="filter-label d-none d-md-inline">{{ 'TODO.FILTERS.PRIORITY' | translate }}:</span>
+    <div class="filter-buttons">
+      @for (p of priorities; track p) {
+        <button 
+          class="filter-btn" 
+          [class.active]="todoService.priorityFilter() === p"
+          [class]="'filter-btn-' + p.toLowerCase()"
+          (click)="setPriority(p)"
+        >
+          {{ (p === 'All' ? 'TODO.FILTERS.ALL' : 'TODO.PRIORITIES.' + p) | translate }}
+        </button>
+      }
+    </div>
+  </div>
+</div>
