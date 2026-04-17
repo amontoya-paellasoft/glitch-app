@@ -1,22 +1,15 @@
-import { AgentInterface } from '../models/agent-interface';
+import { AgentMockInterface } from '../models/agent-interface';
 import { MessageInterface } from '../models/message-interface';
 import { ConversationInterface } from '../models/conversation-interface';
 import { TareaInterface } from '../models/tarea-interface';
 
-export const MOCK_AGENTS: AgentInterface[] = [
-  {
-    id: 'pm',
-    name: 'P. Manager',
-    role: 'Coordinación',
-    emoji: '🏛️',
-    status: 'ocupado',
-    bg: 'white',
-  },
-  { id: 'di', name: 'Diseñador', role: 'Diseño', emoji: '✨', status: 'en línea', bg: 'pink' },
-  { id: 'fe', name: 'FrontEnd Dev', role: 'UI/UI', emoji: '🔍', status: 'ausente', bg: 'black' },
-  { id: 'be', name: 'BackEnd Dev', role: 'Node/API', emoji: '🧪', status: 'ocupado', bg: 'orange' },
-  { id: 'qa', name: 'QA', role: 'Test', emoji: '🦄', status: 'en línea', bg: 'blue' },
-  { id: 'us', name: 'User', role: 'Guest', emoji: '👤', status: 'en línea', bg: 'darkpink' },
+export const MOCK_AGENTS: AgentMockInterface[] = [
+  { id: 'pm', dummyUserId: 1, name: 'P. Manager',    role: 'Coordinación', emoji: '🏛️', status: 'ocupado',   bg: 'white'    },
+  { id: 'di', dummyUserId: 2, name: 'Diseñador',     role: 'Diseño',       emoji: '✨',  status: 'en línea', bg: 'pink'     },
+  { id: 'fe', dummyUserId: 3, name: 'FrontEnd Dev',  role: 'UI/UX',        emoji: '🔍', status: 'ausente',  bg: 'black'    },
+  { id: 'be', dummyUserId: 4, name: 'BackEnd Dev',   role: 'Node/API',     emoji: '🧪', status: 'ocupado',  bg: 'orange'   },
+  { id: 'qa', dummyUserId: 5, name: 'QA',            role: 'Test',         emoji: '🦄', status: 'en línea', bg: 'blue'     },
+  { id: 'us', dummyUserId: 6, name: 'User',          role: 'Guest',        emoji: '👤', status: 'en línea', bg: 'darkpink' },
 ];
 
 export const MOCK_MESSAGES: MessageInterface[] = [

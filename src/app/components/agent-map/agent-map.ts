@@ -1,23 +1,28 @@
-import { Component, computed, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, computed, DestroyRef, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MOCK_AGENTS, MOCK_LINKS } from '../../mock/mock-data';
 import { UpperCasePipe, LowerCasePipe } from '@angular/common';
 import { WorkspaceService } from '../../services/workspace-service';
 import { ChatService } from '../../services/chat-service';
+import { TareaService } from '../../services/tarea-service';
 import { NodePosition } from '../../models/node-interface';
+import { FloatingWindow } from '../floating-window/floating-window';
 
 @Component({
   selector: 'app-agent-map',
   standalone: true,
-  imports: [UpperCasePipe, LowerCasePipe],
+  imports: [UpperCasePipe, LowerCasePipe, FloatingWindow],
   templateUrl: './agent-map.html',
   styleUrl: './agent-map.css',
 })
-export class AgentMap {
+export class AgentMap implements OnInit {
   // el svg, para el drag necesito acceder a él directamente
   @ViewChild('svgRef') svgRef!: ElementRef<SVGSVGElement>;
 
   ws: WorkspaceService = inject(WorkspaceService);
   chatServ: ChatService = inject(ChatService);
+  private tareaServ: TareaService = inject(TareaService);
+  private destroyRef = inject(DestroyRef);
 
   mensajeActivo = computed(() => this.chatServ.mensajeActivo());
   hayMensajeActivo = computed(() => this.mensajeActivo() !== null);
@@ -61,6 +66,28 @@ export class AgentMap {
   });
 
   links = MOCK_LINKS;
+
+  ngOnInit(): void {
+    this.ws.abrir({ agentId: '' });
+
+    this.tareaServ.getUsuariosConTareas()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(usuarios => {
+        usuarios.forEach((usuario: any) => {
+          const agenteMock = MOCK_AGENTS.find(a => a.dummyUserId === usuario.id);
+          if (!agenteMock) return;
+          const nodo = this.nodes.find(n => n.id === agenteMock.id);
+          if (!nodo) return;
+          nodo.label = `${usuario.firstName} ${usuario.lastName}`;
+          nodo.data = {
+            ...nodo.data,
+            image: usuario.image,
+            realName: `${usuario.firstName} ${usuario.lastName}`,
+          };
+        });
+        this.nodes = [...this.nodes];
+      });
+  }
 
   // Centro de un nodo
   cx(node: NodePosition): number {

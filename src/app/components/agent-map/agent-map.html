@@ -168,7 +168,19 @@
         <!-- Contenido interno -->
         @if (node.id === 'us') {
           <!-- nodo especial: user-->
-          <text x="10" y="48" font-size="32">{{ node.data.emoji }}</text>
+          @if (node.data.image) {
+            <clipPath [attr.id]="'clip-avatar-' + node.id">
+              <circle cx="30" cy="40" r="18" />
+            </clipPath>
+            <image
+              [attr.href]="node.data.image"
+              x="12" y="22"
+              width="36" height="36"
+              [attr.clip-path]="'url(#clip-avatar-' + node.id + ')'"
+            />
+          } @else {
+            <text x="10" y="48" font-size="32">{{ node.data.emoji }}</text>
+          }
           <text
             x="60"
             y="30"
@@ -240,8 +252,20 @@
             {{ node.data.status | lowercase }}
           </text>
 
-          <!-- emoji del agente -->
-          <text x="11" y="25" font-size="16">{{ node.data.emoji }}</text>
+          <!-- avatar: imagen real si está disponible, emoji si no -->
+          @if (node.data.image) {
+            <clipPath [attr.id]="'clip-avatar-' + node.id">
+              <circle cx="22" cy="22" r="11" />
+            </clipPath>
+            <image
+              [attr.href]="node.data.image"
+              x="11" y="11"
+              width="22" height="22"
+              [attr.clip-path]="'url(#clip-avatar-' + node.id + ')'"
+            />
+          } @else {
+            <text x="11" y="25" font-size="16">{{ node.data.emoji }}</text>
+          }
 
           <!-- nombre -->
           <text
@@ -281,3 +305,7 @@
     }
   </svg>
 </div>
+
+@for (agentId of ws.ventanasAbiertas(); track agentId) {
+  <app-floating-window [agentId]="agentId" />
+}

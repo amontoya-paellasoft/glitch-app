@@ -15,10 +15,20 @@
   <!-- info agente -->
   <div class="panel-info">
     <div class="agent-hero">
-      <span class="agent-emoji">{{ agente()?.emoji }}</span>
+      @if (usuarioDummy()?.image) {
+        <img class="agent-avatar" [src]="usuarioDummy()!.image" [alt]="usuarioDummy()!.firstName" />
+      } @else {
+        <span class="agent-emoji">{{ agente()?.emoji }}</span>
+      }
       <div>
-        <div class="agent-name">{{ agente()?.name }}</div>
-        <div class="agent-role">{{ agente()?.role | uppercase }}</div>
+        @if (usuarioDummy(); as u) {
+          <div class="agent-name">{{ u.firstName }} {{ u.lastName }}</div>
+          <div class="agent-role">{{ u.company.title | uppercase }}</div>
+          <div class="agent-dept">{{ u.company.department }}</div>
+        } @else {
+          <div class="agent-name">{{ agente()?.name }}</div>
+          <div class="agent-role">{{ agente()?.role | uppercase }}</div>
+        }
       </div>
       <div class="agent-status">
         <span
@@ -53,23 +63,14 @@
   <div class="panel-info">
     <div class="section-label">TAREAS ASIGNADAS</div>
     <div class="tareas-lista">
-      @for (tarea of tareas; track tarea.id) {
+      @for (tarea of tareas(); track tarea.id) {
         <div class="tarea-item" routerLink="to-do" (click)="ws.cerrarTodas()">
           <div class="tarea-header">
             <span class="tarea-estado" [style.color]="getColorEstado(tarea.estado)">
               ● {{ tarea.estado | uppercase }}
             </span>
-            <span
-              class="tarea-prioridad"
-              [class.alta]="tarea.prioridad === 'alta'"
-              [class.media]="tarea.prioridad === 'media'"
-              [class.baja]="tarea.prioridad === 'baja'"
-            >
-              {{ tarea.prioridad | uppercase }}
-            </span>
           </div>
-          <div class="tarea-titulo">{{ tarea.titulo }}</div>
-          <div class="tarea-desc">{{ tarea.descripcion }}</div>
+          <div class="tarea-titulo">{{ tarea.texto }}</div>
         </div>
       } @empty {
         <span class="empty">SIN TAREAS ASIGNADAS.</span>

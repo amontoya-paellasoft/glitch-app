@@ -1,23 +1,28 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Column, Task } from '../../models/to-do-interface';
 import { dateNotPastValidator } from '../../common/validators/date-not-past.validator';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { TodoService } from '../../services/todo-service';
+import { TareaService } from '../../services/tarea-service';
 import { Busqueda } from '../busqueda/busqueda';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, Busqueda],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, Busqueda, RouterLink],
   templateUrl: './to-do.html',
   styleUrls: ['./to-do.css']
 })
-export class TodoComponent {
+export class TodoComponent implements OnInit {
   private translate = inject(TranslateService);
   public todoService = inject(TodoService);
-  
+  private tareaService = inject(TareaService);
+  private destroyRef = inject(DestroyRef);
+
   selectedTaskId: string | null = null;
   viewedTask: Task | null = null;
   taskForm: FormGroup;
@@ -29,7 +34,7 @@ export class TodoComponent {
     return this.todoService.filteredColumns();
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.taskForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       shortDescription: ['', [Validators.required, Validators.maxLength(50)]],
@@ -37,6 +42,16 @@ export class TodoComponent {
       priority: ['Medium', Validators.required],
       dueDate: ['', dateNotPastValidator()]
     });
+  }
+
+  ngOnInit(): void {
+    this.tareaService.getUsuariosConTareas()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(usuarios => {
+        usuarios.forEach((usuario: any) => {
+          this.todoService.cargarTareasDeApi(usuario.tareas);
+        });
+      });
   }
 
   getTranslatedPriority(priority: string): string {

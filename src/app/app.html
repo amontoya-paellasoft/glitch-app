@@ -8,10 +8,6 @@
   </div>
   <app-control-panel />
 
-  @for (agentId of ws.ventanasAbiertas(); track agentId) {
-    <app-floating-window [agentId]="agentId" />
-  }
-
   @if (ws.agentSelec()) {
     <app-agent-panel [agentId]="ws.agentSelec()!" />
   }

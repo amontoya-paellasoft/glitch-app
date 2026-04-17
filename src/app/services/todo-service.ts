@@ -1,5 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Column, Task } from '../models/to-do-interface';
+import { TaskInterface } from '../models/task-dummy-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,12 @@ export class TodoService {
   public priorityFilter = this._priorityFilter.asReadonly();
 
   private _columns = signal<Column[]>([
-    { 
-      id: 'mise-en-place', 
-      name: 'Mise en Place', 
-      tasks: [
-        { 
-          id: '1', 
-          title: 'Config. Entorno', 
-          shortDescription: 'Setup inicial de VSCode y extensiones.', 
-          extendedDescription: 'Instalar Prettier, ESLint y las extensiones necesarias para el desarrollo con Angular 21. Configurar el archivo settings.json.', 
-          priority: 'Medium',
-          createdAt: new Date('2026-04-10'),
-          dueDate: new Date('2026-04-20')
-        }
-      ] 
-    },
-    { id: 'backlog', name: 'Backlog', tasks: [] },
-    { id: 'todo', name: 'To Do', tasks: [] },
-    { id: 'doing', name: 'Do', tasks: [] },
-    { id: 'test', name: 'Test', tasks: [] },
-    { id: 'done', name: 'Done', tasks: [] }
+    { id: 'mise-en-place', name: 'Mise en Place', tasks: [] },
+    { id: 'backlog',       name: 'Backlog',       tasks: [] },
+    { id: 'todo',          name: 'To Do',         tasks: [] },
+    { id: 'doing',         name: 'Do',            tasks: [] },
+    { id: 'test',          name: 'Test',          tasks: [] },
+    { id: 'done',          name: 'Done',          tasks: [] },
   ]);
 
   public filteredColumns = computed(() => {
@@ -93,5 +80,36 @@ export class TodoService {
 
   public getColumns() {
     return this._columns();
+  }
+
+  public cargarTareasDeApi(tareas: TaskInterface[]): void {
+    const currentCols = this._columns();
+    const todoCol  = currentCols.find(c => c.id === 'todo');
+    const doneCol  = currentCols.find(c => c.id === 'done');
+    if (!todoCol || !doneCol) return;
+
+    tareas.forEach(tarea => {
+      const yaExiste = currentCols.some(col =>
+        col.tasks.some(t => t.id === tarea.id.toString())
+      );
+      if (yaExiste) return;
+
+      const task: Task = {
+        id: tarea.id.toString(),
+        title: tarea.texto,
+        shortDescription: '',
+        extendedDescription: '',
+        priority: 'Medium',
+        createdAt: new Date(),
+      };
+
+      if (tarea.estado === 'completada') {
+        doneCol.tasks.push(task);
+      } else {
+        todoCol.tasks.push(task);
+      }
+    });
+
+    this._columns.set([...currentCols]);
   }
 }

@@ -12,6 +12,7 @@ import {
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { ChatService } from '../../services/chat-service';
 import { SimulationService } from '../../services/simulation-service';
+import { TareaService } from '../../services/tarea-service';
 import { MessageInterface } from '../../models/message-interface';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
@@ -32,6 +33,7 @@ export class Chat implements OnInit, OnChanges {
   private chatSvc = inject(ChatService);
   private simulationSvc = inject(SimulationService);
   private cdr = inject(ChangeDetectorRef);
+  tareaServ = inject(TareaService);
 
   messages: MessageInterface[] = [];
   userInput: string = '';

@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MOCK_AGENTS, MOCK_CONVERSATIONS } from '../mock/mock-data';
-import { AgentInterface } from '../models/agent-interface';
+import { AgentMockInterface } from '../models/agent-interface';
 import { MessageInterface } from '../models/message-interface';
 import { ConversationInterface } from '../models/conversation-interface';
 
@@ -99,7 +99,7 @@ export class ChatService {
       .sort((a, b) => a.timeStamp.getTime() - b.timeStamp.getTime());
   }
 
-  getAgentesRelacionados(agentId: string): { id: string; count: number; agente: AgentInterface | undefined }[] {
+  getAgentesRelacionados(agentId: string): { id: string; count: number; agente: AgentMockInterface | undefined }[] {
     const msgs = this.getMensajesPrivados(agentId);
     const contador: Record<string, number> = {};
 
