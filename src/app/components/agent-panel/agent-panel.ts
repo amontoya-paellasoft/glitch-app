@@ -8,11 +8,12 @@ import { UpperCasePipe } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Chat } from '../chat/chat';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-agent-panel',
   standalone: true,
-  imports: [UpperCasePipe, DragDropModule, Chat, TranslatePipe],
+  imports: [UpperCasePipe, DragDropModule, Chat, TranslatePipe, RouterLink],
   templateUrl: './agent-panel.html',
   styleUrl: './agent-panel.css',
 })

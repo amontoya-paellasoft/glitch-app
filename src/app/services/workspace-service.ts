@@ -35,6 +35,7 @@ export class WorkspaceService {
   }
 
   cerrarTodas() {
+    this.cerrarPanel();
     this.ventanasAbiertas.set([]);
   }
 
