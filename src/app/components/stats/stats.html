@@ -1,0 +1,26 @@
+<div class="stats-ventana" cdkDrag (click)="$event.stopPropagation()">
+
+  <div class="stats-header" cdkDragHandle>
+    <span class="stats-title">[ AGENT ACTIVITY STATS ]</span>
+    <button class="close-btn" (click)="ws.cerrarStats()">✕</button>
+  </div>
+
+  <div class="stats-body">
+
+    <div class="chart-section">
+      <div class="chart-label">MENSAJES POR AGENTE</div>
+      <div echarts [options]="configBarras"
+           class="chart">
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-label">PÚBLICO VS PRIVADO</div>
+      <div echarts
+           [options]="configDonut"
+           class="chart">
+      </div>
+    </div>
+
+  </div>
+</div>

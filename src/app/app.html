@@ -2,8 +2,13 @@
   <app-header />
   <div class="contenido-principal">
     <app-agent-map />
-  </div>
+
+    @if (ws.statsAbierto()) {
+      <app-stats />
+    }
+      </div>
   <app-control-panel />
+
 
   @for (agentId of ws.ventanasAbiertas(); track agentId) {
     <app-floating-window [agentId]="agentId" />
@@ -12,4 +17,5 @@
   @if (ws.agentSelec()) {
     <app-agent-panel [agentId]="ws.agentSelec()!" />
   }
+
 </div>

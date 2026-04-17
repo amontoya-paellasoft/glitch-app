@@ -5,13 +5,15 @@ import { AngularSplitModule, SplitGutterInteractionEvent } from 'angular-split';
 import { WorkspaceService } from './services/workspace-service';
 import { FloatingWindow } from './components/floating-window/floating-window';
 import { SimulationService } from './services/simulation-service';
-import { AgentPanel } from "./components/agent-panel/agent-panel";
+import { AgentPanel } from './components/agent-panel/agent-panel';
 import { ControlPanel } from './components/structure/control-panel/control-panel';
+import { Stats } from './components/stats/stats';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, AgentMap, ControlPanel, AngularSplitModule, FloatingWindow, AgentPanel],
+  imports: [Header, AgentMap, ControlPanel, AngularSplitModule, FloatingWindow, AgentPanel, Stats],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -24,6 +24,8 @@
     "@swimlane/ngx-graph": "^11.0.0",
     "angular-split": "^20.0.0",
     "bootstrap": "^5.3.8",
+    "echarts": "^6.0.0",
+    "ngx-echarts": "^21.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

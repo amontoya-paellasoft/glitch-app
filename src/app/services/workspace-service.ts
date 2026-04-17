@@ -43,4 +43,15 @@ export class WorkspaceService {
     this.cerrarPanel();
     this.abrir({ agentId: '' });
   }
+
+  // ECHARTS
+  statsAbierto = signal<boolean>(false);
+
+  abrirStats(): void {
+    this.statsAbierto.set(true);
+  }
+
+  cerrarStats(): void {
+    this.statsAbierto.set(false);
+  }
 }
