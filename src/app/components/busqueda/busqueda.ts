@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TodoService } from '../../services/todo-service';
+import { TareaService } from '../../services/tarea-service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -12,7 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './busqueda.css',
 })
 export class Busqueda {
-  public todoService = inject(TodoService);
+  public todoService = inject(TareaService);
   public searchTerm = '';
   public priorities = ['All', 'Low', 'Medium', 'High'];
 

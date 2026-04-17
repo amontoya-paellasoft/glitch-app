@@ -1,20 +1,20 @@
 :host {
   display: block;
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #0f172a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 50;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: 'IBMPlex', monospace;
+  position: relative;
+  z-index: 5;
+  flex: 1;
 }
 
 .todo-main-container {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  height: 100%;
+  min-height: 80vh;
 }
 /* Header */
 .header-container {
@@ -152,7 +152,10 @@
   padding: 12px 12px 8px 12px;
   font-size: 14px;
   font-weight: 800;
-  color: #0f172a; /* Título de tarea destacado */
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .todo-card-body {
@@ -164,6 +167,10 @@
   color: #334155;
   margin-bottom: 0.75rem;
   line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .task-date {
@@ -195,7 +202,7 @@
   gap: 4px;
 }
 
-.btn-move, .btn-view {
+.btn-move {
   background: #000000;
   border: 1px solid #e2e8f0;
   color: #ffffff;
@@ -205,6 +212,14 @@
   cursor: pointer;
   border-radius: 10px;
   margin-top: -1.4rem;
+  transition: transform 0.1s;
+}
+
+.btn-move:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  filter: grayscale(1);
 }
 
 .btn-view {
@@ -212,11 +227,10 @@
   color: #ffffff;
   border: none;
   padding: 4px 10px;
+  margin-top: -1.5rem;
 }
 
-.btn-move:hover:not(:disabled) {
-  background: #e2e8f0;
-}
+
 
 /* Prioridades */
 .priority-tag {
@@ -436,3 +450,4 @@
   font-weight: 800;
   text-transform: uppercase;
 }
+

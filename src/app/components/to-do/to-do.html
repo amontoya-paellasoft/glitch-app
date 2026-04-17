@@ -1,5 +1,4 @@
 <div class="todo-main-container">
-  <!-- Header con Botón de Nueva Tarea -->
   <div class="header-container">
     <div class="header-left">
       <h2 class="todo-page-title">{{ 'TODO.TITLE' | translate }}</h2>
@@ -114,8 +113,8 @@
                 @if (selectedTaskId === task.id) {
                   <div class="task-actions" (click)="$event.stopPropagation()">
                     <div class="move-btns">
-                      <button class="btn-move" [disabled]="colIndex === 0" (click)="moveTask(task.id, 'prev')">«</button>
-                      <button class="btn-move" [disabled]="colIndex === columns.length - 1" (click)="moveTask(task.id, 'next')">»</button>
+                      <button class="btn-move" [disabled]="colIndex === 0 || colIndex === 3" (click)="moveTask(task.id, 'prev')">«</button>
+                      <button class="btn-move" [disabled]="colIndex >= 2" (click)="moveTask(task.id, 'next')">»</button>
                     </div>
                     <button class="btn-view" (click)="openView(task)">{{ 'TODO.BUTTONS.VIEW' | translate }}</button>
                   </div>
@@ -173,6 +172,14 @@
                [class.priority-border-medium]="viewedTask.priority === 'Medium'"
                [class.priority-border-high]="viewedTask.priority === 'High'">
             <div class="info-label">{{ 'TODO.LABELS.DESCRIPTION' | translate }}</div>
+            <div class="info-content">{{ viewedTask.shortDescription }}</div>
+          </div>
+
+          <div class="info-card"
+               [class.priority-border-low]="viewedTask.priority === 'Low'"
+               [class.priority-border-medium]="viewedTask.priority === 'Medium'"
+               [class.priority-border-high]="viewedTask.priority === 'High'">
+            <div class="info-label">{{ 'TODO.LABELS.DETAILS' | translate }}</div>
             <div class="info-content desc-content">
               {{ viewedTask.extendedDescription }}
             </div>

@@ -1,6 +1,7 @@
 {
   "APP_1001_TITLE": "GLITCH",
   "APP_1002_SUBTITLE": "AI agent workspace simulation",
+  "AGENT_MAP": "Agent Map",
 
   "CTRL_2001_PANEL": "CONTROL PANEL",
   "CTRL_2002_RESTART": "[ RESTART ]",

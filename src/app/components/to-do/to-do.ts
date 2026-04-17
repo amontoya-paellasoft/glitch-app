@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Column, Task } from '../../models/to-do-interface';
+import { Column, Task } from '../../models/tarea-interface';
 import { dateNotPastValidator } from '../../common/validators/date-not-past.validator';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { TodoService } from '../../services/todo-service';
+import { TareaService } from '../../services/tarea-service';
 import { Busqueda } from '../busqueda/busqueda';
 
 @Component({
@@ -16,7 +16,7 @@ import { Busqueda } from '../busqueda/busqueda';
 })
 export class TodoComponent {
   private translate = inject(TranslateService);
-  public todoService = inject(TodoService);
+  public todoService = inject(TareaService);
   
   selectedTaskId: string | null = null;
   viewedTask: Task | null = null;
@@ -27,6 +27,10 @@ export class TodoComponent {
   // Accedemos a las columnas filtradas desde el servicio
   get columns() {
     return this.todoService.filteredColumns();
+  }
+
+  get currentPriority() {
+    return this.todoService.priorityFilter();
   }
 
   constructor(private fb: FormBuilder) {
@@ -63,7 +67,7 @@ export class TodoComponent {
     if (this.taskForm.valid) {
       const formValue = this.taskForm.value;
       const newTask: Task = {
-        id: this.taskIdCounter.toString(),
+        id: 'mise_en_place-' + Date.now(),
         title: formValue.title,
         shortDescription: formValue.shortDescription,
         extendedDescription: formValue.extendedDescription,
@@ -80,6 +84,8 @@ export class TodoComponent {
 
   moveTask(taskId: string, direction: 'prev' | 'next') {
     this.todoService.moveTask(taskId, direction);
-    this.selectedTaskId = taskId;
+    // Mantenemos la tarea seleccionada actualizando su ID si es necesario (el servicio ya gestiona el nuevo ID)
+    const newId = this.todoService.findTaskIdByOriginal(taskId);
+    this.selectedTaskId = newId || taskId;
   }
 }
