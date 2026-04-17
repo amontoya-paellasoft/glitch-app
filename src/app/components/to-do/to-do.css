@@ -195,14 +195,15 @@
 }
 
 .btn-move, .btn-view {
-  background: #f1f5f9;
+  background: #000000;
   border: 1px solid #e2e8f0;
-  color: #475569;
-  font-size: 11px;
+  color: #ffffff;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 2px 8px;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 10px;
+  margin-top: -1.4rem;
 }
 
 .btn-view {
