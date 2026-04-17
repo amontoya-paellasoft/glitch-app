@@ -1,0 +1,82 @@
+{
+  "APP_1001_TITLE": "GLITCH",
+  "APP_1002_SUBTITLE": "AI agent workspace simulation",
+
+  "CTRL_2001_PANEL": "CONTROL PANEL",
+  "CTRL_2002_RESTART": "[ RESTART ]",
+  "CTRL_2003_CLOSE": "[ CLOSE WINDOWS ]",
+
+  "AGENT_4001_DETAIL_TITLE": "[ AGENT DETAIL ::",
+  "AGENT_4002_INTERACT": "INTERACT WITH",
+  "AGENT_4003_EMPTY": "NO DATA",
+
+  "CONSOLE_5001_AGENT_TITLE": "AGENT CONSOLE :: {{id}}",
+  "CONSOLE_5002_SYSTEM_TITLE": "SYSTEM CONSOLE",
+  "CONSOLE_5003_LOG_COUNT": "LOGS RECORDED",
+  "CONSOLE_5004_LOADING_AGENT": "LOADING AGENT LOG...",
+  "CONSOLE_5005_LOADING_PUBLIC": "LOADING PUBLIC CHANNEL...",
+  "CONSOLE_5006_EMPTY": "NO LOGS RECORDED.",
+
+  "CONSOLE_5007_FILTER_ALL": "[ALL]",
+  "CONSOLE_5008_FILTER_PUBLIC": "[PUB]",
+  "CONSOLE_5009_FILTER_PRIVATE": "[PRIV]",
+
+  "INPUT_5010_PLACEHOLDER": "TYPE A MESSAGE...",
+  "INPUT_5011_SEND": "SEND ↵",
+
+  "WINDOW_6001_TERMINAL_TITLE": "TERMINAL ::",
+  "WINDOW_6002_SYSTEM_TITLE": "SYSTEM CONSOLE",
+
+  "TODO": {
+    "TITLE": "Task Board",
+    "NEW_TASK": "+ New Task",
+    "CLOSE": "✕ Close",
+    "MODAL_TITLE": "New Task",
+    "LABELS": {
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "DETAILS": "Details",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "STATUS": "Status",
+      "CREATED": "Created",
+      "ID": "ID"
+    },
+    "PLACEHOLDERS": {
+      "TITLE": "Task title",
+      "DESCRIPTION": "Brief description",
+      "DETAILS": "Detailed information..."
+    },
+    "PRIORITIES": {
+      "Low": "Low",
+      "Medium": "Medium",
+      "High": "High"
+    },
+    "ERRORS": {
+      "PAST_DATE": "Date cannot be in the past."
+    },
+    "BUTTONS": {
+      "CANCEL": "Cancel",
+      "ADD": "Add Task",
+      "VIEW": "View",
+      "ALL": "All"
+    },
+    "FILTERS": {
+      "PRIORITY": "Filter by Priority",
+      "ALL": "All"
+    },
+    "COLUMNS": {
+      "Mise en Place": "Mise en Place",
+      "Backlog": "Backlog",
+      "To Do": "To Do",
+      "Do": "Do",
+      "Test": "Test",
+      "Done": "Done"
+    },
+    "VIEW_MODAL": {
+      "TITLE": "Task Details",
+      "NO_DEADLINE": "No deadline"
+    },
+    "EMPTY_STATE": "No tasks here"
+  }
+}

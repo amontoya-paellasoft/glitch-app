@@ -1,17 +1,17 @@
 // header.component.ts
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TranslationService, Language } from '../../../Service/Translation/translation-service';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, TranslatePipe],
   template: `
     <header class="topbar">
       <span class="status-led"></span>
-      <span class="topbar-title" routerLink="/" style="cursor: pointer">GLITCH</span>
-      <span class="topbar-sub d-none d-md-inline">Simulación de trabajo entre agentes IA</span>
+      <span class="topbar-title" routerLink="/" style="cursor: pointer">{{ 'APP_1001_TITLE' | translate }}</span>
+      <span class="topbar-sub d-none d-md-inline">{{ 'APP_1002_SUBTITLE' | translate }}</span>
       
       <nav class="ms-3 d-flex gap-2">
         <button class="nav-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Dash</button>
@@ -20,7 +20,7 @@ import { TranslationService, Language } from '../../../Service/Translation/trans
 
       <div class="ms-auto d-flex align-items-center gap-3">
         <button class="lang-btn" (click)="toggleLanguage()">
-          {{ translationService.currentLang() === 'es' ? 'EN' : 'ES' }}
+          {{ translate.currentLang === 'es' ? 'EN' : 'ES' }}
         </button>
         <span class="sprint-badge">Sprint 1</span>
       </div>
@@ -83,10 +83,10 @@ import { TranslationService, Language } from '../../../Service/Translation/trans
   `]
 })
 export class Header {
-  public translationService = inject(TranslationService);
+  public translate = inject(TranslateService);
 
   toggleLanguage() {
-    const nextLang: Language = this.translationService.currentLang() === 'es' ? 'en' : 'es';
-    this.translationService.setLanguage(nextLang);
+    const nextLang = this.translate.currentLang === 'es' ? 'en' : 'es';
+    this.translate.use(nextLang);
   }
 }

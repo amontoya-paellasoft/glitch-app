@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Column, Task } from '../../models/to-do-interface';
 import { dateNotPastValidator } from '../../common/validators/date-not-past.validator';
-import { TranslatePipe } from '../../Utils/translate-pipe';
-import { TranslationService } from '../../Service/Translation/translation-service';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { TodoService } from '../../services/todo-service';
 import { Busqueda } from '../busqueda/busqueda';
 
@@ -16,7 +15,7 @@ import { Busqueda } from '../busqueda/busqueda';
   styleUrls: ['./to-do.css']
 })
 export class TodoComponent {
-  private translationService = inject(TranslationService);
+  private translate = inject(TranslateService);
   public todoService = inject(TodoService);
   
   selectedTaskId: string | null = null;
@@ -41,11 +40,11 @@ export class TodoComponent {
   }
 
   getTranslatedPriority(priority: string): string {
-    return this.translationService.translate('TODO.PRIORITIES.' + priority);
+    return this.translate.instant('TODO.PRIORITIES.' + priority);
   }
 
   getTranslatedColumn(name: string): string {
-    return this.translationService.translate('TODO.COLUMNS.' + name);
+    return this.translate.instant('TODO.COLUMNS.' + name);
   }
 
   selectTask(id: string) {
