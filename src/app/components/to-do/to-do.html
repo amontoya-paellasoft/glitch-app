@@ -1,18 +1,12 @@
 <div class="todo-main-container">
-  <!-- Header con Botón de Nueva Tarea -->
-  <div class="header-container">
-    <div class="header-left">
-      <button routerLink="/" class="btn-retro me-2">
-        <i class="fa-solid fa-square-caret-left">ATRÁS</i>
-      </button>
-      <h2 class="todo-page-title">
-        {{ userName() ? 'Tablero de ' + userName() : ('TODO.TITLE' | translate) }}
-      </h2>
+  <div class="todo-sub-header">
+    <h3 class="todo-user-name">
+      {{ userName() ? 'Tablero de ' + userName() : ('TODO.TITLE' | translate) }}
+    </h3>
+    <div class="header-actions">
       <button class="btn-retro" (click)="showForm = !showForm">
         {{ (showForm ? 'TODO.CLOSE' : 'TODO.NEW_TASK') | translate }}
       </button>
-    </div>
-    <div class="header-right">
       <app-busqueda />
     </div>
   </div>

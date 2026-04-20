@@ -1,7 +1,14 @@
 <header class="topbar">
-  <span class="status-led"></span>
-  <span class="topbar-title">{{ 'APP_1001_TITLE' | translate }}</span>
-  <span class="topbar-sub">{{ 'APP_1002_SUBTITLE' | translate }}</span>
+  <div class="nav-left">
+    <span class="status-led"></span>
+    <span class="topbar-title">{{ 'APP_1001_TITLE' | translate }}</span>
+    <span class="topbar-sub">{{ 'APP_1002_SUBTITLE' | translate }}</span>
+  </div>
+
+  <nav class="nav-center">
+    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'AGENT_MAP' | translate }}</a>
+    <a class="nav-link" routerLink="/to-do" routerLinkActive="active">{{ 'TODO.TITLE' | translate }}</a>
+  </nav>
 
   <div class="lang-wrapper">
     <div class="lang-selector" [class.expanded]="isLangMenuOpen">

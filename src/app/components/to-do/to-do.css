@@ -1,29 +1,49 @@
 :host {
   display: block;
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #0f172a;
+  height: 100%;
+  width: 100%;
+  background: #f8fafc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
   overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 50;
 }
 
 .todo-main-container {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  background: #f8fafc;
 }
-/* Header */
-.header-container {
+
+.todo-sub-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: #f1f5f9;
-  border-bottom: 2px solid #d4af37;
+  background: #ffffff;
+  border: 2px solid #000;
+  margin-bottom: 1.5rem;
+}
+
+.todo-user-name {
+  font-family: 'ModernDos', monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Header (removed but kept for reference if needed) */
+.header-container {
+  display: none;
 }
 
 .todo-page-title {

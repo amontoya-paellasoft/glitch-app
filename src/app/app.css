@@ -1,7 +1,7 @@
 .app-contenedor {
   position: relative;
   display: grid;
-  grid-template-rows: 46px 1fr auto;
+  grid-template-rows: auto 1fr auto;
   height: 100vh;
   overflow: hidden;
 }
@@ -9,16 +9,9 @@
 .contenido-principal {
   overflow: hidden;
   height: 100%;
-  width: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.left-panel {
-  border-right: 1px solid rgba(212, 175, 55, 0.2);
-  overflow: hidden;
-}
-
-.right-panel {
-  background: #050505;
-  overflow: hidden;
-}
 
