@@ -1,14 +1,23 @@
 <div class="todo-main-container">
-  <div class="todo-sub-header">
-    <h3 class="todo-user-name">
-      {{ userName() ? 'Tablero de ' + userName() : ('TODO.TITLE' | translate) }}
-    </h3>
-    <div class="header-actions">
+  <!-- Header: Título y Acciones -->
+  <div class="header-container">
+    <div class="header-left">
+      <button routerLink="/" class="btn-retro">
+        <i class="fa-solid fa-square-caret-left"></i> ATRÁS
+      </button>
+      <h2 class="todo-page-title">
+        {{ userName() ? 'Tablero de ' + userName() : ('TODO.TITLE' | translate) }}
+      </h2>
       <button class="btn-retro" (click)="showForm = !showForm">
         {{ (showForm ? 'TODO.CLOSE' : 'TODO.NEW_TASK') | translate }}
       </button>
-      <app-busqueda />
     </div>
+
+    <div class="header-right">
+      <app-busqueda />
+      <!-- Filters can go here if added later -->
+    </div>
+
   </div>
 
   <!-- Formulario Flotante Modal -->

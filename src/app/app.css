@@ -1,17 +1,18 @@
 .app-contenedor {
   position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   overflow: hidden;
 }
 
 .contenido-principal {
+  flex: 1;
   overflow: hidden;
-  height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
+
+
 
 

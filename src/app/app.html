@@ -6,7 +6,9 @@
       <app-stats />
     }
   </div>
-  <app-control-panel />
+  @if (isMapRoute) {
+    <app-control-panel />
+  }
 
   @if (ws.agentSelec()) {
     <app-agent-panel [agentId]="ws.agentSelec()!" />
