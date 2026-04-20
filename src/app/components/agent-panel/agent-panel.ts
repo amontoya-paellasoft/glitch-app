@@ -40,7 +40,7 @@ export class AgentPanel implements OnInit {
 
     forkJoin([
       this.tareaServ.getAgenteAPIPorId(agente.dummyUserId),
-      this.tareaServ.getTareasByAgente(agente.dummyUserId),
+      this.tareaServ.getTareasApiByAgente(agente.dummyUserId),
     ])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([usuario, tareas]) => {

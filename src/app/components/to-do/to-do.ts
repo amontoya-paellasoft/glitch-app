@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +18,8 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./to-do.css']
 })
 export class TodoComponent implements OnInit {
+  @Input('id') tareaId!: string;
+  @Input('agentId') agentId!: string;
   private translate = inject(TranslateService);
   public todoService = inject(TodoService);
   private tareaService = inject(TareaService);

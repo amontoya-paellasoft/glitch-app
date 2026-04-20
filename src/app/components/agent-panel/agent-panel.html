@@ -64,7 +64,7 @@
     <div class="section-label">TAREAS ASIGNADAS</div>
     <div class="tareas-lista">
       @for (tarea of tareas(); track tarea.id) {
-        <div class="tarea-item" routerLink="to-do" (click)="ws.cerrarTodas()">
+        <div class="tarea-item" [routerLink]="['/to-do', tarea.id]" (click)="ws.cerrarTodas()">
           <div class="tarea-header">
             <span class="tarea-estado" [style.color]="getColorEstado(tarea.estado)">
               ● {{ tarea.estado | uppercase }}

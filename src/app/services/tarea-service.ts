@@ -58,7 +58,7 @@ export class TareaService {
       );
   }
 
-  getTareasByAgente(agentId: number): Observable<TaskInterface[]> {
+  getTareasApiByAgente(agentId: number): Observable<TaskInterface[]> {
     return this.http
       .get<any>(`${this.baseUrl}/todos/user/${agentId}`)
       .pipe(map((respuesta) => respuesta.todos.map((todo: any) => this.mapTodo(todo))));
@@ -90,7 +90,7 @@ export class TareaService {
         switchMap((respuesta) => {
           const users = respuesta.users;
           const observables: Observable<any>[] = users.map((user: any) =>
-            this.getTareasByAgente(user.id).pipe(map((tareas) => ({ ...user, tareas }))),
+            this.getTareasApiByAgente(user.id).pipe(map((tareas) => ({ ...user, tareas }))),
           );
           return forkJoin(observables);
         }),
