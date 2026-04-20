@@ -6,4 +6,5 @@ export interface TareaInterface {
   estado: 'pendiente' | 'acabada' | 'en_progreso' | 'descartada';
   prioridad: 'baja' | 'media' | 'alta';
   creadaEn: Date;
+  usuarioId: number; // idUsuario que creó la tarea
 }

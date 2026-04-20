@@ -5,7 +5,9 @@
       <button routerLink="/" class="btn-retro me-2">
         <i class="fa-solid fa-square-caret-left">ATRÁS</i>
       </button>
-      <h2 class="todo-page-title">{{ 'TODO.TITLE' | translate }}</h2>
+      <h2 class="todo-page-title">
+        {{ userName() ? 'Tablero de ' + userName() : ('TODO.TITLE' | translate) }}
+      </h2>
       <button class="btn-retro" (click)="showForm = !showForm">
         {{ (showForm ? 'TODO.CLOSE' : 'TODO.NEW_TASK') | translate }}
       </button>

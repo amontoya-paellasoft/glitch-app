@@ -6,6 +6,7 @@ export interface Task {
   priority: 'Low' | 'Medium' | 'High';
   createdAt: Date;
   dueDate?: Date;
+  usuarioId: number;
 }
 
 export interface Column {

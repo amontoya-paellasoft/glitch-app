@@ -5,5 +5,7 @@ import { TodoComponent } from './components/to-do/to-do';
 export const routes: Routes = [
   { path: '', component: AgentMap },
   { path: 'to-do', component: TodoComponent },
-  { path: 'to-do/:id/:agentId', component: TodoComponent } // Ruta para las tareas de un agente específico
+  { path: 'to-do/:userId/:userName', component: TodoComponent },
+  { path: 'to-do/:userId', component: TodoComponent },
+  { path: 'to-do/:id/:agentId', component: TodoComponent }
 ];

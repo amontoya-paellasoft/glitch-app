@@ -296,6 +296,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'en_progreso',
     prioridad: 'alta',
     creadaEn: new Date(),
+    usuarioId: 4,
   },
   {
     id: 'tarea2',
@@ -305,6 +306,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'en_progreso',
     prioridad: 'media',
     creadaEn: new Date(),
+    usuarioId: 2,
   },
   {
     id: 'tarea3',
@@ -314,6 +316,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'pendiente',
     prioridad: 'alta',
     creadaEn: new Date(),
+    usuarioId: 4,
   },
   {
     id: 'tarea4',
@@ -323,6 +326,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'en_progreso',
     prioridad: 'alta',
     creadaEn: new Date(),
+    usuarioId: 5,
   },
   {
     id: 'tarea5',
@@ -332,6 +336,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'pendiente',
     prioridad: 'alta',
     creadaEn: new Date(),
+    usuarioId: 1,
   },
   {
     id: 'tarea6',
@@ -341,6 +346,7 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'en_progreso',
     prioridad: 'media',
     creadaEn: new Date(),
+    usuarioId: 3,
   },
   {
     id: 'tarea7',
@@ -350,5 +356,6 @@ export const MOCK_TAREAS: TareaInterface[] = [
     estado: 'pendiente',
     prioridad: 'baja',
     creadaEn: new Date(),
+    usuarioId: 6,
   },
 ];

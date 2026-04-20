@@ -1,5 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Column, Task } from '../models/to-do-interface';
+import { TareaInterface } from '../models/tarea-interface';
 import { TaskInterface } from '../models/task-dummy-interface';
 
 @Injectable({
@@ -11,6 +12,11 @@ export class TodoService {
 
   private _priorityFilter = signal<string>('All');
   public priorityFilter = this._priorityFilter.asReadonly();
+
+  private _usuarioIdFilter = signal<number | null>(null);
+  public usuarioIdFilter = this._usuarioIdFilter.asReadonly();
+
+  public currentUser = signal<number>(1);
 
   private _columns = signal<Column[]>([
     { id: 'mise-en-place', name: 'Mise en Place', tasks: [] },
@@ -24,6 +30,7 @@ export class TodoService {
   public filteredColumns = computed(() => {
     const term = this._searchTerm().toLowerCase();
     const priority = this._priorityFilter();
+    const userIdFilter = this._usuarioIdFilter();
 
     return this._columns().map(col => ({
       ...col,
@@ -35,7 +42,9 @@ export class TodoService {
         
         const matchesPriority = priority === 'All' || task.priority === priority;
         
-        return matchesSearch && matchesPriority;
+        const matchesUser = userIdFilter === null || task.usuarioId === userIdFilter;
+        
+        return matchesSearch && matchesPriority && matchesUser;
       })
     }));
   });
@@ -46,6 +55,13 @@ export class TodoService {
 
   public setPriorityFilter(priority: string) {
     this._priorityFilter.set(priority);
+  }
+
+  public setUsuarioIdFilter(id: number | null) {
+    this._usuarioIdFilter.set(id);
+    if (id !== null) {
+      this.currentUser.set(id);
+    }
   }
 
   public addTask(task: Task) {
@@ -82,6 +98,50 @@ export class TodoService {
     return this._columns();
   }
 
+  public cargarTareasMock(tareas: TareaInterface[]): void {
+    const currentCols = this._columns();
+    
+    tareas.forEach(tarea => {
+      // Evitar duplicados
+      const yaExiste = currentCols.some(col => 
+        col.tasks.some(t => t.id === tarea.id)
+      );
+      if (yaExiste) return;
+
+      const task: Task = {
+        id: tarea.id,
+        title: tarea.titulo,
+        shortDescription: tarea.descripcion.substring(0, 50),
+        extendedDescription: tarea.descripcion,
+        priority: this.mapPrioridad(tarea.prioridad),
+        createdAt: tarea.creadaEn,
+        usuarioId: tarea.usuarioId
+      };
+
+      // Mapear estado a columna
+      const colId = this.mapEstadoAColumna(tarea.estado);
+      const targetCol = currentCols.find(c => c.id === colId);
+      if (targetCol) {
+        targetCol.tasks.push(task);
+      }
+    });
+
+    this._columns.set([...currentCols]);
+  }
+
+  private mapPrioridad(p: TareaInterface['prioridad']): Task['priority'] {
+    if (p === 'alta') return 'High';
+    if (p === 'media') return 'Medium';
+    return 'Low';
+  }
+
+  private mapEstadoAColumna(e: TareaInterface['estado']): string {
+    if (e === 'pendiente') return 'todo';
+    if (e === 'en_progreso') return 'doing';
+    if (e === 'acabada') return 'done';
+    return 'backlog';
+  }
+
   public cargarTareasDeApi(tareas: TaskInterface[]): void {
     const currentCols = this._columns();
     const todoCol  = currentCols.find(c => c.id === 'todo');
@@ -101,6 +161,7 @@ export class TodoService {
         extendedDescription: '',
         priority: 'Medium',
         createdAt: new Date(),
+        usuarioId: tarea.asignadaA,
       };
 
       if (tarea.estado === 'completada') {

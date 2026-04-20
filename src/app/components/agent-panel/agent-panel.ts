@@ -60,4 +60,8 @@ export class AgentPanel implements OnInit {
   cerrar(): void {
     this.ws.cerrarPanel();
   }
+
+  getSlug(name: string): string {
+    return name.toLowerCase().replace(/ /g, '-');
+  }
 }
