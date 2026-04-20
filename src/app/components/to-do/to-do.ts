@@ -112,6 +112,11 @@ export class TodoComponent implements OnInit {
       });
   }
 
+  getNombreUsuario(userId: number): string {
+    const usuario = this.tareaService._usuariosCache().find(u => u.id === userId);
+    return usuario ? `${usuario.firstName} ${usuario.lastName}` : `Usuario ${userId}`;
+  }
+
   getTranslatedPriority(priority: string): string {
     return this.translate.instant('TODO.PRIORITIES.' + priority);
   }

@@ -13,7 +13,7 @@ export class TareaService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly baseUrl = 'https://dummyjson.com';
 
-  private readonly _usuariosCache = signal<User[]>([]);
+  public readonly _usuariosCache = signal<User[]>([]);
 
   getNombrePorMockId(mockId: string): string {
     const agente = MOCK_AGENTS.find(a => a.id === mockId);

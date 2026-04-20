@@ -96,6 +96,9 @@
             >
               <div class="todo-card-header">
                 {{ task.texto }}
+                <div class="task-user-name" style="font-size: 0.8rem; color: #888; margin-top: 4px;">
+                  {{ getNombreUsuario(task.asignadaA) }}
+                </div>
               </div>
               <div class="todo-card-body">
                 <div class="task-footer">

@@ -1,12 +1,14 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Column, Task } from '../models/to-do-interface';
 import { TareaInterface } from '../models/tarea-interface';
 import { TaskInterface } from '../models/task-dummy-interface';
+import { TareaService } from './tarea-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
+  private tareaService = inject(TareaService);
   private _searchTerm = signal<string>('');
   public searchTerm = this._searchTerm.asReadonly();
 
@@ -35,8 +37,12 @@ export class TodoService {
     return this._columns().map(col => ({
       ...col,
       tasks: col.tasks.filter(task => {
+        const userName = this.tareaService._usuariosCache().find(u => u.id === task.asignadaA);
+        const fullName = userName ? `${userName.firstName} ${userName.lastName}`.toLowerCase() : `usuario ${task.asignadaA}`.toLowerCase();
+        
         const matchesSearch = !term || 
-          task.texto.toLowerCase().includes(term);
+          task.texto.toLowerCase().includes(term) ||
+          fullName.includes(term);
         
         const matchesPriority = priority === 'All' || task.priority === priority;
         
