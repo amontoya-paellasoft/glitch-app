@@ -1,12 +1,8 @@
-export interface Task {
-  id: string;
-  title: string;
-  shortDescription: string;
-  extendedDescription: string;
+import { TaskInterface } from './task-dummy-interface';
+
+export interface Task extends TaskInterface {
   priority: 'Low' | 'Medium' | 'High';
   createdAt: Date;
-  dueDate?: Date;
-  usuarioId: number;
 }
 
 export interface Column {

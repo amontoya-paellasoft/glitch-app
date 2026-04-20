@@ -47,11 +47,10 @@ export class TodoComponent implements OnInit {
   private tareaService = inject(TareaService);
   private destroyRef = inject(DestroyRef);
 
-  selectedTaskId: string | null = null;
-  viewedTask: Task | null = null;
+  selectedTaskId: number | null = null;
   taskForm: FormGroup;
   showForm = false;
-  taskIdCounter = 2;
+  taskIdCounter = 5000; // Un numero alto para IDs locales
   userName = signal<string>('');
 
   // Accedemos a las columnas filtradas desde el servicio
@@ -61,11 +60,8 @@ export class TodoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.taskForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      shortDescription: ['', [Validators.required, Validators.maxLength(50)]],
-      extendedDescription: ['', Validators.required],
-      priority: ['Medium', Validators.required],
-      dueDate: ['', dateNotPastValidator()]
+      texto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      priority: ['Medium', Validators.required]
     });
   }
 
@@ -124,30 +120,20 @@ export class TodoComponent implements OnInit {
     return this.translate.instant('TODO.COLUMNS.' + name);
   }
 
-  selectTask(id: string) {
+  selectTask(id: number) {
     this.selectedTaskId = this.selectedTaskId === id ? null : id;
-  }
-
-  openView(task: Task) {
-    this.viewedTask = task;
-  }
-
-  closeView() {
-    this.viewedTask = null;
   }
 
   addTask() {
     if (this.taskForm.valid) {
       const formValue = this.taskForm.value;
       const newTask: Task = {
-        id: this.taskIdCounter.toString(),
-        title: formValue.title,
-        shortDescription: formValue.shortDescription,
-        extendedDescription: formValue.extendedDescription,
+        id: this.taskIdCounter,
+        texto: formValue.texto,
+        estado: 'pendiente',
+        asignadaA: this.todoService.currentUser(),
         priority: formValue.priority,
-        createdAt: new Date(),
-        dueDate: formValue.dueDate ? new Date(formValue.dueDate) : undefined,
-        usuarioId: this.todoService.currentUser()
+        createdAt: new Date()
       };
       this.taskIdCounter++;
       this.todoService.addTask(newTask);
@@ -156,7 +142,7 @@ export class TodoComponent implements OnInit {
     }
   }
 
-  moveTask(taskId: string, direction: 'prev' | 'next') {
+  moveTask(taskId: number, direction: 'prev' | 'next') {
     this.todoService.moveTask(taskId, direction);
     this.selectedTaskId = taskId;
   }

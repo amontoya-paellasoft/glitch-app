@@ -36,13 +36,11 @@ export class TodoService {
       ...col,
       tasks: col.tasks.filter(task => {
         const matchesSearch = !term || 
-          task.title.toLowerCase().includes(term) || 
-          task.shortDescription.toLowerCase().includes(term) ||
-          task.extendedDescription.toLowerCase().includes(term);
+          task.texto.toLowerCase().includes(term);
         
         const matchesPriority = priority === 'All' || task.priority === priority;
         
-        const matchesUser = userIdFilter === null || task.usuarioId === userIdFilter;
+        const matchesUser = userIdFilter === null || task.asignadaA === userIdFilter;
         
         return matchesSearch && matchesPriority && matchesUser;
       })
@@ -70,7 +68,7 @@ export class TodoService {
     this._columns.set([...currentCols]);
   }
 
-  public moveTask(taskId: string, direction: 'prev' | 'next') {
+  public moveTask(taskId: number, direction: 'prev' | 'next') {
     const currentCols = this._columns();
     let sourceColumnIndex = -1;
     let taskIndex = -1;
@@ -89,6 +87,12 @@ export class TodoService {
 
     if (targetColumnIndex >= 0 && targetColumnIndex < currentCols.length) {
       const [task] = currentCols[sourceColumnIndex].tasks.splice(taskIndex, 1);
+      // Actualizamos el estado basado en la columna destino
+      if (currentCols[targetColumnIndex].id === 'done') {
+        task.estado = 'completada';
+      } else {
+        task.estado = 'pendiente';
+      }
       currentCols[targetColumnIndex].tasks.push(task);
       this._columns.set([...currentCols]);
     }
@@ -102,20 +106,20 @@ export class TodoService {
     const currentCols = this._columns();
     
     tareas.forEach(tarea => {
-      // Evitar duplicados
+      // Evitar duplicados (id puede ser string o number en TareaInterface, convertimos a number si es numérico)
+      const numericId = parseInt(tarea.id.replace('tarea', ''), 10) || Math.floor(Math.random() * 10000);
       const yaExiste = currentCols.some(col => 
-        col.tasks.some(t => t.id === tarea.id)
+        col.tasks.some(t => t.id === numericId)
       );
       if (yaExiste) return;
 
       const task: Task = {
-        id: tarea.id,
-        title: tarea.titulo,
-        shortDescription: tarea.descripcion.substring(0, 50),
-        extendedDescription: tarea.descripcion,
+        id: numericId,
+        texto: tarea.titulo,
+        estado: tarea.estado === 'acabada' ? 'completada' : 'pendiente',
+        asignadaA: tarea.usuarioId,
         priority: this.mapPrioridad(tarea.prioridad),
         createdAt: tarea.creadaEn,
-        usuarioId: tarea.usuarioId
       };
 
       // Mapear estado a columna
@@ -150,18 +154,17 @@ export class TodoService {
 
     tareas.forEach(tarea => {
       const yaExiste = currentCols.some(col =>
-        col.tasks.some(t => t.id === tarea.id.toString())
+        col.tasks.some(t => t.id === tarea.id)
       );
       if (yaExiste) return;
 
       const task: Task = {
-        id: tarea.id.toString(),
-        title: tarea.texto,
-        shortDescription: '',
-        extendedDescription: '',
+        id: tarea.id,
+        texto: tarea.texto,
+        estado: tarea.estado,
+        asignadaA: tarea.asignadaA,
         priority: 'Medium',
         createdAt: new Date(),
-        usuarioId: tarea.asignadaA,
       };
 
       if (tarea.estado === 'completada') {

@@ -31,34 +31,15 @@
         <div class="detail-body">
           <form [formGroup]="taskForm" (ngSubmit)="addTask()" class="retro-form">
             <div class="form-group-grid">
-              <div class="form-field">
+              <div class="form-field full-width">
                 <label class="form-label-retro">{{ 'TODO.LABELS.TITLE' | translate }}</label>
                 <input
-                  formControlName="title"
+                  formControlName="texto"
                   type="text"
                   class="form-control-retro"
                   [placeholder]="'TODO.PLACEHOLDERS.TITLE' | translate"
-                  maxlength="30"
+                  maxlength="100"
                 />
-              </div>
-              <div class="form-field">
-                <label class="form-label-retro">{{ 'TODO.LABELS.DESCRIPTION' | translate }}</label>
-                <input
-                  formControlName="shortDescription"
-                  type="text"
-                  class="form-control-retro"
-                  [placeholder]="'TODO.PLACEHOLDERS.DESCRIPTION' | translate"
-                  maxlength="50"
-                />
-              </div>
-              <div class="form-field full-width">
-                <label class="form-label-retro">{{ 'TODO.LABELS.DETAILS' | translate }}</label>
-                <textarea
-                  formControlName="extendedDescription"
-                  class="form-control-retro"
-                  [placeholder]="'TODO.PLACEHOLDERS.DETAILS' | translate"
-                  rows="4"
-                ></textarea>
               </div>
               <div class="form-field">
                 <label class="form-label-retro">{{ 'TODO.LABELS.PRIORITY' | translate }}</label>
@@ -67,16 +48,6 @@
                   <option value="Medium">{{ 'TODO.PRIORITIES.Medium' | translate }}</option>
                   <option value="High">{{ 'TODO.PRIORITIES.High' | translate }}</option>
                 </select>
-              </div>
-              <div class="form-field">
-                <label class="form-label-retro">{{ 'TODO.LABELS.DUE_DATE' | translate }}</label>
-                <input formControlName="dueDate" type="date" class="form-control-retro" />
-                @if (
-                  taskForm.get('dueDate')?.hasError('dateInPast') &&
-                  taskForm.get('dueDate')?.touched
-                ) {
-                  <div class="error-msg">{{ 'TODO.ERRORS.PAST_DATE' | translate }}</div>
-                }
               </div>
             </div>
 
@@ -121,18 +92,9 @@
               (click)="selectTask(task.id)"
             >
               <div class="todo-card-header">
-                {{ task.title }}
+                {{ task.texto }}
               </div>
               <div class="todo-card-body">
-                <p class="task-desc">
-                  {{ task.shortDescription }}
-                </p>
-
-                <div class="task-date">
-                  <span>🕐</span>
-                  <span>{{ (task.dueDate | date: 'dd/MM') || '—' }}</span>
-                </div>
-
                 <div class="task-footer">
                   <span
                     class="priority-tag"
@@ -162,9 +124,6 @@
                         »
                       </button>
                     </div>
-                    <button class="btn-view" (click)="openView(task)">
-                      {{ 'TODO.BUTTONS.VIEW' | translate }}
-                    </button>
                   </div>
                 }
               </div>
@@ -174,85 +133,4 @@
       </div>
     }
   </div>
-
-  <!-- PANEL DE INFORMACIÓN EXTENDIDA MODERNO -->
-  @if (viewedTask) {
-    <div class="view-overlay" (click)="closeView()">
-      <div class="detail-panel" (click)="$event.stopPropagation()">
-        <!-- Header -->
-        <div class="detail-header">
-          <div class="detail-header-info">
-            <h2 class="detail-title">{{ 'TODO.VIEW_MODAL.TITLE' | translate }}</h2>
-            <div class="task-meta">{{ 'TODO.LABELS.ID' | translate }}: {{ viewedTask.id }}</div>
-          </div>
-          <button type="button" class="btn-close-retro" (click)="closeView()">×</button>
-        </div>
-
-        <!-- Body -->
-        <div class="detail-body">
-          <div
-            class="info-card"
-            [class.priority-border-low]="viewedTask.priority === 'Low'"
-            [class.priority-border-medium]="viewedTask.priority === 'Medium'"
-            [class.priority-border-high]="viewedTask.priority === 'High'"
-          >
-            <div class="info-label">{{ 'TODO.LABELS.TITLE' | translate }}</div>
-            <div class="info-content title-content">{{ viewedTask.title }}</div>
-          </div>
-
-          <div class="info-row">
-            <div
-              class="info-card half"
-              [class.priority-border-low]="viewedTask.priority === 'Low'"
-              [class.priority-border-medium]="viewedTask.priority === 'Medium'"
-              [class.priority-border-high]="viewedTask.priority === 'High'"
-            >
-              <div class="info-label">{{ 'TODO.LABELS.CREATED' | translate }}</div>
-              <div class="info-content small">{{ viewedTask.createdAt | date: 'short' }}</div>
-            </div>
-            <div
-              class="info-card half"
-              [class.priority-border-low]="viewedTask.priority === 'Low'"
-              [class.priority-border-medium]="viewedTask.priority === 'Medium'"
-              [class.priority-border-high]="viewedTask.priority === 'High'"
-            >
-              <div class="info-label">{{ 'TODO.LABELS.DUE_DATE' | translate }}</div>
-              <div class="info-content small">
-                {{
-                  (viewedTask.dueDate | date: 'short') ||
-                    ('TODO.VIEW_MODAL.NO_DEADLINE' | translate)
-                }}
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="info-card"
-            [class.priority-border-low]="viewedTask.priority === 'Low'"
-            [class.priority-border-medium]="viewedTask.priority === 'Medium'"
-            [class.priority-border-high]="viewedTask.priority === 'High'"
-          >
-            <div class="info-label">{{ 'TODO.LABELS.DESCRIPTION' | translate }}</div>
-            <div class="info-content desc-content">
-              {{ viewedTask.extendedDescription }}
-            </div>
-          </div>
-
-          <div class="detail-footer">
-            <div class="priority-badge-container">
-              <span class="info-label">{{ 'TODO.LABELS.PRIORITY' | translate }}:</span>
-              <span
-                class="priority-tag"
-                [class.priority-low]="viewedTask.priority === 'Low'"
-                [class.priority-medium]="viewedTask.priority === 'Medium'"
-                [class.priority-high]="viewedTask.priority === 'High'"
-              >
-                {{ getTranslatedPriority(viewedTask.priority) }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  }
 </div>
