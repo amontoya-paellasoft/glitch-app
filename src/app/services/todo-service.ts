@@ -29,6 +29,10 @@ export class TodoService {
     { id: 'done',          name: 'Done',          tasks: [] },
   ]);
 
+  public actualizarColumnas(columns: Column[]) {
+    this._columns.set([...columns]);
+  }
+
   public filteredColumns = computed(() => {
     const term = this._searchTerm().toLowerCase();
     const priority = this._priorityFilter();
@@ -36,7 +40,7 @@ export class TodoService {
 
     return this._columns().map(col => ({
       ...col,
-      tasks: col.tasks.filter(task => {
+      tasks: [...col.tasks].sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)).filter(task => {
         const userName = this.tareaService._usuariosCache().find(u => u.id === task.asignadaA);
         const fullName = userName ? `${userName.firstName} ${userName.lastName}`.toLowerCase() : `usuario ${task.asignadaA}`.toLowerCase();
         

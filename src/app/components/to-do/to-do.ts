@@ -2,9 +2,9 @@ import { Component, DestroyRef, inject, Input, OnInit, signal } from '@angular/c
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Column, Task } from '../../models/to-do-interface';
-import { dateNotPastValidator } from '../../common/validators/date-not-past.validator';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { Column, Task } from '../../models/to-do-interface';
 import { TodoService } from '../../services/todo-service';
 import { TareaService } from '../../services/tarea-service';
 import { MOCK_AGENTS, MOCK_TAREAS } from '../../mock/mock-data';
@@ -14,11 +14,26 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, Busqueda, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, Busqueda, RouterLink, DragDropModule],
   templateUrl: './to-do.html',
   styleUrls: ['./to-do.css']
 })
 export class TodoComponent implements OnInit {
+// ... (rest of class properties)
+
+  onDrop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // Actualizar los orderIndex en la columna
+      event.container.data.forEach((task, index) => {
+        task.orderIndex = index;
+      });
+      // Forzar la actualización del estado en el servicio
+      this.todoService.actualizarColumnas(this.todoService.getColumns());
+    }
+  }
+// ...
+
   @Input('id') tareaId!: string;
   
   private _agentId!: string;

@@ -77,7 +77,8 @@
           <span class="column-counter">({{ column.tasks.length }})</span>
         </div>
 
-        <div class="task-list">
+        <div class="task-list" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="onDrop($event)">
+
           @if (column.tasks.length === 0) {
             <div class="empty-state-container">
               <div class="empty-state-icon">📭</div>
@@ -88,50 +89,56 @@
           @for (task of column.tasks; track task.id) {
             <div
               class="todo-card"
+              cdkDrag
               [class.selected]="selectedTaskId === task.id"
               [class.priority-border-low]="task.priority === 'Low'"
               [class.priority-border-medium]="task.priority === 'Medium'"
               [class.priority-border-high]="task.priority === 'High'"
               (click)="selectTask(task.id)"
             >
-              <div class="todo-card-header">
-                {{ task.texto }}
-                <div class="task-user-name" style="font-size: 0.8rem; color: #888; margin-top: 4px;">
-                  {{ getNombreUsuario(task.asignadaA) }}
-                </div>
+              <div class="drag-handle" cdkDragHandle>
+                <img src="assets/imgs/lineas-de-menu.png" alt="Drag" style="width: 0.8em; height: 0.8em; display: block;">
               </div>
-              <div class="todo-card-body">
-                <div class="task-footer">
-                  <span
-                    class="priority-tag"
-                    [class.priority-low]="task.priority === 'Low'"
-                    [class.priority-medium]="task.priority === 'Medium'"
-                    [class.priority-high]="task.priority === 'High'"
-                  >
-                    {{ getTranslatedPriority(task.priority) }}
-                  </span>
-                </div>
-
-                @if (selectedTaskId === task.id) {
-                  <div class="task-actions" (click)="$event.stopPropagation()">
-                    <div class="move-btns">
-                      <button
-                        class="btn-move"
-                        [disabled]="colIndex === 0"
-                        (click)="moveTask(task.id, 'prev')"
-                      >
-                        «
-                      </button>
-                      <button
-                        class="btn-move"
-                        [disabled]="colIndex === columns.length - 1"
-                        (click)="moveTask(task.id, 'next')"
-                      >
-                        »
-                      </button>
-                    </div>
+              <div class="todo-card-content">
+                <div class="todo-card-header">
+                  {{ task.texto }}
+                  <div class="task-user-name" style="font-size: 0.8rem; color: #888; margin-top: 4px;">
+                    {{ getNombreUsuario(task.asignadaA) }}
                   </div>
-                }
+                </div>
+                <div class="todo-card-body">
+                  <div class="task-footer">
+                    <span
+                      class="priority-tag"
+                      [class.priority-low]="task.priority === 'Low'"
+                      [class.priority-medium]="task.priority === 'Medium'"
+                      [class.priority-high]="task.priority === 'High'"
+                    >
+                      {{ getTranslatedPriority(task.priority) }}
+                    </span>
+                  </div>
+
+                  @if (selectedTaskId === task.id) {
+                    <div class="task-actions" (click)="$event.stopPropagation()">
+                      <div class="move-btns">
+                        <button
+                          class="btn-move"
+                          [disabled]="colIndex >= 3"
+                          (click)="moveTask(task.id, 'prev')"
+                        >
+                          «
+                        </button>
+                        <button
+                          class="btn-move"
+                          [disabled]="colIndex >= 2"
+                          (click)="moveTask(task.id, 'next')"
+                        >
+                          »
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           }
