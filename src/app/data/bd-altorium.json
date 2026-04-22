@@ -1,0 +1,228 @@
+{
+  "task": {
+    "taskId": 1042,
+    "companyId": 81,
+    "projectId": 220,
+    "originType": "CHAT",
+    "title": "Corregir sincronización del timeline operativo",
+    "functionalSummary": "Corregir la sincronización entre eventos operativos del timeline y el cambio de estado visible de la tarea para evitar desalineación en la vista operativa. Asegurar que los eventos se procesen en el orden correcto y que el estado de la tarea refleje el último evento confirmado.",
+    "assignedUserId": 17,
+    "state": "DOING",
+    "createdBy": 11,
+    "currentIteration": 2,
+    "validationMode": "FULL_SANDBOX",
+    "relatedTaskId": 1038,
+    "automationActive": true,
+    "automationBranchName": "feature/timeline-sync-fix",
+    "createdAt": "2026-01-18T09:00:00Z",
+    "updatedAt": "2026-01-18T09:18:00Z"
+  },
+  "resolvedUsers": {
+    "assignedUser": {
+      "userId": 17,
+      "fullName": "Olivia Wilson",
+      "email": "olivia.wilson@altorium.io"
+    },
+    "createdByUser": {
+      "userId": 11,
+      "fullName": "Sophia Brown",
+      "email": "sophia.brown@altorium.io"
+    },
+    "approvedByUser": {
+      "userId": 18,
+      "fullName": "Emily Johnson",
+      "email": "emily.johnson@altorium.io"
+    }
+  },
+  "currentEstimate": {
+    "estimateId": 5902,
+    "taskId": 1042,
+    "baseMinutes": 90,
+    "finalMinutes": 120,
+    "estimatedPrice": 180.0,
+    "estimatedSavings": 60.0,
+    "approvalRequired": true,
+    "createdAt": "2026-01-18T09:24:00Z"
+  },
+  "currentApproval": {
+    "approvalId": 5592,
+    "taskId": 1042,
+    "estimateId": 5902,
+    "approvedBy": 18,
+    "approvedAt": "2026-01-18T09:30:00Z",
+    "status": "APPROVED",
+    "promoHoursApplied": 0
+  },
+  "activity": {
+    "events": [
+      {
+        "timelineEventId": 8801,
+        "taskId": 1042,
+        "projectId": 220,
+        "eventType": "TASK_CREATED",
+        "title": "Task creada",
+        "summary": "Task creada en backlog por Sophia Brown.",
+        "fromState": null,
+        "toState": "BACKLOG",
+        "actorUserId": 11,
+        "referenceType": "TASK",
+        "referenceId": "1042",
+        "createdAt": "2026-01-18T09:00:00Z"
+      },
+      {
+        "timelineEventId": 8802,
+        "taskId": 1042,
+        "projectId": 220,
+        "eventType": "STATE_CHANGED",
+        "title": "Cambio de estado",
+        "summary": "Estado BACKLOG -> TODO.",
+        "fromState": "BACKLOG",
+        "toState": "TODO",
+        "actorUserId": 11,
+        "referenceType": "TASK_STATE",
+        "referenceId": "TODO",
+        "createdAt": "2026-01-18T09:05:00Z"
+      },
+      {
+        "timelineEventId": 8803,
+        "taskId": 1042,
+        "projectId": 220,
+        "eventType": "TASK_STARTED",
+        "title": "Task arrancada",
+        "summary": "Estado TODO -> DOING. Rama automatica: feature/timeline-sync-fix.",
+        "fromState": "TODO",
+        "toState": "DOING",
+        "actorUserId": 17,
+        "referenceType": "TASK_STATE",
+        "referenceId": "DOING",
+        "createdAt": "2026-01-18T09:10:00Z"
+      }
+    ],
+    "comments": [
+      {
+        "commentId": 7301,
+        "taskId": 1042,
+        "projectId": 220,
+        "authorUserId": 17,
+        "authorName": "Olivia Wilson",
+        "body": "Ajusto consumo del stream de eventos y reordeno persistencia antes de emitir actualización al tablero.",
+        "createdAt": "2026-01-18T09:12:00Z"
+      }
+    ],
+    "diagnostics": [
+      {
+        "diagnosticId": 3312,
+        "taskId": 1042,
+        "projectId": 220,
+        "eventType": "TASK_STARTED",
+        "recordMode": "REQUIRED",
+        "errorCode": "LOCK-409",
+        "errorMessage": "Conflicto de lock al actualizar estado y timeline en paralelo.",
+        "contextSummary": "projectId=220; requestedTaskId=1042; lockConflict=true; source=TimelineService",
+        "createdAt": "2026-01-18T09:08:00Z"
+      }
+    ],
+    "builds": [
+      {
+        "buildRunId": 8821,
+        "taskId": 1042,
+        "status": "RUNNING",
+        "startedAt": "2026-01-18T09:18:00Z",
+        "finishedAt": null,
+        "mavenGoal": "clean verify",
+        "artifactObjectId": "obj-build-78af2",
+        "exitCode": null,
+        "timedOut": false,
+        "createdAt": "2026-01-18T09:18:00Z"
+      }
+    ],
+    "items": [
+      {
+        "itemType": "TIMELINE_EVENT",
+        "itemId": 8801,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Task creada",
+        "summary": "Task creada en backlog por Sophia Brown.",
+        "referenceType": "TASK",
+        "referenceId": "1042",
+        "createdAt": "2026-01-18T09:00:00Z"
+      },
+      {
+        "itemType": "TIMELINE_EVENT",
+        "itemId": 8802,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Cambio de estado",
+        "summary": "Estado BACKLOG -> TODO.",
+        "referenceType": "TASK_STATE",
+        "referenceId": "TODO",
+        "createdAt": "2026-01-18T09:05:00Z"
+      },
+      {
+        "itemType": "DIAGNOSTIC",
+        "itemId": 3312,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Diagnostico operativo",
+        "summary": "Conflicto de lock al actualizar estado y timeline en paralelo.",
+        "referenceType": "TIMELINE_DIAGNOSTIC",
+        "referenceId": "3312",
+        "createdAt": "2026-01-18T09:08:00Z"
+      },
+      {
+        "itemType": "TIMELINE_EVENT",
+        "itemId": 8803,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Task arrancada",
+        "summary": "Estado TODO -> DOING. Rama automatica: feature/timeline-sync-fix.",
+        "referenceType": "TASK_STATE",
+        "referenceId": "DOING",
+        "createdAt": "2026-01-18T09:10:00Z"
+      },
+      {
+        "itemType": "COMMENT",
+        "itemId": 7301,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Comentario anadido",
+        "summary": "Ajusto consumo del stream de eventos y reordeno persistencia antes de emitir actualización al tablero.",
+        "referenceType": "COMMENT",
+        "referenceId": "7301",
+        "createdAt": "2026-01-18T09:12:00Z"
+      },
+      {
+        "itemType": "BUILD",
+        "itemId": 8821,
+        "taskId": 1042,
+        "projectId": 220,
+        "title": "Build RUNNING",
+        "summary": "Estado RUNNING. Maven: clean verify",
+        "referenceType": "BUILD_RUN",
+        "referenceId": "8821",
+        "createdAt": "2026-01-18T09:18:00Z"
+      }
+    ]
+  },
+  "latestBuild": {
+    "buildRunId": 8821,
+    "taskId": 1042,
+    "status": "RUNNING",
+    "startedAt": "2026-01-18T09:18:00Z",
+    "finishedAt": null,
+    "mavenGoal": "clean verify",
+    "artifactObjectId": "obj-build-78af2",
+    "exitCode": null,
+    "timedOut": false,
+    "createdAt": "2026-01-18T09:18:00Z"
+  },
+  "latestBuildLog": {
+    "buildRunId": 8821,
+    "taskId": 1042,
+    "exitCode": null,
+    "timedOut": false,
+    "stdoutExcerpt": "[INFO] Scanning for projects...\n[INFO] --- maven-surefire-plugin:test ---\n[INFO] Running eu.altorium.task.service.TaskServiceTest\n[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0\n[INFO] Running eu.altorium.task.controller.TaskControllerTest",
+    "stderrExcerpt": ""
+  }
+}

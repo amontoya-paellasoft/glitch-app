@@ -4,7 +4,7 @@ import { WorkspaceService } from '../../services/workspace-service';
 import { ChatService } from '../../services/chat-service';
 import { TareaService } from '../../services/tarea-service';
 import { TareaInterface } from '../../models/tarea-interface';
-import { MOCK_AGENTS } from '../../mock/mock-data';
+import { MOCK_AGENTS, MOCK_USERS } from '../../mock/mock-data';
 import { UpperCasePipe } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Chat } from '../chat/chat';
@@ -26,7 +26,8 @@ export class AgentPanel implements OnInit {
   private destroyRef = inject(DestroyRef);
   ws: WorkspaceService = inject(WorkspaceService);
 
-  agente = computed(() => MOCK_AGENTS.find((a) => a.id === this.agentId()));
+  agente        = computed(() => MOCK_AGENTS.find((a) => a.id === this.agentId()));
+  usuarioReal   = computed(() => MOCK_USERS.find((u) => u.userId === this.agente()?.userId) ?? null);
   agentesRelacionados = computed(() => this.chatServ.getAgentesRelacionados(this.agentId()));
 
   tareas = signal<TareaInterface[]>([]);
@@ -54,7 +55,7 @@ export class AgentPanel implements OnInit {
     this.ws.cerrarPanel();
   }
 
-  getSlug(name: string): string {
+  getSlugAgente(name: string): string {
     return name.toLowerCase().replace(/ /g, '-');
   }
 }

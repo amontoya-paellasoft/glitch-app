@@ -19,6 +19,9 @@
       <div>
         <div class="agent-name">{{ agente()?.name }}</div>
         <div class="agent-role">{{ agente()?.role | uppercase }}</div>
+        @if (usuarioReal()) {
+          <div class="agent-fullname">{{ usuarioReal()!.fullName }}</div>
+        }
       </div>
       <div class="agent-status">
         <span
@@ -54,8 +57,8 @@
     <div class="section-label">TAREAS ASIGNADAS</div>
     <div class="tareas-lista">
       @for (tarea of tareas(); track tarea.id) {
-        <div class="tarea-item" 
-             [routerLink]="['/to-do', agente()?.id, getSlug(agente()?.name || '')]"
+        <div class="tarea-item"
+             [routerLink]="['/to-do', agente()?.id, getSlugAgente(agente()?.name || '')]"
              (click)="ws.cerrarTodas()">
           <div class="tarea-header">
             <span class="tarea-estado" [style.color]="getColorEstado(tarea.estado)">

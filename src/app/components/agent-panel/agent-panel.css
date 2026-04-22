@@ -4,12 +4,11 @@
   left: 20px;
   z-index: 200;
   display: block;
-  height: calc(100vh - 100px);
 }
 
 .panel-ventana {
   width: 28rem;
-  height: 100%;
+  max-height: calc(100vh - 120px);
   background: #FFFBF0;
   border: 1px solid #D4C4A0;
   border-radius: 4px;
@@ -80,6 +79,12 @@
   color: #9B7A4A;
   letter-spacing: 0.1em;
   margin-top: 2px;
+}
+
+.agent-fullname {
+  font-size: 11px;
+  color: #6B5030;
+  margin-top: 3px;
 }
 
 .agent-status {
@@ -204,8 +209,8 @@
 
 /* CHAT */
 .panel-chat {
-  flex: 1;
+  height: 280px;
+  flex-shrink: 0;
   overflow: hidden;
   border-top: 1px solid #1a2e1a;
-  min-height: 0;
 }
