@@ -9,7 +9,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from '@angular/core';
-import { DatePipe, UpperCasePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ChatService } from '../../services/chat-service';
 import { SimulationService } from '../../services/simulation-service';
 import { TareaService } from '../../services/tarea-service';
@@ -21,7 +21,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
   selector: 'app-chat',
   standalone: true,
   templateUrl: './chat.html',
-  imports: [DatePipe, UpperCasePipe, FormsModule, TranslateModule, TranslatePipe
+  imports: [DatePipe, FormsModule, TranslateModule, TranslatePipe
   ],
   styleUrl: './chat.css',
 })

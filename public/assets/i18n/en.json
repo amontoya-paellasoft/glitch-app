@@ -45,7 +45,8 @@
     "PLACEHOLDERS": {
       "TITLE": "Task title",
       "DESCRIPTION": "Brief description",
-      "DETAILS": "Detailed information..."
+      "DETAILS": "Detailed information...",
+      "SEARCH": "Search tasks..."
     },
     "PRIORITIES": {
       "Low": "Low",
@@ -59,11 +60,43 @@
       "CANCEL": "Cancel",
       "ADD": "Add Task",
       "VIEW": "View",
-      "ALL": "All"
+      "ALL": "All",
+      "VIEW_INFO": "View Info"
+    },
+    "DETAIL_PANEL": {
+      "ORIGIN_LABEL": "REQUIREMENT ORIGIN:",
+      "STATUS": {
+        "ACTIVA": "ACTIVE",
+        "CONECTADO": "CONNECTED",
+        "COMPLETADO": "COMPLETED",
+        "VALIDADO": "VALIDATED",
+        "DISPONIBLE": "AVAILABLE"
+      },
+      "LABELS": {
+        "FUNCTIONAL_SUMMARY": "Functional Summary",
+        "COMPANY": "Company",
+        "ASSIGNED_USER": "Assigned User",
+        "CREATOR": "Ticket Creator",
+        "STATE_PRIORITY": "Status and Priority",
+        "ITERATION_VALIDATION": "Iteration and Validation",
+        "RELATED_TASK": "Related Task",
+        "AUTOMATION": "Automation",
+        "CREATED_AT": "Creation Date",
+        "UPDATED_AT": "Last Update",
+        "RESOURCE_TYPE": "Resource Type"
+      },
+      "VALUES": {
+        "SYSTEM": "System",
+        "NONE": "NONE",
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE",
+        "BRANCH": "Branch"
+      }
     },
     "FILTERS": {
       "PRIORITY": "Filter",
-      "ALL": "All"
+      "ALL": "All",
+      "ALL_USERS": "All users"
     },
     "COLUMNS": {
       "mise-en-place": "Mise en Place",

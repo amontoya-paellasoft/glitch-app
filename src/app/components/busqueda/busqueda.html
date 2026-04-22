@@ -7,14 +7,14 @@
       class="search-input" 
       [(ngModel)]="searchTerm" 
       (ngModelChange)="onSearchChange()" 
-      placeholder="Search tasks..."
+      [placeholder]="'TODO.PLACEHOLDERS.SEARCH' | translate"
     >
   </div>
 
   <!-- Filtro de Usuario -->
   <div class="user-filters ms-3">
     <select class="filter-select" (change)="setUser($any($event.target).value)">
-      <option value="All">Todos los usuarios</option>
+      <option value="All">{{ 'TODO.FILTERS.ALL_USERS' | translate }}</option>
       @for (user of usuarios; track user.id) {
         <option [value]="user.id">{{ user.firstName }} {{ user.lastName }}</option>
       }

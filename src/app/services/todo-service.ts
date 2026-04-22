@@ -44,12 +44,12 @@ export class TodoService {
   public cargarTareasMock(tareas: any[]): void {
     const currentCols = this._columns();
     tareas.forEach(tarea => {
-      const numericId = parseInt(tarea.id.replace('tarea', ''), 10) || Math.floor(Math.random() * 10000);
+      const numericId = parseInt(tarea.id.replace('tarea', ''), 10) || Math.floor(Math.random() * 10000);      
       const yaExiste = currentCols.some(col => col.tasks.some(t => (t as any).id === numericId));
       if (yaExiste) return;
       const task: Task = {
         taskId: numericId, id: numericId, title: tarea.titulo, texto: tarea.titulo, state: 'TODO',
-        estado: tarea.estado === 'acabada' ? 'completada' : 'pendiente', assignedUserId: tarea.usuarioId,
+        estado: tarea.estado === 'acabada' ? 'completada' : 'pendiente', assignedUserId: tarea.usuarioId,      
         asignadaA: tarea.usuarioId, priority: 'Medium', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
         companyId: 0, projectId: 0, originType: 'MANUAL', functionalSummary: '', createdBy: 0,
         currentIteration: 1, validationMode: 'NONE', relatedTaskId: null, automationActive: false, automationBranchName: null
@@ -67,11 +67,32 @@ export class TodoService {
     tareas.forEach(tarea => {
       const yaExiste = currentCols.some(col => col.tasks.some(t => (t as any).id === tarea.id));
       if (yaExiste) return;
-      todoCol.tasks.push({ ...tarea, taskId: tarea.id, title: tarea.texto, texto: tarea.texto, state: 'TODO', estado: tarea.estado, assignedUserId: tarea.asignadaA, asignadaA: tarea.asignadaA, priority: 'Medium', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } as any);
+      todoCol.tasks.push({ 
+        ...tarea, 
+        taskId: tarea.id, 
+        title: tarea.texto, 
+        texto: tarea.texto, 
+        state: 'TODO', 
+        estado: tarea.estado, 
+        assignedUserId: tarea.asignadaA, 
+        asignadaA: tarea.asignadaA, 
+        priority: 'Medium', 
+        createdAt: new Date().toISOString(), 
+        updatedAt: new Date().toISOString(),
+        originType: 'MANUAL',
+        validationMode: 'NONE',
+        functionalSummary: '',
+        companyId: 0,
+        projectId: 0,
+        createdBy: 0,
+        currentIteration: 1,
+        automationActive: false,
+        automationBranchName: null,
+        relatedTaskId: null
+      } as any);
     });
     this._columns.set([...currentCols]);
   }
-
   private _columns = signal<Column[]>([
     { id: 'mise-en-place', name: 'Mise en Place', tasks: [], isMiseEnPlace: true },
     { id: 'backlog',       name: 'Backlog',       tasks: [] },
@@ -94,8 +115,9 @@ export class TodoService {
       miseCol.tasks = MOCK_MISE_EN_PLACE.map(item => ({
         ...item,
         id: parseInt(item.itemId.replace(/\D/g, ''), 10) || 0,
-        texto: item.title
-      }));
+        texto: item.title,
+        itemType: item.itemType as any // Forzar tipo para evitar error de literal
+      } as MiseEnPlaceItem));
     }
 
     // 2. Tareas

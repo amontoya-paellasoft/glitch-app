@@ -87,49 +87,112 @@
           }
 
           @for (task of column.tasks; track task.id) {
-            <div
-              class="todo-card"
-              cdkDrag
-              [class.selected]="selectedTaskId === task.id"
-              [class.priority-border-low]="task.priority === 'Low'"
-              [class.priority-border-medium]="task.priority === 'Medium'"
-              [class.priority-border-high]="task.priority === 'High'"
-              (click)="selectTask(task.id)"
-            >
-              <div class="drag-handle" cdkDragHandle>
-                <img src="assets/imgs/lineas-de-menu.png" alt="Drag" style="width: 0.8em; height: 0.8em; display: block;">
-              </div>
-              <div class="todo-card-content">
-                <div class="todo-card-header">
-                  {{ task.texto }}
-                  <div class="task-user-name" style="font-size: 0.8rem; color: #888; margin-top: 4px;">
-                    {{ getNombreUsuario(task.asignadaA) }}
+            @if (column.isMiseEnPlace) {
+              <!-- Diseño Especial para Mise en Place -->
+              @let miseItem = asMiseEnPlace(task);
+              <div
+                class="todo-card mise-en-place-card"
+                [class.selected]="selectedTaskId === task.id"
+                (click)="selectTask(task.id)"
+              >
+                <div class="todo-card-content">
+                  <div class="mise-header">
+                    <div class="mise-icon-container">
+                      @switch (miseItem.itemType) {
+                        @case ('PROJECT_VERSION') { <i class="fa-solid fa-code-branch"></i> }
+                        @case ('REPOSITORY_CONFIG') { <i class="fa-brands fa-bitbucket"></i> }
+                        @case ('AUDIT_REPORT') { <i class="fa-solid fa-shield-halved"></i> }
+                        @case ('COMPANY_PROFILE') { <i class="fa-solid fa-building"></i> }
+                        @case ('BILLING_STATUS') { <i class="fa-solid fa-file-invoice-dollar"></i> }
+                        @default { <i class="fa-solid fa-gears"></i> }
+                      }
+                    </div>
+                    <div class="mise-title-area">
+                      <div class="mise-type-label">{{ miseItem.itemType }}</div>
+                      <div class="mise-title">{{ miseItem.texto }}</div>
+                    </div>
+                    <div class="mise-actions">
+                      <button class="btn-view-small" (click)="viewTaskDetails(miseItem)">
+                        <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW_INFO' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="mise-body">
+                    <div class="status-badge" [class]="'status-' + miseItem.status.toLowerCase()">
+                      {{ ('TODO.DETAIL_PANEL.STATUS.' + miseItem.status) | translate }}
+                    </div>
+                    
+                    @if (miseItem.itemType === 'PROJECT_VERSION') {
+                      <div class="mise-meta">v{{ $any(miseItem).versionNumber }}</div>
+                    }
+                    @if (miseItem.itemType === 'REPOSITORY_CONFIG') {
+                      <div class="mise-meta">{{ $any(miseItem).provider }}</div>
+                    }
+                    @if (miseItem.itemType === 'AUDIT_REPORT') {
+                      <div class="mise-meta">Score: {{ $any(miseItem).globalHealthScore }}%</div>
+                    }
                   </div>
                 </div>
-                <div class="todo-card-body">
-                  <div class="task-footer">
-                    <span
-                      class="priority-tag"
-                      [class.priority-low]="task.priority === 'Low'"
-                      [class.priority-medium]="task.priority === 'Medium'"
-                      [class.priority-high]="task.priority === 'High'"
-                    >
-                      {{ getTranslatedPriority(task.priority) }}
-                    </span>
+              </div>
+            } @else {
+              <!-- Diseño Estándar para Tareas -->
+              @let taskItem = asTask(task);
+              <div
+                class="todo-card"
+                cdkDrag
+                [class.selected]="selectedTaskId === taskItem.id"
+                [class.priority-border-low]="getPriority(taskItem) === 'Low'"
+                [class.priority-border-medium]="getPriority(taskItem) === 'Medium'"
+                [class.priority-border-high]="getPriority(taskItem) === 'High'"
+                (click)="$event.stopPropagation(); selectTask(taskItem.id)"
+              >
+                <div class="drag-handle" cdkDragHandle>
+                  <img src="assets/imgs/lineas-de-menu.png" alt="Drag" style="width: 0.8em; height: 0.8em; display: block;">
+                </div>
+                <div class="todo-card-content">
+                  <div class="todo-card-header-compact">
+                    <div class="task-tech-bar">
+                      <div class="tech-left">
+                        <span class="origin-tag-prominent" [class]="'origin-' + taskItem.originType.toLowerCase()">{{ taskItem.originType }}</span>
+                      </div>
+                      <span class="task-id-badge-ghost">#{{ taskItem.taskId }}</span>
+                    </div>
+                    <div class="task-title-main">{{ taskItem.texto }}</div>
                   </div>
-
-                  @if (selectedTaskId === task.id) {
-                    <div class="task-actions" (click)="$event.stopPropagation()">
-                      <div class="move-btns">
-                        <button class="btn-view" (click)="viewTaskDetails(task)">Ver Info</button>
-                        <button class="btn-move" [disabled]="colIndex >= 3" (click)="moveTask(task.id, 'prev')">«</button>
-                        <button class="btn-move" [disabled]="colIndex >= 2" (click)="moveTask(task.id, 'next')">»</button>
+                  
+                  <div class="todo-card-body-compact">
+                    <div class="task-info-row">
+                      <span class="priority-tag-compact" [class]="'prio-' + getPriority(taskItem).toLowerCase()">
+                        {{ getTranslatedPriority(getPriority(taskItem)) }}
+                      </span>
+                      <div class="task-user-name-compact">
+                        <i class="fa-solid fa-user-circle"></i> {{ getNombreUsuario(getAsignadaA(taskItem)) }}
                       </div>
                     </div>
-                  }
+
+                    <div class="task-footer-layout">
+                      <span class="validation-tag-mini" [class]="'val-' + taskItem.validationMode.toLowerCase()">
+                        {{ taskItem.validationMode }}
+                      </span>
+                      <span class="iteration-tag-corner">IT:{{ taskItem.currentIteration }}</span>
+                    </div>
+
+                    @if (selectedTaskId === taskItem.id) {
+                      <div class="task-actions-compact" (click)="$event.stopPropagation()">
+                        <button class="btn-view-small" (click)="viewTaskDetails(taskItem)">
+                          <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW_INFO' | translate }}
+                        </button>
+                        <div class="move-btns-compact">
+                          <button class="btn-move-mini" [disabled]="colIndex >= 3" (click)="moveTask(taskItem.id, 'prev')">«</button>
+                          <button class="btn-move-mini" [disabled]="colIndex >= 2" (click)="moveTask(taskItem.id, 'next')">»</button>
+                        </div>
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           }
         </div>
       </div>
@@ -139,35 +202,155 @@
   @if (selectedTaskDetail) {
     <div class="view-overlay" (click)="closeTaskDetails()">
       <div class="detail-panel" (click)="$event.stopPropagation()">
-        <div class="detail-header">
-          <h2 class="detail-title">{{ selectedTaskDetail.title }}</h2>
+        <div class="detail-header" [class.mise-detail-header]="selectedTaskDetail.itemType">
+          <div class="detail-title-group">
+            <h2 class="detail-title">
+              @if (selectedTaskDetail.itemType) {
+                {{ selectedTaskDetail.title }}
+              } @else {
+                #{{ selectedTaskDetail.taskId }} :: {{ selectedTaskDetail.title }}
+              }
+            </h2>
+          </div>
           <button class="btn-close-retro" (click)="closeTaskDetails()">✕</button>
         </div>
         <div class="detail-body">
-          <div class="info-card">
-            <div class="info-label">Resumen Funcional</div>
-            <div class="info-content">{{ selectedTaskDetail.functionalSummary }}</div>
+          @if (selectedTaskDetail.originType) {
+            <div class="origin-context-bar" [class]="'bar-origin-' + selectedTaskDetail.originType.toLowerCase()">
+              <span class="origin-label">{{ 'TODO.DETAIL_PANEL.ORIGIN_LABEL' | translate }}</span>
+              <span class="origin-value">
+                @switch (selectedTaskDetail.originType) {
+                  @case ('AUDIT') { <i class="fa-solid fa-clipboard-check"></i> }
+                  @case ('CHAT') { <i class="fa-solid fa-comments"></i> }
+                  @case ('MANUAL') { <i class="fa-solid fa-hand-pointer"></i> }
+                }
+                {{ selectedTaskDetail.originType }}
+              </span>
+            </div>
+          }
+
+          <div class="info-card highlight">
+            <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.FUNCTIONAL_SUMMARY' | translate }}</div>
+            <div class="info-content">{{ selectedTaskDetail.functionalSummary || selectedTaskDetail.summary }}</div>
           </div>
           
           <div class="info-row">
             <div class="info-card half">
-              <div class="info-label">Estado / ID</div>
-              <div class="info-content">{{ selectedTaskDetail.state }} / #{{ selectedTaskDetail.taskId }}</div>
+              <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.COMPANY' | translate }}</div>
+              <div class="info-content">
+                {{ getNombreCompania(selectedTaskDetail.companyId) }} 
+                <span style="font-size: 0.8rem; opacity: 0.6;">(ID: {{ selectedTaskDetail.companyId }})</span>
+              </div>
             </div>
             <div class="info-card half">
-              <div class="info-label">Usuario Asignado</div>
-              <div class="info-content">{{ getNombreUsuario(selectedTaskDetail.assignedUserId) }}</div>
+              <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.ASSIGNED_USER' | translate }}</div>
+              <div class="info-content">{{ getNombreUsuario(getAsignadaA(selectedTaskDetail)) }}</div>
             </div>
           </div>
 
+          @if (!selectedTaskDetail.itemType) {
+            <!-- Detalles Técnicos de Tarea -->
+            <div class="info-row">
+              <div class="info-card half">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.CREATOR' | translate }}</div>
+                <div class="info-content">
+                  <i class="fa-solid fa-user-pen"></i> {{ getNombreUsuario(selectedTaskDetail.createdBy) }}
+                </div>
+              </div>
+              <div class="info-card half">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.STATE_PRIORITY' | translate }}</div>
+                <div class="info-content">
+                  {{ getTranslatedColumn(selectedTaskDetail.state) }} 
+                  <span class="pipe">|</span> 
+                  {{ getTranslatedPriority(getPriority(selectedTaskDetail)) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-card half">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.ITERATION_VALIDATION' | translate }}</div>
+                <div class="info-content">
+                  IT: {{ selectedTaskDetail.currentIteration }}
+                  <div class="sub-info">{{ selectedTaskDetail.validationMode }}</div>
+                </div>
+              </div>
+              <div class="info-card half">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.RELATED_TASK' | translate }}</div>
+                <div class="info-content">
+                  {{ getNombreTareaRelacionada(selectedTaskDetail.relatedTaskId) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-card full-width-card" style="grid-column: span 2;">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.AUTOMATION' | translate }}</div>
+                <div class="info-content">
+                  {{ (selectedTaskDetail.automationActive ? 'TODO.DETAIL_PANEL.VALUES.ACTIVE' : 'TODO.DETAIL_PANEL.VALUES.INACTIVE') | translate }}
+                  @if (selectedTaskDetail.automationBranchName) {
+                    <span class="pipe">|</span> {{ 'TODO.DETAIL_PANEL.VALUES.BRANCH' | translate }}: <code>{{ selectedTaskDetail.automationBranchName }}</code>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else {
+            <!-- Detalles Técnicos de Mise en Place -->
+            <div class="info-row">
+              <div class="info-card">
+                <div class="info-label">ID Ítem / Proyecto</div>
+                <div class="info-content">
+                  #{{ selectedTaskDetail.itemId }} <span class="pipe">|</span> P: {{ selectedTaskDetail.projectId }}
+                </div>
+              </div>
+              <div class="info-card">
+                <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.COMPANY' | translate }}</div>
+                <div class="info-content">
+                  {{ getNombreCompania(selectedTaskDetail.companyId) }} 
+                  <span style="font-size: 0.8rem; opacity: 0.6;">(ID: {{ selectedTaskDetail.companyId }})</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-card">
+                <div class="info-label">Estado / Fuente</div>
+                <div class="info-content">
+                  {{ selectedTaskDetail.status }} <span class="pipe">|</span> {{ selectedTaskDetail.sourceType || 'N/A' }}
+                </div>
+              </div>
+              @if (selectedTaskDetail.versionNumber) {
+                <div class="info-card">
+                  <div class="info-label">Versión</div>
+                  <div class="info-content">v{{ selectedTaskDetail.versionNumber }}</div>
+                </div>
+              }
+            </div>
+
+            @if (selectedTaskDetail.provider) {
+              <div class="info-card">
+                <div class="info-label">Proveedor Git</div>
+                <div class="info-content">{{ selectedTaskDetail.provider }}</div>
+              </div>
+            }
+
+            @if (selectedTaskDetail.globalHealthScore) {
+              <div class="info-card highlight">
+                <div class="info-label">Health Score</div>
+                <div class="info-content">{{ selectedTaskDetail.globalHealthScore }}%</div>
+              </div>
+            }
+          }
+
+
           <div class="info-row">
             <div class="info-card half">
-              <div class="info-label">Creado</div>
-              <div class="info-content">{{ selectedTaskDetail.createdAt | date:'short' }}</div>
+              <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.CREATED_AT' | translate }}</div>
+              <div class="info-content">{{ selectedTaskDetail.createdAt | date:'medium' }}</div>
             </div>
             <div class="info-card half">
-              <div class="info-label">Actualizado</div>
-              <div class="info-content">{{ selectedTaskDetail.updatedAt | date:'short' }}</div>
+              <div class="info-label">{{ 'TODO.DETAIL_PANEL.LABELS.UPDATED_AT' | translate }}</div>
+              <div class="info-content">{{ selectedTaskDetail.updatedAt | date:'medium' }}</div>
             </div>
           </div>
         </div>

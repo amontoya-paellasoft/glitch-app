@@ -45,7 +45,8 @@
     "PLACEHOLDERS": {
       "TITLE": "Título de la tarea",
       "DESCRIPTION": "Breve descripción",
-      "DETAILS": "Información detallada..."
+      "DETAILS": "Información detallada...",
+      "SEARCH": "Buscar tareas..."
     },
     "PRIORITIES": {
       "Low": "Baja",
@@ -59,11 +60,43 @@
       "CANCEL": "Cancelar",
       "ADD": "Añadir Tarea",
       "VIEW": "Ver",
-      "ALL": "Todas"
+      "ALL": "Todas",
+      "VIEW_INFO": "Ver Info"
+    },
+    "DETAIL_PANEL": {
+      "ORIGIN_LABEL": "ORIGEN DEL REQUERIMIENTO:",
+      "STATUS": {
+        "ACTIVA": "ACTIVA",
+        "CONECTADO": "CONECTADO",
+        "COMPLETADO": "COMPLETADO",
+        "VALIDADO": "VALIDADO",
+        "DISPONIBLE": "DISPONIBLE"
+      },
+      "LABELS": {
+        "FUNCTIONAL_SUMMARY": "Resumen Funcional",
+        "COMPANY": "Compañía",
+        "ASSIGNED_USER": "Usuario Asignado",
+        "CREATOR": "Creador del Ticket",
+        "STATE_PRIORITY": "Estado y Prioridad",
+        "ITERATION_VALIDATION": "Iteración y Validación",
+        "RELATED_TASK": "Tarea Relacionada",
+        "AUTOMATION": "Automatización",
+        "CREATED_AT": "Fecha de Creación",
+        "UPDATED_AT": "Última Actualización",
+        "RESOURCE_TYPE": "Tipo de Recurso"
+      },
+      "VALUES": {
+        "SYSTEM": "Sistema",
+        "NONE": "NINGUNA",
+        "ACTIVE": "ACTIVA",
+        "INACTIVE": "INACTIVA",
+        "BRANCH": "Rama"
+      }
     },
     "FILTERS": {
       "PRIORITY": "Filtrar",
-      "ALL": "Todas"
+      "ALL": "Todas",
+      "ALL_USERS": "Todos los usuarios"
     },
     "COLUMNS": {
       "mise-en-place": "Mise en Place",
