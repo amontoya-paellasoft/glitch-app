@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo-service';
+import { TareaService } from '../../services/tarea-service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -13,8 +14,39 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class Busqueda {
   public todoService = inject(TodoService);
+  public tareaService = inject(TareaService);
   public searchTerm = '';
   public priorities = ['All', 'Low', 'Medium', 'High'];
+
+  get usuarios() {
+    const columns = this.todoService.getColumns();
+    const userIds = new Set<number>();
+    
+    columns.forEach(col => {
+      col.tasks.forEach(task => {
+        const userId = (task as any).assignedUserId ?? (task as any).asignadaA;
+        if (userId) userIds.add(userId);
+      });
+    });
+
+    const cache = this.tareaService._usuariosCache();
+    const usuariosPresentes = cache.filter(u => userIds.has(u.id));
+    
+    // Añadir usuarios que están en tareas pero no en el caché
+    userIds.forEach(id => {
+      if (!cache.find(u => u.id === id)) {
+        usuariosPresentes.push({
+          id: id,
+          firstName: 'Usuario',
+          lastName: id.toString(),
+          image: '',
+          company: { department: '', title: '' }
+        });
+      }
+    });
+
+    return usuariosPresentes;
+  }
 
   onSearchChange() {
     this.todoService.setSearchTerm(this.searchTerm);
@@ -22,5 +54,10 @@ export class Busqueda {
 
   setPriority(priority: string) {
     this.todoService.setPriorityFilter(priority);
+  }
+
+  setUser(userId: string) {
+    const id = userId === 'All' ? null : parseInt(userId, 10);
+    this.todoService.setUsuarioIdFilter(id);
   }
 }
