@@ -10,10 +10,10 @@ import { MOCK_TASK_DETAIL } from '../../mock/mock-task-detail';
   styleUrl: './task-detail.css',
 })
 export class TaskDetail implements OnInit {
-  data = signal<TaskDetailDTO | null>(null);
+  taskData = signal<TaskDetailDTO | null>(null);
 
   ngOnInit(): void {
     // TODO: reemplazar por llamada al servicio cuando esté el endpoint
-    this.data.set(MOCK_TASK_DETAIL);
+    this.taskData.set(MOCK_TASK_DETAIL);
   }
 }
