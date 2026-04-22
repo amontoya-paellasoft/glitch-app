@@ -24,7 +24,7 @@ export class AgentPanel implements OnInit {
   private chatServ = inject(ChatService);
   private tareaServ = inject(TareaService);
   private destroyRef = inject(DestroyRef);
-  ws = inject(WorkspaceService);
+  ws: WorkspaceService = inject(WorkspaceService);
 
   agente = computed(() => MOCK_AGENTS.find((a) => a.id === this.agentId()));
   agentesRelacionados = computed(() => this.chatServ.getAgentesRelacionados(this.agentId()));

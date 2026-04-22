@@ -3,13 +3,21 @@ import { MessageInterface } from '../models/message-interface';
 import { ConversationInterface } from '../models/conversation-interface';
 
 export const MOCK_AGENTS: AgentMockInterface[] = [
-  { id: 'pm', dummyUserId: 1, name: 'P. Manager',    role: 'Coordinación', emoji: '🏛️', status: 'ocupado',   bg: 'white'    },
-  { id: 'di', dummyUserId: 2, name: 'Diseñador',     role: 'Diseño',       emoji: '✨',  status: 'en línea', bg: 'pink'     },
-  { id: 'fe', dummyUserId: 3, name: 'FrontEnd Dev',  role: 'UI/UX',        emoji: '🔍', status: 'ausente',  bg: 'black'    },
-  { id: 'be', dummyUserId: 4, name: 'BackEnd Dev',   role: 'Node/API',     emoji: '🧪', status: 'ocupado',  bg: 'orange'   },
-  { id: 'qa', dummyUserId: 5, name: 'QA',            role: 'Test',         emoji: '🦄', status: 'en línea', bg: 'blue'     },
-  { id: 'us', dummyUserId: 6, name: 'User',          role: 'Guest',        emoji: '👤', status: 'en línea', bg: 'darkpink' },
+  { id: 'pm', userId: 1, name: 'P. Manager',    role: 'Coordinación', emoji: '🏛️', status: 'ocupado',   bg: 'white'    },
+  { id: 'di', userId: 2, name: 'Diseñador',     role: 'Diseño',       emoji: '✨',  status: 'en línea', bg: 'pink'     },
+  { id: 'fe', userId: 3, name: 'FrontEnd Dev',  role: 'UI/UX',        emoji: '🔍', status: 'ausente',  bg: 'black'    },
+  { id: 'be', userId: 4, name: 'BackEnd Dev',   role: 'Node/API',     emoji: '🧪', status: 'ocupado',  bg: 'orange'   },
+  { id: 'qa', userId: 5, name: 'QA',            role: 'Test',         emoji: '🦄', status: 'en línea', bg: 'blue'     },
+  { id: 'us', userId: 6, name: 'User',          role: 'Guest',        emoji: '👤', status: 'en línea', bg: 'darkpink' },
 ];
+
+
+export const MOCK_USERS = [
+  {userId: 1, fullName: 'Laura Gómez', email: 'laura.gomez@example.com'},
+  {userId: 2, fullName: 'Carlos Ruiz', email: 'carlosruiz@inventado.es'},
+  {userId: 3, fullName: 'Mónica Pérez', email: 'monicaperez@1234.es'},
+];
+
 
 export const MOCK_MESSAGES: MessageInterface[] = [
   // Canal general

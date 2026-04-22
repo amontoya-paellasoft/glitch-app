@@ -1,96 +1,71 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { MOCK_AGENTS } from '../mock/mock-data';
-import { TaskInterface } from '../models/task-dummy-interface';
-import { User } from '../models/agent-interface';
+import { MOCK_TASK_DATA } from '../mock/task-data';
+import { TareaInterface } from '../models/tarea-interface';
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  image: string;
+  company: { department: string; title: string };
+}
+
+const MOCK_USERS_CACHE: User[] = [
+  { id: 11, firstName: 'Sophia',  lastName: 'Brown',   image: '', company: { department: 'Management',  title: 'Project Manager' } },
+  { id: 14, firstName: 'Ana',     lastName: 'Torres',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
+  { id: 17, firstName: 'Olivia',  lastName: 'Wilson',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
+  { id: 18, firstName: 'Emily',   lastName: 'Johnson', image: '', company: { department: 'QA',          title: 'QA Engineer'     } },
+  { id: 19, firstName: 'Lucas',   lastName: 'Herrera', image: '', company: { department: 'Engineering', title: 'Developer'       } },
+  { id: 21, firstName: 'Daniel',  lastName: 'Morais',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
+];
+
+const AGENT_TASK_MAP: Record<string, number[]> = {
+  'pm': [1042, 1051],
+  'di': [1049, 1048],
+  'fe': [1046, 1047],
+  'be': [1052, 1050],
+  'qa': [1045, 1043],
+  'us': [],
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class TareaService {
-  private readonly http: HttpClient = inject(HttpClient);
-  private readonly baseUrl = 'https://dummyjson.com';
-
-  public readonly _usuariosCache = signal<User[]>([]);
+  public readonly _usuariosCache = signal<User[]>(MOCK_USERS_CACHE);
 
   getNombrePorMockId(mockId: string): string {
     const agente = MOCK_AGENTS.find(a => a.id === mockId);
-    if (!agente) return mockId.toUpperCase();
-    const usuario = this._usuariosCache().find(u => u.id === agente.dummyUserId);
-    return usuario ? `${usuario.firstName} ${usuario.lastName}` : agente.name;
+    return agente ? agente.name : mockId.toUpperCase();
   }
 
-  getAgenteAPIPorId(id: number): Observable<User> {
-    return this.http
-      .get<any>(`${this.baseUrl}/users/${id}?select=id,firstName,lastName,image,company`)
-      .pipe(
-        map((u): User => ({
-          id: u.id,
-          firstName: u.firstName,
-          lastName: u.lastName,
-          image: u.image,
-          company: { department: u.company.department, title: u.company.title },
-        })),
-        tap(usuario => {
-          const actual = this._usuariosCache();
-          const sinEste = actual.filter(u => u.id !== usuario.id);
-          this._usuariosCache.set([...sinEste, usuario]);
-        }),
-      );
+  getTareasByAgenteMock(agentId: string): Observable<TareaInterface[]> {
+    const taskIds = AGENT_TASK_MAP[agentId] ?? [];
+    const tareas: TareaInterface[] = MOCK_TASK_DATA
+      .filter(t => taskIds.includes(t.taskId))
+      .map(t => ({
+        id: String(t.taskId),
+        titulo: t.title,
+        descripcion: t.functionalSummary,
+        asignadaA: String(t.assignedUserId),
+        estado: this.mapEstado(t.state),
+        prioridad: this.mapPrioridad(t.validationMode),
+        creadaEn: new Date(t.createdAt),
+      }));
+    return of(tareas);
   }
 
-  private mapTodo(todo: any): TaskInterface | null {
-    const excludedTitles = [
-      'Learn Javascript',
-      'Listen to a new music genre',
-      'Text a friend you haven\'t talked to in a long time',
-      'Attend a local cultural festival',
-      'Draw and color a Mandala'
-    ];
-    
-    if (excludedTitles.includes(todo.todo)) {
-      return null;
-    }
-
-    return {
-      id: todo.id,
-      texto: todo.todo,
-      estado: todo.completed ? 'completada' : 'pendiente',
-      asignadaA: todo.userId,
-    };
+  private mapEstado(state: string): TareaInterface['estado'] {
+    if (state === 'DOING' || state === 'TEST') return 'en_progreso';
+    if (state === 'DONE') return 'acabada';
+    return 'pendiente';
   }
 
-  getTareasApiByAgente(agentId: number): Observable<TaskInterface[]> {
-    return this.http
-      .get<any>(`${this.baseUrl}/todos/user/${agentId}`)
-      .pipe(map((respuesta) => respuesta.todos
-        .map((todo: any) => this.mapTodo(todo))
-        .filter((t: any) => t !== null) as TaskInterface[]
-      ));
-  }
-
-  getUsuariosConTareas(): Observable<any[]> {
-    return this.http
-      .get<any>('https://dummyjson.com/users?limit=6&select=id,firstName,lastName,image,company')
-      .pipe(
-        tap(respuesta => {
-          const users: User[] = respuesta.users.map((u: any): User => ({
-            id: u.id,
-            firstName: u.firstName,
-            lastName: u.lastName,
-            image: u.image,
-            company: { department: u.company.department, title: u.company.title },
-          }));
-          this._usuariosCache.set(users);
-        }),
-        switchMap((respuesta) => {
-          const users = respuesta.users;
-          const observables: Observable<any>[] = users.map((user: any) =>
-            this.getTareasApiByAgente(user.id).pipe(map((tareas) => ({ ...user, tareas }))),
-          );
-          return forkJoin(observables);
-        }),
-      );
+  private mapPrioridad(validationMode: string): TareaInterface['prioridad'] {
+    if (validationMode === 'FULL_SANDBOX')    return 'alta';
+    if (validationMode === 'PARTIAL_SANDBOX') return 'media';
+    return 'baja';
   }
 }
