@@ -1,27 +1,30 @@
-import { Component, DestroyRef, inject, Input, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo-service';
 import { TareaService } from '../../services/tarea-service';
-import { Task, MiseEnPlaceItem, Column } from '../../models/to-do-interface';
+import { Task, Column } from '../../models/to-do-interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Busqueda } from '../busqueda/busqueda';
 
+import { TarjetasToDo } from '../tarjetas-to-do/tarjetas-to-do';
+
 @Component({
   selector: 'app-to-do',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, DragDropModule, Busqueda],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, DragDropModule, Busqueda, TarjetasToDo],
   templateUrl: './to-do.html',
   styleUrls: ['./to-do.css']
 })
 export class TodoComponent implements OnInit {
-  private todoService = inject(TodoService);
+  public todoService = inject(TodoService);
   private tareaService = inject(TareaService);
   private translate = inject(TranslateService);
   
-  columns = this.todoService.getColumns();
+  get columns() {
+    return this.todoService.filteredColumns();
+  }
   showForm = false;
   selectedTaskId: number | null = null;
   selectedTaskDetail: any = null;
@@ -103,15 +106,5 @@ export class TodoComponent implements OnInit {
     return item.asignadaA || item.assignedUserId;
   }
 
-  isTask(item: any): item is Task {
-    return (item as Task).taskId !== undefined && (item as any).itemType === undefined;
-  }
 
-  asMiseEnPlace(item: any): MiseEnPlaceItem {
-    return item as MiseEnPlaceItem;
-  }
-
-  asTask(item: any): Task {
-    return item as Task;
-  }
 }
