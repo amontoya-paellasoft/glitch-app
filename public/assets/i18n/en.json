@@ -1,32 +1,25 @@
 {
   "APP_1001_TITLE": "ALTORIUM",
   "APP_1002_SUBTITLE": "AI agent workspace simulation",
-
   "CTRL_2001_PANEL": "CONTROL PANEL",
   "CTRL_2002_RESTART": "[ RESTART ]",
   "CTRL_2003_CLOSE": "[ CLOSE WINDOWS ]",
-
   "AGENT_4001_DETAIL_TITLE": "[ AGENT DETAIL ::",
   "AGENT_4002_INTERACT": "INTERACT WITH",
   "AGENT_4003_EMPTY": "NO DATA",
-
-  "CONSOLE_5001_AGENT_TITLE": "AGENT CONSOLE :: {{id}}",
+  "CONSOLE_5001_AGENT_TITLE": "AGENT CONSOLE ::",
   "CONSOLE_5002_SYSTEM_TITLE": "SYSTEM CONSOLE",
   "CONSOLE_5003_LOG_COUNT": "LOGS RECORDED",
   "CONSOLE_5004_LOADING_AGENT": "LOADING AGENT LOG...",
   "CONSOLE_5005_LOADING_PUBLIC": "LOADING PUBLIC CHANNEL...",
   "CONSOLE_5006_EMPTY": "NO LOGS RECORDED.",
-
   "CONSOLE_5007_FILTER_ALL": "[ALL]",
   "CONSOLE_5008_FILTER_PUBLIC": "[PUB]",
   "CONSOLE_5009_FILTER_PRIVATE": "[PRIV]",
-
   "INPUT_5010_PLACEHOLDER": "TYPE A MESSAGE...",
   "INPUT_5011_SEND": "SEND ↵",
-
   "WINDOW_6001_TERMINAL_TITLE": "TERMINAL ::",
   "WINDOW_6002_SYSTEM_TITLE": "SYSTEM CONSOLE",
-
   "TODO": {
     "TITLE": "Task Board",
     "NEW_TASK": "+ New Task",
@@ -111,5 +104,70 @@
       "NO_DEADLINE": "No deadline"
     },
     "EMPTY_STATE": "No tasks here"
+  },
+  "TASK_DETAIL": {
+    "HEADER": {
+      "ASSIGNED_TO": "Assigned to",
+      "CREATED_BY": "Created by",
+      "CREATED": "Created",
+      "UPDATED": "Updated",
+      "AUTOMATED": "Automated",
+      "ITERATION": "Iteration"
+    },
+    "SECTIONS": {
+      "SUMMARY": "Functional summary",
+      "READINESS": "Readiness",
+      "ACTIVITY": "Operational activity",
+      "BUILD": "Execution and logs"
+    },
+    "META": {
+      "RELATED_TO": "Related to",
+      "PROJECT": "Project",
+      "COMPANY": "Company"
+    },
+    "READINESS": {
+      "COMPLETE": "Readiness complete · Ready to advance",
+      "ESTIMATE_TITLE": "Current estimate",
+      "APPROVAL_TITLE": "Current approval"
+    },
+    "ESTIMATE": {
+      "BASE_MINUTES": "Base minutes",
+      "FINAL_MINUTES": "Final minutes",
+      "ESTIMATED_PRICE": "Estimated price",
+      "SAVINGS": "Savings",
+      "APPROVAL_REQ": "Approval req.",
+      "CREATED": "Created"
+    },
+    "APPROVAL": {
+      "APPROVAL_ID": "Approval ID",
+      "STATUS": "Status",
+      "APPROVED_BY": "Approved by",
+      "APPROVED_AT": "Approved at",
+      "PROMO_HOURS": "Promo hours"
+    },
+    "BUILD": {
+      "LAST_BUILD": "Last build #",
+      "STARTED": "Started",
+      "FINISHED": "Finished",
+      "MAVEN_GOAL": "Maven goal",
+      "ARTIFACT": "Artifact"
+    },
+    "LOGS": {
+      "STDOUT": "stdoutExcerpt",
+      "STDERR": "stderrExcerpt",
+      "NO_ERRORS": "(no error messages)"
+    }
+  },
+  "STATS": {
+    "TITLE": "[ AGENT ACTIVITY STATS ]",
+    "PERIODS": {
+      "7D": "Last 7 days",
+      "3M": "Last 3 months",
+      "6M": "Last 6 months"
+    },
+    "CHARTS": {
+      "MESSAGES_BY_AGENT": "MESSAGES BY AGENT",
+      "PUBLIC_VS_PRIVATE": "PUBLIC VS PRIVATE"
+    }
   }
 }

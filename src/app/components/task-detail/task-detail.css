@@ -88,7 +88,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr auto;
   gap: 16px;
-  margin-bottom: 28px;
+  margin-bottom: 15px;
 }
 
 .user-box {
@@ -114,7 +114,7 @@
 }
 
 .mini-label {
-  font-size: 12px;
+  font-size: 11px;
   color: #64748b;
 }
 
@@ -124,7 +124,7 @@
 
 .dates-box {
   text-align: right;
-  font-size: 10px;
+  font-size: 9px;
   color: #64748b;
 }
 
@@ -211,7 +211,7 @@
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 0.7fr 0.3fr 1fr;
+  grid-template-columns: 150px 30px 1fr;
   gap: 12px;
 }
 
@@ -278,7 +278,7 @@
 /* BUILD */
 .build-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1.25fr 1.25fr;
   gap: 20px;
 }
 
@@ -299,16 +299,16 @@
 
 /* LOGS */
 .logs-grid {
-  margin-top: 5px;
+  margin-top: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .log-card {
   background: #0f172a;
   border-radius: 16px;
-  padding: 16px;
+  padding: 15px;
   color: #e2e8f0;
   min-width: 0;
   overflow: hidden;

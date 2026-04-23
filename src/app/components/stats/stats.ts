@@ -4,10 +4,11 @@ import { NgxEchartsDirective } from 'ngx-echarts';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WorkspaceService } from '../../services/workspace-service';
 import { ChatService } from '../../services/chat-service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stats',
-  imports: [NgxEchartsDirective, DragDropModule],
+  imports: [NgxEchartsDirective, DragDropModule, TranslatePipe],
   templateUrl: './stats.html',
   styleUrl: './stats.css',
 })

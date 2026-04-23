@@ -2,11 +2,12 @@ import { Component, Input, OnChanges, output, signal } from '@angular/core';
 import { TaskDetailDTO } from '../../models/altorium/task-detail-dto';
 import { MOCK_TASK_DETAIL } from '../../mock/mock-task-detail';
 import { UpperCasePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [UpperCasePipe],
+  imports: [UpperCasePipe, TranslatePipe],
   templateUrl: './task-detail.html',
   styleUrl: './task-detail.css',
 })

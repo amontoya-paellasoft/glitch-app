@@ -11,10 +11,10 @@
           <span class="badge badge-state">{{ data.task.state }}</span>
           <span class="badge badge-origin">{{ data.task.originType }}</span>
           <span class="badge badge-validation">{{ data.task.validationMode }}</span>
-          <span class="badge badge-soft">Iteración {{ data.task.currentIteration }}</span>
+          <span class="badge badge-soft">{{ 'Iteración' | translate }} {{ data.task.currentIteration }}</span>
 
           @if (data.task.automationActive) {
-            <span class="badge badge-success">Automatizada</span>
+            <span class="badge badge-success">{{ 'Automatizada' | translate }}</span>
             <span class="badge badge-soft">{{ data.task.automationBranchName }}</span>
           }
         </div>
@@ -30,7 +30,7 @@
           {{ data.resolvedUsers.assignedUser.fullName.charAt(0) }}
         </div>
         <div>
-          <div class="mini-label">Asignada a</div>
+          <div class="mini-label">{{ 'Asignada a' | translate }}</div>
           <div class="user-name">
             {{ data.resolvedUsers.assignedUser.fullName }}
           </div>
@@ -42,7 +42,7 @@
           {{ data.resolvedUsers.createdByUser.fullName.charAt(0) }}
         </div>
         <div>
-          <div class="mini-label">Creada por</div>
+          <div class="mini-label">{{ 'Creada por' | translate }}</div>
           <div class="user-name">
             {{ data.resolvedUsers.createdByUser.fullName }}
           </div>
@@ -50,27 +50,27 @@
       </div>
 
       <div class="dates-box">
-        <div><span>Creada</span> {{ data.task.createdAt }}</div>
-        <div><span>Actualizada</span> {{ data.task.updatedAt }}</div>
+        <div><span>{{ 'Creada' | translate }}</span> {{ data.task.createdAt }}</div>
+        <div><span>{{ 'Actualizada' | translate }}</span> {{ data.task.updatedAt }}</div>
       </div>
     </div>
 
     <!-- RESUMEN -->
     <section class="section">
-      <h3>Resumen funcional</h3>
+      <h3>{{ 'Resumen funcional' | translate }}</h3>
 
       <p class="summary">
         {{ data.task.functionalSummary }}
       </p>
 
       <div class="meta-line">
-        Relacionada con
+        {{ 'Relacionada con' | translate }}
         <strong>#TK-{{ data.task.relatedTaskId }}</strong>
 
-        · Proyecto
+        · {{ 'Proyecto' | translate }}
         <strong>{{ data.task.projectId.toString() | uppercase }}</strong>
 
-        · Empresa
+        · {{ 'Empresa' | translate }}
         <strong>{{ data.task.companyId.toString() | uppercase }}</strong>
       </div>
     </section>
@@ -78,57 +78,57 @@
     <!-- READINESS -->
     <section class="section">
       <div class="section-inline">
-        <h3>Readiness</h3>
+        <h3>{{ 'Readiness' | translate }}</h3>
         @if (data.currentApproval.status === 'APPROVED') {
-          <span class="pill-ok"> Readiness completo · Lista para avanzar </span>
+          <span class="pill-ok"> {{ 'Readiness completo · Lista para avanzar' | translate }} </span>
         }
       </div>
 
       <div class="cards-grid">
         <!-- ESTIMATE -->
         <div class="card">
-          <div class="card-title">Estimate actual</div>
+          <div class="card-title">{{ 'Estimate actual' | translate }}</div>
 
           <div class="kv">
-            <span>Base minutes</span><strong>{{ data.currentEstimate.baseMinutes }}</strong>
+            <span>{{ 'Base minutes' | translate }}</span><strong>{{ data.currentEstimate.baseMinutes }}</strong>
           </div>
           <div class="kv">
-            <span>Final minutes</span><strong>{{ data.currentEstimate.finalMinutes }}</strong>
+            <span>{{ 'Final minutes' | translate }}</span><strong>{{ data.currentEstimate.finalMinutes }}</strong>
           </div>
           <div class="kv">
-            <span>Estimated price</span><strong>{{ data.currentEstimate.estimatedPrice }} €</strong>
+            <span>{{ 'Estimated price' | translate }}</span><strong>{{ data.currentEstimate.estimatedPrice }} €</strong>
           </div>
           <div class="kv">
-            <span>Savings</span><strong>{{ data.currentEstimate.estimatedSavings }} €</strong>
+            <span>{{ 'Savings' | translate }}</span><strong>{{ data.currentEstimate.estimatedSavings }} €</strong>
           </div>
           <div class="kv">
-            <span>Approval req.</span
+            <span>{{ 'Approval req.' | translate }}</span
             ><strong>{{ data.currentEstimate.approvalRequired ? 'Sí' : 'No' }}</strong>
           </div>
           <div class="kv">
-            <span>Creada</span><strong>{{ data.currentEstimate.createdAt }}</strong>
+            <span>{{ 'Creada' | translate }}</span><strong>{{ data.currentEstimate.createdAt }}</strong>
           </div>
         </div>
 
         <!-- APPROVAL -->
         <div class="card">
-          <div class="card-title">Approval actual</div>
+          <div class="card-title">{{ 'Approval actual' | translate }}</div>
 
           <div class="kv">
-            <span>Approval ID</span><strong>{{ data.currentApproval.approvalId }}</strong>
+            <span>{{ 'Approval ID' | translate }}</span><strong>{{ data.currentApproval.approvalId }}</strong>
           </div>
           <div class="kv">
-            <span>Status</span><strong class="text-success">{{ data.currentApproval.status }}</strong>
+            <span>{{ 'Status' | translate }}</span><strong class="text-success">{{ data.currentApproval.status }}</strong>
           </div>
           <div class="kv">
-            <span>Approved by</span
+            <span>{{ 'Approved by' | translate }}</span
             ><strong>{{ data.resolvedUsers.approvedByUser.fullName }}</strong>
           </div>
           <div class="kv">
-            <span>Approved at</span><strong>{{ data.currentApproval.approvedAt }}</strong>
+            <span>{{ 'Approved at' | translate }}</span><strong>{{ data.currentApproval.approvedAt }}</strong>
           </div>
           <div class="kv">
-            <span>Promo hours</span><strong>{{ data.currentApproval.promoHoursApplied }}</strong>
+            <span>{{ 'Promo hours' | translate }}</span><strong>{{ data.currentApproval.promoHoursApplied }}</strong>
           </div>
         </div>
       </div>
@@ -136,7 +136,7 @@
 
     <!-- ACTIVIDAD -->
     <section class="section">
-      <h3>Actividad operativa</h3>
+      <h3>{{ 'Actividad operativa' | translate }}</h3>
 
       <div class="timeline">
         @for (item of data.activity.items; track $index) {
@@ -173,12 +173,12 @@
 
     <!-- BUILD -->
     <section class="section">
-      <h3>Ejecución y logs</h3>
+      <h3>{{ 'Ejecución y logs' | translate }}</h3>
 
       <div class="build-card">
         <div class="build-grid">
           <div>
-            <div class="build-title">Último build #{{ data.latestBuild.buildRunId }}</div>
+            <div class="build-title">{{ 'TASK_DETAIL.BUILD.LAST_BUILD' | translate }} build #{{ data.latestBuild.buildRunId }}</div>
 
             <div class="running">
               {{ data.latestBuild.status }}
@@ -187,24 +187,24 @@
 
           <div>
             <div class="kv">
-              <span>Started</span>
+              <span>{{ 'Started' | translate }}</span>
               <strong>{{ data.latestBuild.startedAt }}</strong>
             </div>
 
             <div class="kv">
-              <span>Finished</span>
+              <span>{{ 'Finished' | translate }}</span>
               <strong>{{ data.latestBuild.finishedAt || '—' }}</strong>
             </div>
           </div>
 
           <div>
             <div class="kv">
-              <span>Maven goal</span>
+              <span>{{ 'Maven goal' | translate }}</span>
               <strong>{{ data.latestBuild.mavenGoal }}</strong>
             </div>
 
             <div class="kv">
-              <span>Artifact</span>
+              <span>{{ 'Artifact' | translate }}</span>
               <strong>{{ data.latestBuild.artifactObjectId }}</strong>
             </div>
           </div>
@@ -219,7 +219,7 @@
 
         <div class="log-card">
           <div class="log-title">stderrExcerpt</div>
-          <pre>{{ data.latestBuildLog.stderrExcerpt || '(sin mensajes de error)' }}</pre>
+          <pre>{{ data.latestBuildLog.stderrExcerpt || '(Sin mensajes de error)' }}</pre>
         </div>
       </div>
     </section>

@@ -1,11 +1,11 @@
 <div class="stats-ventana" cdkDrag (click)="$event.stopPropagation()">
 
   <div class="stats-header" cdkDragHandle>
-    <span class="stats-title">[ AGENT ACTIVITY STATS ]</span>
-     <select class="periodo-select" (change)="onPeriodoChange($event)">
-      <option value="7d">Últimos 7 días</option>
-      <option value="3m">Últimos 3 meses</option>
-      <option value="6m">Últimos 6 meses</option>
+    <span class="stats-title">{{ 'STATS.TITLE' | translate }}</span>
+    <select class="periodo-select" (change)="onPeriodoChange($event)">
+      <option value="7d">{{ 'STATS.PERIODS.7D' | translate }}</option>
+      <option value="3m">{{ 'STATS.PERIODS.3M' | translate }}</option>
+      <option value="6m">{{ 'STATS.PERIODS.6M' | translate }}</option>
     </select>
     <button class="close-btn" (click)="ws.cerrarStats()">✕</button>
   </div>
@@ -13,14 +13,14 @@
   <div class="stats-body">
 
     <div class="chart-section">
-      <div class="chart-label">MENSAJES POR AGENTE</div>
+      <div class="chart-label">{{ 'STATS.CHARTS.MESSAGES_BY_AGENT' | translate }}</div>
       <div echarts [options]="configBarras"
            class="chart">
       </div>
     </div>
 
     <div class="chart-section">
-      <div class="chart-label">PÚBLICO VS PRIVADO</div>
+      <div class="chart-label">{{ 'STATS.CHARTS.PUBLIC_VS_PRIVATE' | translate }}</div>
       <div echarts
            [options]="configDonut"
            class="chart">
