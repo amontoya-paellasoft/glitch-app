@@ -1,175 +1,228 @@
 <!-- Deuda tecnológica: iconos por itemType en actividad operativa -->
-<div class="main-container">
+@if (taskData(); as data) {
+  <div class="main-container">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <div class="task-id">#TK-{{ data.task.taskId }}</div>
+        <div class="task-title">{{ data.task.title }}</div>
 
-  <!--HEADER-->
-  <div class="header d-flex justify-content-between align-items-start">
-    <div class="d-flex align-items-baseline gap-2 flex-wrap">
-      <h1 class="mb-0">#TK-{{ taskData()?.task?.taskId }}</h1>
-      <h2 class="mb-0 fw-normal">{{ taskData()?.task?.title }}</h2>
-    </div>
-    <button class="btn-close-retro" (click)="cerrar.emit()">✕</button>
-  </div>
+        <div class="badges">
+          <span class="badge badge-state">{{ data.task.state }}</span>
+          <span class="badge badge-origin">{{ data.task.originType }}</span>
+          <span class="badge badge-validation">{{ data.task.validationMode }}</span>
+          <span class="badge badge-soft">Iteración {{ data.task.currentIteration }}</span>
 
-  <!--BADGES-->
-  <div class="container-badges mb-2">
-    <div class="d-flex flex-wrap gap-1">
-      <span class="badge badge-state">{{ taskData()?.task?.state }}</span>
-      <span class="badge badge-origin">{{ taskData()?.task?.originType }}</span>
-      <span class="badge badge-validation">{{ taskData()?.task?.validationMode }}</span>
-      <span class="badge badge-texto">Iteración {{ taskData()?.task?.currentIteration }}</span>
-    </div>
-    <div class="d-flex flex-wrap gap-1 mt-1">
-      @if (taskData()?.task?.automationActive) {
-        <span class="badge badge-automation">Automatizada</span>
-        <span class="badge badge-texto">{{ taskData()?.task?.automationBranchName }}</span>
-      }
-    </div>
-  </div>
-
-  <!--USUARIOS-->
-  <div class="d-flex flex-wrap gap-3 align-items-start mb-1 small">
-    <div class="d-flex align-items-center gap-1">
-      <span class="text-muted">Asignada a</span>
-      <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-           class="rounded-circle" style="width:24px;height:24px;"
-           alt="Avatar asignado" />
-      <span class="fw-semibold">{{ taskData()?.resolvedUsers?.assignedUser?.fullName }}</span>
-    </div>
-    <div class="d-flex align-items-center gap-1">
-      <span class="text-muted">Creada por</span>
-      <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-           class="rounded-circle" style="width:24px;height:24px;"
-           alt="Avatar creador" />
-      <span class="fw-semibold">{{ taskData()?.resolvedUsers?.createdByUser?.fullName }}</span>
-    </div>
-    <div class="text-muted ms-auto">
-      <div>Creada <span class="fw-semibold text-body">{{ taskData()?.task?.createdAt }}</span></div>
-      <div>Actualizada <span class="fw-semibold text-body">{{ taskData()?.task?.updatedAt }}</span></div>
-    </div>
-  </div>
-
-  <hr />
-
-  <!--RESUMEN FUNCIONAL-->
-  <div class="mb-2">
-    <p class="section-label">Resumen funcional</p>
-    <p class="small text-secondary mb-1">{{ taskData()?.task?.functionalSummary }}</p>
-    <div class="d-flex flex-wrap gap-1 small text-muted">
-      <span>Relacionada con <span class="text-primary fw-bold">#TK-{{ taskData()?.task?.relatedTaskId }}</span></span>
-      <span>·</span>
-      <span>Proyecto {{ taskData()?.task?.projectId?.toString() | uppercase }}</span>
-      <span>·</span>
-      <span>Empresa {{ taskData()?.task?.companyId?.toString() | uppercase }}</span>
-    </div>
-  </div>
-
-  <hr />
-
-  <!-- READINESS -->
-  <div class="d-flex align-items-center gap-2 mb-2">
-    <p class="section-label mb-0">Readiness</p>
-    @if (taskData()?.currentApproval?.status === 'APPROVED') {
-      <span class="badge bg-success text-white">Readiness completo · Listo para avanzar</span>
-    }
-  </div>
-
-  <div class="row g-2 mb-2">
-    <!-- CARD ESTIMATE -->
-    <div class="col-6">
-      <div class="card border border-secondary rounded-2 h-100 kv-card">
-        <div class="card-body">
-          <p class="kv-title">Estimate actual</p>
-          <div class="d-flex justify-content-between"><span>Base minutes</span><span class="fw-bold">{{ taskData()?.currentEstimate?.baseMinutes }}</span></div>
-          <div class="d-flex justify-content-between"><span>Final minutes</span><span class="fw-bold">{{ taskData()?.currentEstimate?.finalMinutes }}</span></div>
-          <div class="d-flex justify-content-between"><span>Estimated price</span><span class="fw-bold">{{ taskData()?.currentEstimate?.estimatedPrice }} €</span></div>
-          <div class="d-flex justify-content-between"><span>Savings</span><span class="fw-bold">{{ taskData()?.currentEstimate?.estimatedSavings }} €</span></div>
-          <div class="d-flex justify-content-between"><span>Approval req.</span><span class="fw-bold">{{ taskData()?.currentEstimate?.approvalRequired ? 'Sí' : 'No' }}</span></div>
-          <div class="d-flex justify-content-between"><span>Creada</span><span class="fw-bold">{{ taskData()?.currentEstimate?.createdAt }}</span></div>
+          @if (data.task.automationActive) {
+            <span class="badge badge-success">Automatizada</span>
+            <span class="badge badge-soft">{{ data.task.automationBranchName }}</span>
+          }
         </div>
+      </div>
+
+      <button class="btn-close" (click)="cerrar.emit()">✕</button>
+    </div>
+
+    <!-- USERS -->
+    <div class="users-grid">
+      <div class="user-box">
+        <div class="avatar">
+          {{ data.resolvedUsers.assignedUser.fullName.charAt(0) }}
+        </div>
+        <div>
+          <div class="mini-label">Asignada a</div>
+          <div class="user-name">
+            {{ data.resolvedUsers.assignedUser.fullName }}
+          </div>
+        </div>
+      </div>
+
+      <div class="user-box">
+        <div class="avatar gray">
+          {{ data.resolvedUsers.createdByUser.fullName.charAt(0) }}
+        </div>
+        <div>
+          <div class="mini-label">Creada por</div>
+          <div class="user-name">
+            {{ data.resolvedUsers.createdByUser.fullName }}
+          </div>
+        </div>
+      </div>
+
+      <div class="dates-box">
+        <div><span>Creada</span> {{ data.task.createdAt }}</div>
+        <div><span>Actualizada</span> {{ data.task.updatedAt }}</div>
       </div>
     </div>
 
-    <!-- CARD APPROVAL -->
-    <div class="col-6">
-      <div class="card border border-secondary rounded-2 h-100 kv-card">
-        <div class="card-body">
-          <p class="kv-title">Approval actual</p>
-          <div class="d-flex justify-content-between"><span>Approval ID</span><span class="fw-bold">{{ taskData()?.currentApproval?.approvalId }}</span></div>
-          <div class="d-flex justify-content-between"><span>Status</span><span class="fw-bold text-success">{{ taskData()?.currentApproval?.status }}</span></div>
-          <div class="d-flex justify-content-between"><span>Approved by</span><span class="fw-bold">{{ taskData()?.resolvedUsers?.approvedByUser?.fullName }}</span></div>
-          <div class="d-flex justify-content-between"><span>Approved at</span><span class="fw-bold">{{ taskData()?.currentApproval?.approvedAt }}</span></div>
-          <div class="d-flex justify-content-between"><span>Promo hours</span><span class="fw-bold">{{ taskData()?.currentApproval?.promoHoursApplied }}</span></div>
+    <!-- RESUMEN -->
+    <section class="section">
+      <h3>Resumen funcional</h3>
+
+      <p class="summary">
+        {{ data.task.functionalSummary }}
+      </p>
+
+      <div class="meta-line">
+        Relacionada con
+        <strong>#TK-{{ data.task.relatedTaskId }}</strong>
+
+        · Proyecto
+        <strong>{{ data.task.projectId.toString() | uppercase }}</strong>
+
+        · Empresa
+        <strong>{{ data.task.companyId.toString() | uppercase }}</strong>
+      </div>
+    </section>
+
+    <!-- READINESS -->
+    <section class="section">
+      <div class="section-inline">
+        <h3>Readiness</h3>
+
+        @if (data.currentApproval.status === 'APPROVED') {
+          <span class="pill-ok"> Readiness completo · Lista para avanzar </span>
+        }
+      </div>
+
+      <div class="cards-grid">
+        <!-- ESTIMATE -->
+        <div class="card">
+          <div class="card-title">Estimate actual</div>
+
+          <div class="kv">
+            <span>Base minutes</span><strong>{{ data.currentEstimate.baseMinutes }}</strong>
+          </div>
+          <div class="kv">
+            <span>Final minutes</span><strong>{{ data.currentEstimate.finalMinutes }}</strong>
+          </div>
+          <div class="kv">
+            <span>Estimated price</span><strong>{{ data.currentEstimate.estimatedPrice }} €</strong>
+          </div>
+          <div class="kv">
+            <span>Savings</span><strong>{{ data.currentEstimate.estimatedSavings }} €</strong>
+          </div>
+          <div class="kv">
+            <span>Approval req.</span
+            ><strong>{{ data.currentEstimate.approvalRequired ? 'Sí' : 'No' }}</strong>
+          </div>
+          <div class="kv">
+            <span>Creada</span><strong>{{ data.currentEstimate.createdAt }}</strong>
+          </div>
+        </div>
+
+        <!-- APPROVAL -->
+        <div class="card">
+          <div class="card-title">Approval actual</div>
+
+          <div class="kv">
+            <span>Approval ID</span><strong>{{ data.currentApproval.approvalId }}</strong>
+          </div>
+          <div class="kv">
+            <span>Status</span><strong class="green">{{ data.currentApproval.status }}</strong>
+          </div>
+          <div class="kv">
+            <span>Approved by</span
+            ><strong>{{ data.resolvedUsers.approvedByUser.fullName }}</strong>
+          </div>
+          <div class="kv">
+            <span>Approved at</span><strong>{{ data.currentApproval.approvedAt }}</strong>
+          </div>
+          <div class="kv">
+            <span>Promo hours</span><strong>{{ data.currentApproval.promoHoursApplied }}</strong>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ACTIVIDAD -->
+    <section class="section">
+      <h3>Actividad operativa</h3>
+
+      <div class="timeline">
+        @for (item of data.activity.items; track $index) {
+          <div class="timeline-row">
+            <div class="timeline-time">
+              {{ item.createdAt }}
+            </div>
+
+            <div class="timeline-line">
+              <div
+                class="timeline-dot"
+                [class.blue]="item.itemType === 'TIMELINE_EVENT'"
+                [class.orange]="item.itemType === 'DIAGNOSTIC'"
+                [class.green]="item.itemType === 'COMMENT'"
+                [class.purple]="item.itemType === 'BUILD'"
+              ></div>
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-title">
+                {{ item.title }}
+              </div>
+
+              <div class="timeline-summary">
+                {{ item.summary }}
+              </div>
+
+              <div class="timeline-ref">{{ item.referenceType }} · {{ item.referenceId }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- BUILD -->
+    <section class="section">
+      <h3>Ejecución y logs</h3>
+
+      <div class="build-card">
+        <div class="build-grid">
+          <div>
+            <div class="build-title">Último build #{{ data.latestBuild.buildRunId }}</div>
+
+            <div class="running">
+              {{ data.latestBuild.status }}
+            </div>
+          </div>
+
+          <div>
+            <div class="kv">
+              <span>Started</span>
+              <strong>{{ data.latestBuild.startedAt }}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Finished</span>
+              <strong>{{ data.latestBuild.finishedAt || '—' }}</strong>
+            </div>
+          </div>
+
+          <div>
+            <div class="kv">
+              <span>Maven goal</span>
+              <strong>{{ data.latestBuild.mavenGoal }}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Artifact</span>
+              <strong>{{ data.latestBuild.artifactObjectId }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logs-grid">
+        <div class="log-card">
+          <div class="log-title">stdoutExcerpt</div>
+          <pre>{{ data.latestBuildLog.stdoutExcerpt }}</pre>
+        </div>
+
+        <div class="log-card">
+          <div class="log-title">stderrExcerpt</div>
+          <pre>{{ data.latestBuildLog.stderrExcerpt || '(sin mensajes de error)' }}</pre>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <hr />
-
-  <!-- ACTIVIDAD OPERATIVA -->
-  <!-- Deuda tecnológica: reemplazar tabla por timeline con iconos por itemType -->
-  <p class="section-label">Actividad operativa</p>
-  <table class="table table-sm table-borderless small">
-    <tbody>
-      @for (i of taskData()?.activity?.items; track $index) {
-        <tr>
-          <td class="text-muted text-nowrap" style="width:1%">{{ i.createdAt }}</td>
-          <td class="text-muted" style="width:1%">{{ i.itemType }}</td>
-          <td>
-            <span class="fw-semibold d-block">{{ i.title }}</span>
-            <span class="text-muted">{{ i.summary }}</span>
-          </td>
-          <td class="text-muted">{{ i.referenceType }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-
-  <hr />
-
-  <!-- EJECUCIÓN Y LOGS -->
-  <p class="section-label">Ejecución y logs</p>
-
-  <div class="card mb-2 small">
-    <div class="card-body py-2 px-3">
-      <div class="row g-2">
-        <div class="col-6">
-          <div class="fw-bold">Último build <span class="text-muted fw-normal">{{ taskData()?.latestBuild?.buildRunId }}</span></div>
-          <div class="text-muted">Status <span class="text-uppercase text-primary fw-bold">{{ taskData()?.latestBuild?.status }}</span></div>
-        </div>
-        <div class="col-6">
-          <div class="d-flex justify-content-between"><span class="text-muted">Started</span><span>{{ taskData()?.latestBuild?.startedAt }}</span></div>
-          <div class="d-flex justify-content-between"><span class="text-muted">Finished</span><span>{{ taskData()?.latestBuild?.finishedAt ?? '—' }}</span></div>
-        </div>
-        <div class="col-6">
-          <div class="d-flex justify-content-between"><span class="text-muted">Maven goal</span><span>{{ taskData()?.latestBuild?.mavenGoal }}</span></div>
-          <div class="d-flex justify-content-between"><span class="text-muted">Artifact</span><span>{{ taskData()?.latestBuild?.artifactObjectId }}</span></div>
-        </div>
-        <div class="col-6">
-          <div class="d-flex justify-content-between"><span class="text-muted">Exit code</span><span>{{ taskData()?.latestBuildLog?.exitCode ?? '—' }}</span></div>
-          <div class="d-flex justify-content-between"><span class="text-muted">Timed out</span><span>{{ taskData()?.latestBuildLog?.timedOut }}</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row g-2 pb-3">
-    <div class="col-6">
-      <div class="card text-bg-dark rounded-2 h-100">
-        <div class="card-body py-2 px-3">
-          <p class="text-secondary small fw-bold mb-1 text-uppercase" style="font-size:0.65rem;letter-spacing:.5px">stdoutExcerpt</p>
-          <pre class="log-pre mb-0">{{ taskData()?.latestBuildLog?.stdoutExcerpt }}</pre>
-        </div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card text-bg-dark rounded-2 h-100">
-        <div class="card-body py-2 px-3">
-          <p class="text-secondary small fw-bold mb-1 text-uppercase" style="font-size:0.65rem;letter-spacing:.5px">stderrExcerpt</p>
-          <pre class="log-pre mb-0">{{ taskData()?.latestBuildLog?.stderrExcerpt || '(sin mensajes de error)' }}</pre>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
+}
