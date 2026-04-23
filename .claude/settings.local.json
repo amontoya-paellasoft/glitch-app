@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc *)",
-      "Bash(npx ng *)"
+      "Bash(npx ng *)",
+      "Bash(grep -E \"\\\\.\\(ts|html|css\\)$\")",
+      "Bash(grep -E \"\\\\.\\(ts|js\\)$\")"
     ]
   }
 }

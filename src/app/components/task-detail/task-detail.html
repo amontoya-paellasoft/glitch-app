@@ -1,5 +1,262 @@
-<div class="container">
-  <div class="header">
-    <h1>#Task {{ taskData() }}</h1>
+<!-- Deuda tecnológica: iconos por itemType en actividad operativa -->
+<div class="main-container">
+
+  <!--HEADER-->
+  <div class="header d-flex justify-content-between align-items-start">
+    <div class="d-flex align-items-baseline gap-2 flex-wrap">
+      <h1 class="mb-0">#TK-{{ taskData()?.task?.taskId }}</h1>
+      <h2 class="mb-0 fw-normal">{{ taskData()?.task?.title }}</h2>
+    </div>
+    <button class="btn-close-retro" (click)="cerrar.emit()">✕</button>
   </div>
+
+  <!--BADGES-->
+  <div class="container-badges">
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge badge-state">{{ taskData()?.task?.state }}</span>
+      <span class="badge badge-origin">{{ taskData()?.task?.originType }}</span>
+      <span class="badge badge-validation">{{ taskData()?.task?.validationMode }}</span>
+      <span class="badge badge-texto">Iteración {{ taskData()?.task?.currentIteration }}</span>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mt-1">
+      @if (taskData()?.task?.automationActive) {
+        <span class="badge badge-automation">Automatizada</span>
+        <span class="badge badge-texto">{{ taskData()?.task?.automationBranchName }}</span>
+      }
+    </div>
+  </div>
+
+  <!--USUARIOS-->
+  <div class="container-users mt-2">
+    <div class="d-flex flex-wrap gap-3 align-items-start">
+      <div class="user-assigned d-flex align-items-center gap-1">
+        <span class="title text-muted small">Asignada a</span>
+        <img
+          src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+          class="rounded-circle"
+          style="width: 28px; height: 28px;"
+          alt="Avatar de usuario asignado"
+        />
+        <span>{{ taskData()?.resolvedUsers?.assignedUser?.fullName }}</span>
+      </div>
+
+      <div class="user-createdBy d-flex align-items-center gap-1">
+        <span class="title text-muted small">Creada por</span>
+        <img
+          src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+          class="rounded-circle"
+          style="width: 28px; height: 28px;"
+          alt="Avatar de usuario creador"
+        />
+        <span>{{ taskData()?.resolvedUsers?.createdByUser?.fullName }}</span>
+      </div>
+
+      <div class="user-dates">
+        <div class="d-flex gap-3">
+          <span class="text-muted small">Creada</span>
+          <span class="small fw-bold">{{ taskData()?.task?.createdAt }}</span>
+        </div>
+        <div class="d-flex gap-3">
+          <span class="text-muted small">Actualizada</span>
+          <span class="small fw-bold">{{ taskData()?.task?.updatedAt }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!--RESUMEN FUNCIONAL-->
+  <div class="container-resumen">
+    <h2>Resumen funcional</h2>
+    <p>{{ taskData()?.task?.functionalSummary }}</p>
+    <div class="d-flex flex-wrap gap-2 text-muted small">
+      <span>
+        Relacionada con
+        <span class="text-primary fw-bold">#TK-{{ taskData()?.task?.relatedTaskId }}</span>
+      </span>
+      <span>·</span>
+      <span>Proyecto {{ taskData()?.task?.projectId?.toString() | uppercase }}</span>
+      <span>·</span>
+      <span>Empresa {{ taskData()?.task?.companyId?.toString() | uppercase }}</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- READINESS / PREPARACIÓN -->
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <h2 class="mb-0">Readiness</h2>
+    @if (taskData()?.currentApproval?.status === 'APPROVED') {
+      <span class="badge bg-success text-white fw-bold">Readiness completo · Listo para avanzar</span>
+    }
+  </div>
+
+  <div class="row g-3">
+    <!-- CARD ESTIMATE -->
+    <div class="col-sm-6">
+      <div class="card border border-1 border-secondary rounded-3 h-100">
+        <div class="card-body">
+          <h5 class="card-title">Estimate actual</h5>
+          <div class="d-flex justify-content-between">
+            <span>Base minutes</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.baseMinutes }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Final minutes</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.finalMinutes }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Estimated price</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.estimatedPrice }} €</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Estimated savings</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.estimatedSavings }} €</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Approval required</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.approvalRequired ? 'Sí' : 'No' }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Creada</span>
+            <span class="fw-bold">{{ taskData()?.currentEstimate?.createdAt }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD APPROVAL -->
+    <div class="col-sm-6">
+      <div class="card border border-1 border-secondary rounded-3 h-100">
+        <div class="card-body">
+          <h5 class="card-title">Approval actual</h5>
+          <div class="d-flex justify-content-between">
+            <span>Approval ID</span>
+            <span class="fw-bold">{{ taskData()?.currentApproval?.approvalId }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Status</span>
+            <span class="fw-bold text-success">{{ taskData()?.currentApproval?.status }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Approved by</span>
+            <span class="fw-bold">{{ taskData()?.resolvedUsers?.approvedByUser?.fullName }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Approved at</span>
+            <span class="fw-bold">{{ taskData()?.currentApproval?.approvedAt }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Promo hours applied</span>
+            <span class="fw-bold">{{ taskData()?.currentApproval?.promoHoursApplied }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ACTIVIDAD OPERATIVA -->
+  <!-- Deuda tecnológica: reemplazar tabla por timeline con iconos por itemType (TIMELINE_EVENT, COMMENT, DIAGNOSTIC, BUILD) -->
+  <h2>Actividad operativa</h2>
+  <div class="row">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Hora</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Info</th>
+          <th scope="col">Referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of taskData()?.activity?.items; track $index) {
+          <tr>
+            <th scope="row" class="text-muted small text-nowrap">{{ i.createdAt }}</th>
+            <td class="small text-muted">{{ i.itemType }}</td>
+            <td>
+              <p class="fw-bold mb-0 small">{{ i.title }}</p>
+              <p class="small text-muted mb-0">{{ i.summary }}</p>
+            </td>
+            <td class="text-muted small">{{ i.referenceType }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <!-- EJECUCIÓN Y LOGS -->
+  <h2>Ejecución y logs</h2>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row g-2">
+        <div class="col-6 col-md-3">
+          <p class="mb-1 fw-bold">
+            Último build
+            <span class="text-muted">{{ taskData()?.latestBuild?.buildRunId }}</span>
+          </p>
+          <div class="d-flex gap-2 align-items-center">
+            <span class="text-muted small">Status</span>
+            <span class="text-uppercase text-primary fw-bold small">{{ taskData()?.latestBuild?.status }}</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Started at</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuild?.startedAt }}</span>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Finished at</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuild?.finishedAt ?? '—' }}</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Maven goal</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuild?.mavenGoal }}</span>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Artifact</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuild?.artifactObjectId }}</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Exit code</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuildLog?.exitCode ?? '—' }}</span>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <span class="text-muted small">Timed out</span>
+            <span class="fw-bold small">{{ taskData()?.latestBuildLog?.timedOut }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <div class="card text-bg-dark rounded-3 h-100">
+        <div class="card-body">
+          <h6 class="card-title">stdoutExcerpt</h6>
+          <pre class="card-text small mb-0" style="white-space: pre-wrap;">{{ taskData()?.latestBuildLog?.stdoutExcerpt }}</pre>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card text-bg-dark rounded-3 h-100">
+        <div class="card-body">
+          <h6 class="card-title">stderrExcerpt</h6>
+          <pre class="card-text small mb-0" style="white-space: pre-wrap;">{{ taskData()?.latestBuildLog?.stderrExcerpt || '(sin mensajes de error)' }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
