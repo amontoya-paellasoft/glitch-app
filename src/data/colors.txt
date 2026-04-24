@@ -1,0 +1,135 @@
+================================================================================
+  GLITCH-APP — PALETA DE COLORES
+  Última actualización: 2026-04-24
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  CONSOLA / CHAT          src/app/components/chat/chat.css
+                          src/app/components/task-detail/task-detail.css (logs)
+────────────────────────────────────────────────────────────────────────────────
+
+  #1b271b   Fondo principal consola (verde oscuro)
+  #0d1a0d   Fondo log panel en task-detail
+  #060c06   Header y barra inferior consola (negro verdoso)
+  #1a2e1a   Bordes internos consola
+  #01ff00   Verde neón principal (texto, cursor, iconos)
+  #41ff00   Verde neón variante (arrows, boot text)
+  #1f6b1f   Verde apagado (status count, bordes, botones inactivos)
+  #538dfe   Azul — flecha de mensajes privados
+  #ffffff   Texto usuario (mensajes propios)
+  #ff6b6b   Rojo — stderr en logs
+
+
+────────────────────────────────────────────────────────────────────────────────
+  AGENT PANEL             src/app/components/agent-panel/agent-panel.css
+  AGENT MAP               src/app/components/agent-map/agent-map.css
+────────────────────────────────────────────────────────────────────────────────
+
+  #FFFBF0   Fondo panel agente (crema cálida)    [también agent-map]
+  #FAF7F0   Fondo tarjeta de tarea
+  #F5F0E0   Fondo tags
+  #F1EFE8   Fondo badge prioridad baja
+  #EDE0C4   Borde sutil separadores
+  #D4C4A0   Borde principal panel
+  #C9A84C   Color puntitos mapa SVG (dorado)
+  #C9A227   Acento dorado (count en tags, hover tarea)
+  #3D3020   Texto principal (marrón oscuro)
+  #6B5030   Texto secundario agente (marrón medio)
+  #9B7A4A   Texto rol / label / sección (dorado apagado)
+  #C4A882   Texto vacío / empty state
+  #1a2e1a   Borde panel-chat (verde oscuro consola)
+  #ff3333   Botón cerrar X
+
+  — Status dots —
+  #4A8A47   Online (verde) — glow: #6B9E68
+  #C9882A   Ocupado (ámbar)
+  #888780   Ausente (gris)
+
+  — Prioridades —
+  Alta:   text #A32D2D  | border rgba(163,45,45,0.3)   | bg #FDECEA
+  Media:  text #854F0B  | border rgba(201,136,42,0.3)  | bg #FAEEDA
+  Baja:   text #5F5E5A  | border rgba(136,135,128,0.3) | bg #F1EFE8
+
+
+────────────────────────────────────────────────────────────────────────────────
+  HEADER                  src/app/components/structure/header/header.css
+────────────────────────────────────────────────────────────────────────────────
+
+  #f7f4ee   Fondo topbar (blanco cálido)
+  #f2ede5   Fondo nav-link activo
+  #e5dccf   Borde topbar / botones idioma
+  #2c2c2c   Texto principal / nav activo
+  #8a8175   Texto secundario / nav inactivo (gris cálido)
+  #3ecf8e   LED status (verde esmeralda)
+
+
+────────────────────────────────────────────────────────────────────────────────
+  TABLERO TO-DO           src/app/components/to-do/to-do.css
+────────────────────────────────────────────────────────────────────────────────
+
+  #f8fafc   Fondo tablero / fondo host
+  #f1f5f9   Header columnas / header tablero
+  #ffffff   Fondo columnas
+  #cbd5e1   Borde columnas
+  #e2e8f0   Borde inferior header columna
+  #d4af37   Acento dorado — borde header y panel lateral
+  #0f172a   Título página (navy muy oscuro)
+  #334155   Título columnas
+  #64748b   Contadores / texto secundario / btn-secondary
+  #92400e   Botón primario retro (marrón)
+  #000000   Botones move/mover tarjetas
+  #cbd5e1   Btn move deshabilitado
+  #94a3b8   Texto btn move deshabilitado
+  #fffbeb   Highlight info-card (crema)
+  #dc2626   Error / prioridad alta (rojo)
+  rgba(15,23,42,0.6)   Overlay fondo modal oscurecido
+
+
+────────────────────────────────────────────────────────────────────────────────
+  TASK DETAIL             src/app/components/task-detail/task-detail.css
+────────────────────────────────────────────────────────────────────────────────
+
+  #ffffff   Fondo principal
+  #f8fafc   Fondo header modal / timeline-card
+  #f1f5f9   Info-cards / form-actions border / btn cerrar
+  #e2e8f0   Bordes generales
+  #1e293b   Texto principal (navy oscuro)
+  #475569   Texto secundario / badge-soft
+  #64748b   Labels / fechas / avatar created
+  #94a3b8   Timeline ref (gris azulado)
+
+  — Badges de estado —
+  #f97316   Estado (naranja)                     — bg
+  #fce7f3   Origen (bg)  /  #be185d (texto pink)
+  #dbeafe   Validación (bg)  /  #1d4ed8 (texto azul)
+  #dcfce7   Éxito (bg)  /  #15803d (texto verde)
+
+  — Avatares —
+  #2563eb   Avatar asignado (azul)
+  #64748b   Avatar creado (gris)
+
+  — Timeline dots —
+  #2563eb   Azul
+  #f97316   Naranja
+  #16a34a   Verde
+  #7c3aed   Morado
+
+  — Origin bars —
+  Audit:   bg #f0f9ff  | borde #0369a1  | texto #0369a1 (azul)
+  Chat:    bg #f0fdf4  | borde #15803d  | texto #15803d (verde)
+  Manual:  bg #f8fafc  | borde #475569  | texto #475569 (gris)
+
+  — Info labels —
+  #92400e   Label marrón/oro oscuro
+  #334155   Contenido info-card
+  #d4af37   Borde highlight info-card (dorado)
+
+
+────────────────────────────────────────────────────────────────────────────────
+  GLOBAL                  src/styles.css
+────────────────────────────────────────────────────────────────────────────────
+
+  #ffffff   Fondo body
+  #1a1a18   Color de texto global (negro casi puro)
+
+================================================================================

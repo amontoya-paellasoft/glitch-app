@@ -116,9 +116,9 @@
     },
     "SECTIONS": {
       "SUMMARY": "Resumen funcional",
-      "READINESS": "Readiness",
+      "READINESS": "Preparación",
       "ACTIVITY": "Actividad operativa",
-      "BUILD": "Ejecución y logs"
+      "BUILD": "Ejecución y registros"
     },
     "META": {
       "RELATED_TO": "Relacionada con",
@@ -126,40 +126,42 @@
       "COMPANY": "Empresa"
     },
     "READINESS": {
-      "COMPLETE": "Readiness completo · Lista para avanzar",
-      "ESTIMATE_TITLE": "Estimate actual",
-      "APPROVAL_TITLE": "Approval actual"
+      "COMPLETE": "Preparación completa · Lista para avanzar",
+      "ESTIMATE_TITLE": "Estimación actual",
+      "APPROVAL_TITLE": "Aprobación actual"
     },
     "ESTIMATE": {
-      "BASE_MINUTES": "Base minutes",
-      "FINAL_MINUTES": "Final minutes",
-      "ESTIMATED_PRICE": "Estimated price",
-      "SAVINGS": "Savings",
-      "APPROVAL_REQ": "Approval req.",
+      "BASE_MINUTES": "Minutos base",
+      "FINAL_MINUTES": "Minutos finales",
+      "ESTIMATED_PRICE": "Precio estimado",
+      "SAVINGS": "Ahorro",
+      "APPROVAL_REQ": "Requiere aprobación",
+      "APPROVAL_YES": "Sí",
+      "APPROVAL_NO": "No",
       "CREATED": "Creada"
     },
     "APPROVAL": {
-      "APPROVAL_ID": "Approval ID",
-      "STATUS": "Status",
-      "APPROVED_BY": "Approved by",
-      "APPROVED_AT": "Approved at",
-      "PROMO_HOURS": "Promo hours"
+      "APPROVAL_ID": "ID de aprobación",
+      "STATUS": "Estado",
+      "APPROVED_BY": "Aprobado por",
+      "APPROVED_AT": "Aprobado el",
+      "PROMO_HOURS": "Horario promocional"
     },
     "BUILD": {
-      "LAST_BUILD": "Último build #",
-      "STARTED": "Started",
-      "FINISHED": "Finished",
-      "MAVEN_GOAL": "Maven goal",
-      "ARTIFACT": "Artifact"
+      "LAST_BUILD": "Última ejecución #",
+      "STARTED": "Iniciado",
+      "FINISHED": "Finalizado",
+      "MAVEN_GOAL": "Objetivo Maven",
+      "ARTIFACT": "Artefacto"
     },
     "LOGS": {
-      "STDOUT": "stdoutExcerpt",
-      "STDERR": "stderrExcerpt",
-      "NO_ERRORS": "(sin mensajes de error)"
+      "STDOUT": "Salida estándar",
+      "STDERR": "Salida de error",
+      "NO_ERRORS": "(Sin mensajes de error)"
     }
   },
   "STATS": {
-    "TITLE": "[ AGENT ACTIVITY STATS ]",
+    "TITLE": "[ ESTADÍSTICAS DE ACTIVIDAD DE AGENTES ]",
     "PERIODS": {
       "7D": "Últimos 7 días",
       "3M": "Últimos 3 meses",

@@ -1,3 +1,5 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 *,
 *::before,
 *::after {
@@ -16,21 +18,21 @@ body {
 
 @font-face {
   font-family: 'IBMPlex';
-  src: url('/fonts/ibm-plexmono-regular.ttf');
+  src: url('/assets/fonts/ibm-plexmono-regular.ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ModernDos';
-  src: url('/fonts/modern-dos.ttf');
+  src: url('/assets/fonts/modern-dos.ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'vt323';
-  src: url('/fonts/vt323-regular.ttf');
+  src: url('/assets/fonts/vt323-regular.ttf');
   font-weight: normal;
   font-style: normal;
 }

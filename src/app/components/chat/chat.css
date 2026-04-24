@@ -4,7 +4,7 @@
   height: 100%;
   font-family: 'IBMPlex', monospace;
   background: #1b271b;
-  color: #01FF00;
+  color: #01ff00;
 }
 
 .console-header {
@@ -20,7 +20,7 @@
 .console-title {
   font-size: 15px;
   font-weight: 600;
-  color: #01FF00;
+  color: #01ff00;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -51,14 +51,9 @@
   letter-spacing: 0.08em;
   transition: all 0.12s;
 
-  &:hover {
-    border-color: #01FF00;
-    color: #01FF00;
-  }
-
   &.active {
-    border-color: #01FF00;
-    color: #01FF00;
+    border-color: #01ff00;
+    color: #01ff00;
     text-shadow: 0 0 6px rgba(1, 255, 0, 0.6);
   }
 }
@@ -99,36 +94,35 @@
   letter-spacing: 0.02em;
 }
 
-
 .console-time {
-  color: #01FF00;
+  color: #01ff00;
   flex-shrink: 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-family: 'ModernDos', monospace;
   letter-spacing: -0.5px;
 }
 
 .console-agent {
   flex-shrink: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: 'ModernDos', monospace;
-  color: #01FF00;
+  color: #01ff00;
   margin-left: 0.2rem;
 }
 
 .console-sep {
-  color: #01FF00;
+  color: #01ff00;
   flex-shrink: 0;
   font-weight: bold;
   font-size: 1.1rem;
 }
 
 .console-text {
-  color: #01FF00;
+  color: #01ff00;
   margin-top: 0;
-  font-size: 0.9rem;
-  letter-spacing: -0.07rem;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  letter-spacing: 0.02rem;
+  font-family: 'vt323', monospace;
 }
 
 .console-code {
@@ -138,7 +132,7 @@
   background: #050a057c;
   border-left: 2px solid #1f6b1f;
   font-size: 11px;
-  color: #01FF00;
+  color: #01ff00;
   white-space: pre;
   letter-spacing: 0.03em;
   line-height: 1.6;
@@ -148,7 +142,7 @@
   display: inline-block;
   width: 0.2rem;
   height: 1rem;
-  background: #01FF00;
+  background: #01ff00;
   animation: blink 1s step-end infinite;
 }
 
@@ -163,12 +157,12 @@
 }
 
 .console-line.private {
-  border-left: 2px solid #01FF00;
+  border-left: 2px solid #01ff00;
   padding-left: 6px;
 }
 
 .console-line.private .console-arrow {
-  color: #538DFE;
+  color: #538dfe;
 }
 
 .console-input-bar {
@@ -182,7 +176,7 @@
 }
 
 .input-prompt {
-  color: #01FF00;
+  color: #01ff00;
   font-size: 16px;
   flex-shrink: 0;
 }
@@ -192,11 +186,11 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #01FF00;
+  color: #01ff00;
   font-family: 'IBMPlex', monospace;
   font-size: 12px;
   letter-spacing: 0.04em;
-  caret-color: #01FF00;
+  caret-color: #01ff00;
 
   &::placeholder {
     color: #1f6b1f;
@@ -214,16 +208,16 @@
   cursor: pointer;
   letter-spacing: 0.06em;
   transition: all 0.15s;
-
-  &:hover {
-    border-color: #01FF00;
-    color: #01FF00;
-  }
 }
 
 .console-line.user {
-  .console-agent { color: #ffffff; }
-  .console-text  { color: #ffffff; opacity: 0.9; }
+  .console-agent {
+    color: #ffffff;
+  }
+  .console-text {
+    color: #ffffff;
+    opacity: 0.9;
+  }
 }
 
 @keyframes blink {
@@ -246,4 +240,3 @@
     transform: translateY(0);
   }
 }
-

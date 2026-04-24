@@ -136,6 +136,8 @@
       "ESTIMATED_PRICE": "Estimated price",
       "SAVINGS": "Savings",
       "APPROVAL_REQ": "Approval req.",
+      "APPROVAL_YES": "Yes",
+      "APPROVAL_NO": "No",
       "CREATED": "Created"
     },
     "APPROVAL": {
@@ -155,7 +157,7 @@
     "LOGS": {
       "STDOUT": "stdoutExcerpt",
       "STDERR": "stderrExcerpt",
-      "NO_ERRORS": "(no error messages)"
+      "NO_ERRORS": "(No error messages)"
     }
   },
   "STATS": {

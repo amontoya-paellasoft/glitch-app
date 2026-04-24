@@ -98,8 +98,8 @@
 }
 
 .avatar {
-  width: 38px;
-  height: 38px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   background: #2563eb;
   color: white;
@@ -109,7 +109,7 @@
   font-weight: bold;
 }
 
-.avatar.gray {
+.avatar.created {
   background: #64748b;
 }
 
@@ -211,8 +211,8 @@
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 150px 30px 1fr;
-  gap: 12px;
+  grid-template-columns: 50px 30px 1fr;
+  gap: 15px;
 }
 
 .timeline-time {
@@ -226,11 +226,12 @@
   justify-content: center;
 }
 
+/* sin CONTENT y POSITION no funciona */
 .timeline-line::after {
-  content: "";
+  content: '';
   position: absolute;
-  width: 2px;
-  top: 14px;
+  width: 3px;
+  top: 15px;
   bottom: -16px;
   background: #e2e8f0;
 }
@@ -247,10 +248,18 @@
   margin-top: 2px;
 }
 
-.blue { background: #2563eb; }
-.orange { background: #f97316; }
-.green { background: #16a34a; }
-.purple { background: #7c3aed; }
+.blue {
+  background: #2563eb;
+}
+.orange {
+  background: #f97316;
+}
+.green {
+  background: #16a34a;
+}
+.purple {
+  background: #7c3aed;
+}
 
 .timeline-card {
   background: #f8fafc;
@@ -298,35 +307,47 @@
 }
 
 /* LOGS */
-.logs-grid {
-  margin-top: 15px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+.log-panel {
+  margin-top: 20px;
 }
 
-.log-card {
-  background: #0f172a;
-  border-radius: 16px;
-  padding: 15px;
-  color: #e2e8f0;
-  min-width: 0;
-  overflow: hidden;
+/* Copia del css de chat/consola */
+.log-panel .nav-tabs .nav-link.active {
+  border-bottom-color: #0d1a0d;
 }
 
-.log-card pre {
+.log-output {
+  background: #0d1a0d;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  padding: 14px 16px;
+  height: 220px;
+  min-height: 220px;
+  max-height: 400px;
+  max-width: 100%;
+  resize: both;
+  overflow: auto;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.log-pre {
   margin: 0;
-  color: #e2e8f0;
+  color: #01ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-all;
-  font-size: 10px;
-  line-height: 1.5;
-  overflow-x: auto;
-}
+  letter-spacing: 0.03em;
 
-.log-title {
-  color: #94a3b8;
-  font-size: 10px;
-  margin-bottom: 10px;
-  font-weight: bold;
+  &.stderr {
+    color: #ff6b6b;
+  }
 }

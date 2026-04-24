@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TodoService } from '../../services/todo-service';
 import { TareaService } from '../../services/tarea-service';
 import { Task, Column } from '../../models/to-do-interface';
@@ -14,7 +15,7 @@ import { TaskDetail } from '../task-detail/task-detail';
 @Component({
   selector: 'app-to-do',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, DragDropModule, Busqueda, TarjetasToDo, TaskDetail],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, TranslateModule, DragDropModule, Busqueda, TarjetasToDo, TaskDetail],
   templateUrl: './to-do.html',
   styleUrls: ['./to-do.css']
 })

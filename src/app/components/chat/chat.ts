@@ -53,6 +53,7 @@ export class Chat implements OnInit {
 
   ngOnInit(): void {
     this.chatSvc.conversaciones$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.filtrarMensajes();
       this.cdr.detectChanges();
     });
   }
