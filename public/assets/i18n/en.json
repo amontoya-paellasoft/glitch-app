@@ -122,6 +122,11 @@
         "PENDING": "Pend",
         "REJECTED": "Rej",
         "NONE": "N/A"
+      },
+      "VALIDATION_MODES": {
+        "FULL_SANDBOX": "Full Sandbox",
+        "PARTIAL_SANDBOX": "Partial Sandbox",
+        "EVIDENCE_ONLY": "Evidence Only"
       }
     }
   }
