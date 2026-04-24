@@ -18,6 +18,7 @@ export class TarjetasToDo {
 
   @Input({ required: true }) task!: any;
   @Input({ required: true }) colIndex!: number;
+  @Input() columnId: string = '';
   @Input() selectedTaskId: number | null = null;
   @Input() columnIsMiseEnPlace: boolean = false;
 
@@ -63,5 +64,16 @@ export class TarjetasToDo {
 
   asTask(item: any): Task {
     return item as Task;
+  }
+
+  getFormattedEstimation(task: Task): string {
+    if (!task.estimatedPrice && !task.estimatedMinutes) return 'N/A';
+    const hours = task.estimatedMinutes ? (task.estimatedMinutes / 60).toFixed(1) : '0';
+    return `€${task.estimatedPrice || 0} / ${hours}h`;
+  }
+
+  getApprovalLabel(status: string | undefined): string {
+    const key = status || 'NONE';
+    return this.translate.instant('TODO.CARD.APPROVAL_STATUS.' + key);
   }
 }

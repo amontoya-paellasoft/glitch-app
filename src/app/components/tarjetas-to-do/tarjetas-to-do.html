@@ -43,55 +43,133 @@
     </div>
   </div>
 </div>
-} @else {
-<!-- Diseño Estándar para Tareas -->
-@let taskItem = asTask(task);
-<div class="todo-card" [class.selected]="selectedTaskId === taskItem.id"
-  [class.prio-low]="getPriority(taskItem) === 'Low'"
-  [class.prio-medium]="getPriority(taskItem) === 'Medium'"
-  [class.prio-high]="getPriority(taskItem) === 'High'"
-  (click)="$event.stopPropagation(); selectTask(taskItem.id)">
-  <div class="color-sidebar" cdkDragHandle></div>
-  <div class="todo-card-content">
-    <div class="todo-card-header-compact">
-      <div class="task-tech-bar">
-        <div class="tech-left">
-          <span class="origin-tag-prominent" [class]="'origin-' + taskItem.originType.toLowerCase()">{{
-            taskItem.originType }}</span>
-        </div>
-        <span class="task-id-badge-ghost">#{{ taskItem.taskId }}</span>
-      </div>
-      <div class="task-title-main">{{ taskItem.texto }}</div>
+} @else if (columnId === 'doing') {
+  <!-- Diseño Técnico para Tareas en DOING (Limpio) -->
+  @let taskItem = asTask(task);
+  <div class="modern-todo-card doing-card" [class.selected]="selectedTaskId === taskItem.id" (click)="$event.stopPropagation(); selectTask(taskItem.id)">
+    
+    <!-- Bloque 1: Identificación -->
+    <div class="block-id">
+      <span class="ticket-id">#TK-{{ taskItem.taskId }}</span>
+      <span class="build-status-pill">BUILD: RUNNING</span>
     </div>
 
-    <div class="todo-card-body-compact">
-      <div class="task-info-row">
-        <span class="priority-tag-compact" [class]="'prio-' + getPriority(taskItem).toLowerCase()">
-          {{ getTranslatedPriority(getPriority(taskItem)) }}
-        </span>
-        <div class="task-user-name-compact">
-          <i class="fa-solid fa-user-circle"></i> {{ getNombreUsuario(getAsignadaA(taskItem)) }}
+    <!-- Bloque 2: Contenido -->
+    <div class="block-context">
+      <div class="task-title-bold">{{ taskItem.texto || taskItem.title }}</div>
+      <div class="task-description-soft">{{ taskItem.functionalSummary }}</div>
+    </div>
+
+    <!-- Bloque 3: Asignado (Nombre destacado) -->
+    <div class="block-assignment-line">
+      <div class="assignee-area-large">
+        <div class="mini-avatar-large"></div>
+        <span class="assignee-name-large">{{ getNombreUsuario(getAsignadaA(taskItem)) }}</span>
+      </div>
+    </div>
+
+    <!-- Bloque 4: Estimación y Aprobación (Más grandes) -->
+    <div class="block-footer-large">
+      <div class="action-boxes-large">
+        <div class="action-box est-box-large">
+          <span class="box-label">Est:</span> {{ taskItem.estimatedMinutes }}m / €{{ taskItem.estimatedPrice }}
+        </div>
+        <div class="action-box aprob-box-large">
+          <span class="box-label">Aprob:</span> {{ getApprovalLabel(taskItem.approvalStatus) }}
         </div>
       </div>
+    </div>
 
-      <div class="task-footer-layout">
-        <span class="validation-tag-mini" [class]="'val-' + taskItem.validationMode.toLowerCase()">
-          {{ taskItem.validationMode }}
-        </span>
-        <span class="iteration-tag-corner">IT:{{ taskItem.currentIteration }}</span>
+    <!-- Bloque 3: Metadata -->
+    <div class="block-metadata-large">
+      <div class="context-tags-top">
+        <span class="tag-context tag-blue-large">Origen: {{ taskItem.originType }}</span>
+        <span class="tag-context tag-green-large">{{ ('TODO.CARD.VALIDATION_MODES.' + taskItem.validationMode) | translate }}</span>
       </div>
+      <div class="context-tags-bottom">
+        <span class="tag-context tag-gray-large">Iteración: {{ taskItem.currentIteration }}</span>
+      </div>
+    </div>
 
-      @if (selectedTaskId === taskItem.id) {
-      <div class="task-actions-compact" (click)="$event.stopPropagation()">
-        <button class="btn-view-small" (click)="viewTaskDetails(taskItem)">
-          <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW_INFO' | translate }}
+    <!-- Técnica y Trazabilidad -->
+    <div class="technical-footer">
+      <div class="git-branch-large">
+        <img src="assets/imgs/Git-Icon-Black.png" class="git-icon" alt="Git"> {{ taskItem.automationBranchName || 'N/A' }}
+      </div>
+      <div class="footer-row">
+        @if(taskItem.relatedTaskId) {
+          <div class="trace-info-footer-large">Rel: #TK-{{ taskItem.relatedTaskId }}</div>
+        }
+        <button class="btn-info-mini" (click)="$event.stopPropagation(); viewTaskDetails(taskItem)">
+          <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW' | translate }}
         </button>
-        <div class="move-btns-compact">
-          <button class="btn-move-mini" [disabled]="colIndex >= 3" (click)="moveTask(taskItem.id, 'prev')">«</button>
-          <button class="btn-move-mini" [disabled]="colIndex >= 2" (click)="moveTask(taskItem.id, 'next')">»</button>
-        </div>
       </div>
-      }
+    </div>
+  </div>
+} @else {
+<!-- Nuevo Diseño de 4 Bloques (Para resto de columnas) -->
+@let taskItem = asTask(task);
+<div class="modern-todo-card" [class.selected]="selectedTaskId === taskItem.id" (click)="$event.stopPropagation(); selectTask(taskItem.id)">
+  
+  <!-- Bloque 1: Identificación -->
+  <div class="block-id">
+    <span class="ticket-id">#TK-{{ taskItem.taskId }}</span>
+    <div class="id-actions">
+      <button class="btn-info-mini" (click)="$event.stopPropagation(); viewTaskDetails(taskItem)">
+        <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW' | translate }}
+      </button>
+      <button class="btn-options" (click)="$event.stopPropagation()">
+        <i class="fa-solid fa-ellipsis"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bloque 2: Contexto -->
+  <div class="block-context">
+    <div class="task-title-bold">{{ taskItem.texto || taskItem.title }}</div>
+    <div class="task-description-soft">{{ taskItem.functionalSummary }}</div>
+    <div class="context-tags">
+      <span class="tag-context tag-blue">{{ taskItem.originType }}</span>
+      <span class="tag-context tag-gray">{{ taskItem.validationMode }}</span>
+    </div>
+  </div>
+
+  <!-- Bloque 3: Asignación -->
+  <div class="block-assignment">
+    <div class="assignee-area">
+      <div class="mini-avatar"></div>
+      <span class="assignee-name">{{ getNombreUsuario(getAsignadaA(taskItem)) }}</span>
+    </div>
+    <span class="iteration-badge">{{ 'TODO.CARD.ITERATION_PREFIX' | translate }} {{ taskItem.currentIteration }}</span>
+  </div>
+
+  <!-- Bloque 4: Acción (Cajas Punteadas) y Métricas -->
+  <div class="block-action">
+    <div class="action-boxes">
+      <div class="action-box est-box">
+        <span class="box-label">{{ 'TODO.CARD.EST_LABEL' | translate }}</span>
+        <span class="box-value">{{ getFormattedEstimation(taskItem) }}</span>
+      </div>
+      <div class="action-box aprob-box" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">
+        <span class="box-label">{{ 'TODO.CARD.APROB_LABEL' | translate }}</span>
+        <span class="box-value">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
+      </div>
+    </div>
+
+    <div class="thin-separator"></div>
+
+    <div class="technical-metrics">
+      <div class="metric-group">
+        <i class="fa-solid fa-box-open metric-icon"></i>
+        <span class="metric-label">{{ 'TODO.CARD.BUILDS_LABEL' | translate }}</span>
+        <span class="metric-value">{{ taskItem.buildCount || 0 }}</span>
+      </div>
+      <div class="metric-group">
+        <i class="fa-solid fa-microscope metric-icon"></i>
+        <span class="metric-label">{{ 'TODO.CARD.DIAG_LABEL' | translate }}</span>
+        <span class="metric-value">{{ taskItem.healthScore || 0 }}%</span>
+      </div>
+      <span class="metric-date">{{ taskItem.createdAt | date:'d MMM yyyy' }}</span>
     </div>
   </div>
 </div>

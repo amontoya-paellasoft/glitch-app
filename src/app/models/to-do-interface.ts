@@ -16,6 +16,13 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
   orderIndex?: number;
+
+  // Campos para el nuevo diseño de tarjeta
+  estimatedPrice?: number;
+  estimatedMinutes?: number;
+  approvalStatus?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'NONE';
+  buildCount?: number;
+  healthScore?: number;
   
   // Compatibilidad interna y legacy
   id: number;

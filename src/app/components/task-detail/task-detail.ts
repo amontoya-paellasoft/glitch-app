@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './task-detail.html',
   styleUrl: './task-detail.css',
 })
-export class TaskDetail implements OnChanges {
+export class TaskDetailComponent implements OnChanges {
   @Input({ required: true }) taskId!: number;
   cerrar = output<void>();
   taskData = signal<TaskDetailDTO | null>(null);

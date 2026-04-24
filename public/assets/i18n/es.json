@@ -103,6 +103,24 @@
       "TITLE": "Detalles de la Tarea",
       "NO_DEADLINE": "Sin fecha límite"
     },
+    "EMPTY_STATE": "No hay tareas aquí",
+    "CARD": {
+      "EST_LABEL": "Est:",
+      "APROB_LABEL": "Aprob:",
+      "ITERATION_PREFIX": "IT:",
+      "BUILDS_LABEL": "Builds:",
+      "DIAG_LABEL": "Diag:",
+      "APPROVAL_STATUS": {
+        "APPROVED": "Aprob",
+        "PENDING": "Pend",
+        "REJECTED": "Rechaz",
+        "NONE": "N/A"
+      },
+      "VALIDATION_MODES": {
+        "FULL_SANDBOX": "Full Sandbox",
+        "PARTIAL_SANDBOX": "Partial Sandbox",
+        "EVIDENCE_ONLY": "Solo Evidencia"
+      }
     "EMPTY_STATE": "No hay tareas aquí"
   },
   "TASK_DETAIL": {

@@ -233,6 +233,48 @@ export class TodoService {
     }
   }
 
+  public reorderTasks(event: any) {
+    const currentCols = this._columns();
+    const sourceColId = event.previousContainer.id;
+    const targetColId = event.container.id;
+
+    const sourceColIndex = currentCols.findIndex(c => c.id === sourceColId);
+    const targetColIndex = currentCols.findIndex(c => c.id === targetColId);
+
+    if (sourceColIndex === -1 || targetColIndex === -1) return;
+
+    if (sourceColId === targetColId) {
+      // Reordenar en la misma columna
+      const tasks = [...currentCols[sourceColIndex].tasks];
+      const [movedItem] = tasks.splice(event.previousIndex, 1);
+      tasks.splice(event.currentIndex, 0, movedItem);
+      
+      // Actualizar orderIndex
+      tasks.forEach((t, i) => (t as any).orderIndex = i);
+      
+      currentCols[sourceColIndex].tasks = tasks;
+    } else {
+      // Mover entre columnas
+      const sourceTasks = [...currentCols[sourceColIndex].tasks];
+      const targetTasks = [...currentCols[targetColIndex].tasks];
+      
+      const [movedItem] = sourceTasks.splice(event.previousIndex, 1);
+      targetTasks.splice(event.currentIndex, 0, movedItem);
+
+      // Actualizar estados y orderIndex
+      sourceTasks.forEach((t, i) => (t as any).orderIndex = i);
+      targetTasks.forEach((t, i) => {
+        (t as any).orderIndex = i;
+        (t as any).state = targetColId;
+      });
+
+      currentCols[sourceColIndex].tasks = sourceTasks;
+      currentCols[targetColIndex].tasks = targetTasks;
+    }
+
+    this._columns.set([...currentCols]);
+  }
+
   public getColumns() {
     return this._columns();
   }

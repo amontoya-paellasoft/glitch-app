@@ -78,9 +78,8 @@
 /* Tablero */
 .todo-wrapper {
   display: flex;
-  gap: 0.75rem;
-  /* Reducimos el espacio entre columnas */
-  padding: 1rem;
+  gap: 0.5rem; /* Reducimos el espacio entre columnas */
+  padding: 0.5rem; /* Reducimos el padding general */
   overflow-x: hidden;
   /* Evitamos el scroll horizontal */
   flex-grow: 1;
@@ -90,9 +89,8 @@
 
 .column-container {
   flex: 1;
-  /* Las columnas se reparten el espacio equitativamente */
-  min-width: 0;
-  /* Permite que las columnas se encojan por debajo de su contenido */
+  /* Permitimos que las columnas se encojan más para que quepan todas */
+  min-width: 180px;
   background: #ffffff;
   border: 1px solid #cbd5e1;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -108,16 +106,29 @@
   background: #f1f5f9;
   border-bottom: 2px solid #e2e8f0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
+
+.column-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.bg-backlog { background: #94a3b8; } /* Gris */
+.bg-todo { background: #3b82f6; }     /* Azul */
+.bg-doing { background: #f97316; }    /* Naranja */
+.bg-test { background: #facc15; }     /* Amarillo */
+.bg-done { background: #10b981; }     /* Verde */
+.bg-mise-en-place { background: #475569; } /* Gris técnico */
 
 .column-title {
   font-size: 10px;
-  /* Texto ligeramente más pequeño para que quepa mejor */
   font-weight: 800;
-  color: #334155;
   text-transform: uppercase;
+  flex: 1;
+  color: #334155;
   letter-spacing: 0.5px;
   white-space: nowrap;
   overflow: hidden;
@@ -138,29 +149,124 @@
   overflow-anchor: none;
 }
 
-/* CDK Drag & Drop Smoothness */
-.cdk-drop-list-dragging .todo-card:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+/* CDK Drag & Drop Smoothness & Premium Styles */
+.cdk-drop-list-dragging app-tarjetas-to-do:not(.cdk-drag-placeholder) {
+  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Animación de "asentamiento" al soltar */
+.cdk-drag-animating .todo-card {
+  animation: settle-pulse 0.6s ease-out;
+}
+
+@keyframes settle-pulse {
+  0% { transform: scale(1.05); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); box-shadow: none; }
+}
+
+/* El 'hueco' (Ghost Preview) donde va a caer la tarjeta */
 .cdk-drag-placeholder {
-  /* El placeholder debe ser invisible y no tener transiciones propias para no 'empujar' */
-  opacity: 0;
-  transition: none !important;
-  /* Aseguramos que ocupe exactamente el mismo espacio que una tarjeta sin añadir extras */
-  background: transparent !important;
-  border: none !important;
-  margin-bottom: 1rem !important;
+  display: block !important;
+  min-height: 100px;
+  margin-bottom: 1rem;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  z-index: 1;
+  clear: both;
 }
 
-.cdk-drag-preview {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+.ghost-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 90px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 2px dashed #94a3b8;
   border-radius: 8px;
-  opacity: 0.9;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  animation: ghost-pulse 1.5s infinite ease-in-out;
+}
+
+.ghost-sidebar {
+  width: 12px;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
+
+.ghost-content {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+.ghost-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.ghost-line {
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.ghost-line.short { width: 30%; }
+
+@keyframes ghost-pulse {
+  0% { opacity: 0.5; background: rgba(248, 250, 252, 0.7); }
+  50% { opacity: 0.8; background: rgba(248, 250, 252, 0.9); }
+  100% { opacity: 0.5; background: rgba(248, 250, 252, 0.7); }
+}
+
+/* La tarjeta mientras se arrastra (flotando) */
+.cdk-drag-preview {
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+  /* El CDK necesita gestionar el transform para mover el elemento con el ratón */
+  pointer-events: none !important;
+  z-index: 1000 !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  /* Evitar scroll dentro de la tarjeta arrastrada */
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+/* Ocultar el scroll del contenedor mientras arrastramos */
+.todo-wrapper.cdk-drop-list-dragging {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+
+/* Forzamos que todo lo que esté dentro de la previsualización respete el box-sizing */
+.cdk-drag-preview * {
+  box-sizing: border-box !important;
+}
+
+/* Feedback visual en la lista de destino */
+.task-list.cdk-drop-list-dragging {
+  background: rgba(241, 245, 249, 0.5);
+  transition: background-color 0.2s ease;
+}
+
+/* Estilo cuando la lista está 'receptiva' */
+.cdk-drop-list-receiving {
+  background: rgba(254, 252, 232, 0.4) !important;
 }
 
 
