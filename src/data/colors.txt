@@ -1,8 +1,4 @@
-================================================================================
-  GLITCH-APP — PALETA DE COLORES
-  Última actualización: 2026-04-24
-================================================================================
-
+ALTORIUM — PALETA DE COLORES
 ────────────────────────────────────────────────────────────────────────────────
   CONSOLA / CHAT          src/app/components/chat/chat.css
                           src/app/components/task-detail/task-detail.css (logs)
@@ -34,7 +30,6 @@
   #C9A84C   Color puntitos mapa SVG (dorado)
   #C9A227   Acento dorado (count en tags, hover tarea)
   #3D3020   Texto principal (marrón oscuro)
-  #6B5030   Texto secundario agente (marrón medio)
   #9B7A4A   Texto rol / label / sección (dorado apagado)
   #C4A882   Texto vacío / empty state
   #1a2e1a   Borde panel-chat (verde oscuro consola)
@@ -132,4 +127,4 @@
   #ffffff   Fondo body
   #1a1a18   Color de texto global (negro casi puro)
 
-================================================================================
+

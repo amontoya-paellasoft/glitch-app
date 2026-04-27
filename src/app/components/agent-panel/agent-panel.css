@@ -86,12 +86,6 @@
   margin-top: 2px;
 }
 
-.agent-fullname {
-  font-size: 11px;
-  color: #6B5030;
-  margin-top: 3px;
-}
-
 .agent-status {
   margin-left: auto;
   display: flex;

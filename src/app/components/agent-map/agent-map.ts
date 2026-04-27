@@ -1,5 +1,5 @@
 import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { MOCK_AGENTS, MOCK_LINKS } from '../../mock/mock-data';
+import { MOCK_AGENTS, MOCK_LINKS, MOCK_USERS } from '../../mock/mock-data';
 import { UpperCasePipe, LowerCasePipe } from '@angular/common';
 import { WorkspaceService } from '../../services/workspace-service';
 import { ChatService } from '../../services/chat-service';
@@ -44,6 +44,7 @@ export class AgentMap implements OnInit {
   private offsetY = 0;
 
   nodes: NodePosition[] = MOCK_AGENTS.map((agent) => {
+    const user = MOCK_USERS.find((u) => u.userId === agent.userId);
     const positions: Record<string, { x: number; y: number }> = {
       pm: { x: 260, y: 232 }, // centro
       di: { x: 260, y: 60 }, // arriba
@@ -54,7 +55,7 @@ export class AgentMap implements OnInit {
     };
     return {
       id: agent.id,
-      label: agent.name,
+      label: user?.fullName ?? agent.id.toUpperCase(),
       x: positions[agent.id].x,
       y: positions[agent.id].y,
       data: { role: agent.role, emoji: agent.emoji, status: agent.status },

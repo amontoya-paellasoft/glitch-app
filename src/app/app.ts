@@ -5,13 +5,14 @@ import { SimulationService } from './services/simulation-service';
 import { AgentPanel } from './components/agent-panel/agent-panel';
 import { ControlPanel } from './components/structure/control-panel/control-panel';
 import { Stats } from './components/stats/stats';
+import { FloatingLogPanel } from './components/floating-log-panel/floating-log-panel';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, ControlPanel, AgentPanel, Stats, RouterOutlet],
+  imports: [Header, ControlPanel, AgentPanel, Stats, FloatingLogPanel, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

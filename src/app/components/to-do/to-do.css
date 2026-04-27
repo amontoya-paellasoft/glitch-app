@@ -440,15 +440,16 @@
 }
 
 .task-detail-side-panel {
-  width: 440px;
-  min-width: 440px;
+  width: 28rem;
   border-left: 2px solid #d4af37;
   background: #ffffff;
-  position: sticky;
-  top: 0;
-  height: calc(100vh - 100px); /* Ajuste para el viewport */
-  display: flex;
-  flex-direction: column;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  top: var(--topbar-height);
+  bottom: 0;
+  z-index: 99;
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.08);
   animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

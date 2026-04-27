@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+:root {
+  --topbar-height: 46px;
+}
+
 html,
 body {
   height: 100%;

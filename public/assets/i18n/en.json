@@ -165,6 +165,13 @@
       "APPROVED_AT": "Approved at",
       "PROMO_HOURS": "Promo hours"
     },
+    "LEGEND": {
+      "TIMELINE_EVENT": "Timeline event",
+      "DIAGNOSTIC": "Diagnostic",
+      "COMMENT": "Comment",
+      "BUILD": "Build",
+      "EVENTS": "events"
+    },
     "BUILD": {
       "LAST_BUILD": "Last build #",
       "STARTED": "Started",
@@ -175,7 +182,8 @@
     "LOGS": {
       "STDOUT": "stdoutExcerpt",
       "STDERR": "stderrExcerpt",
-      "NO_ERRORS": "(No error messages)"
+      "NO_ERRORS": "(No error messages)",
+      "OPEN_HINT": "Click a tab to open the log in a floating window"
     }
   },
   "STATS": {

@@ -6,52 +6,12 @@ import { TareaInterface } from '../models/tarea-interface';
 import { MOCK_TASK_DETAIL } from './mock-task-detail';
 
 export const MOCK_AGENTS: AgentMockInterface[] = [
-  {
-    id: 'pm',
-    userId: 1,
-    name: 'P. Manager',
-    role: 'Coordinación',
-    emoji: '🏛️',
-    status: 'ocupado',
-    bg: 'white',
-  },
-  {
-    id: 'di',
-    userId: 2,
-    name: 'Diseñador',
-    role: 'Diseño',
-    emoji: '✨',
-    status: 'en línea',
-    bg: 'pink',
-  },
-  {
-    id: 'fe',
-    userId: 3,
-    name: 'FrontEnd Dev',
-    role: 'UI/UX',
-    emoji: '🔍',
-    status: 'ausente',
-    bg: 'black',
-  },
-  {
-    id: 'be',
-    userId: 4,
-    name: 'BackEnd Dev',
-    role: 'Node/API',
-    emoji: '🧪',
-    status: 'ocupado',
-    bg: 'orange',
-  },
-  { id: 'qa', userId: 5, name: 'QA', role: 'Test', emoji: '🦄', status: 'en línea', bg: 'blue' },
-  {
-    id: 'us',
-    userId: 6,
-    name: 'User',
-    role: 'Guest',
-    emoji: '👤',
-    status: 'en línea',
-    bg: 'darkpink',
-  },
+  { id: 'pm', userId: 1, role: 'Coordinación', emoji: '🏛️', status: 'ocupado',   bg: 'white'    },
+  { id: 'di', userId: 2, role: 'Diseño',       emoji: '✨',  status: 'en línea', bg: 'pink'     },
+  { id: 'fe', userId: 3, role: 'UI/UX',        emoji: '🔍', status: 'ausente',  bg: 'black'    },
+  { id: 'be', userId: 4, role: 'Node/API',     emoji: '🧪', status: 'ocupado',   bg: 'orange'   },
+  { id: 'qa', userId: 5, role: 'Test',         emoji: '🦄', status: 'en línea', bg: 'blue'     },
+  { id: 'us', userId: 6, role: 'Guest',        emoji: '👤', status: 'en línea', bg: 'darkpink' },
 ];
 
 export const MOCK_USERS: UserDTO[] = [
@@ -64,7 +24,6 @@ export const MOCK_USERS: UserDTO[] = [
 ];
 
 export const MOCK_MESSAGES: MessageInterface[] = [
-  // Canal general
   {
     id: 1,
     from: 'pm',

@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { MOCK_AGENTS } from '../mock/mock-data';
+import { MOCK_AGENTS, MOCK_USERS } from '../mock/mock-data';
 import { MOCK_TASK_DATA } from '../mock/task-data';
 import { TareaInterface } from '../models/tarea-interface';
 
@@ -38,7 +38,9 @@ export class TareaService {
 
   getNombrePorMockId(mockId: string): string {
     const agente = MOCK_AGENTS.find(a => a.id === mockId);
-    return agente ? agente.name : mockId.toUpperCase();
+    if (!agente) return mockId.toUpperCase();
+    const usuario = MOCK_USERS.find(u => u.userId === agente.userId);
+    return usuario?.fullName ?? mockId.toUpperCase();
   }
 
   getTareasByAgenteMock(agentId: string): Observable<TareaInterface[]> {

@@ -11,7 +11,11 @@
     <app-control-panel />
   }
 
-   @if (ws.agentSelec(); as agentId) {
+  @if (ws.agentSelec(); as agentId) {
     <app-agent-panel [agentId]="agentId" />
+  }
+
+  @if (ws.logPanelTab() !== null) {
+    <app-floating-log-panel />
   }
 </div>

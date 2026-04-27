@@ -148,11 +148,12 @@
 
 /* SECTION */
 .section {
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
 .section h3 {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-size: 16px;
 }
 
@@ -181,7 +182,7 @@
   font-weight: bold;
 }
 
-/* CARDS */
+/* READINESS */
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -216,7 +217,28 @@
   color: #15803d;
 }
 
-/* TIMELINE */
+/* ACTIVIDAD OPERATIVA */
+.timeline-legend {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-meta {
+  font-size: 9px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
 .timeline {
   display: flex;
   flex-direction: column;
@@ -240,7 +262,7 @@
   justify-content: center;
 }
 
-/* sin CONTENT y POSITION no funciona */
+/* sin CONTENT y POSITION EL ::after no funciona */
 .timeline-line::after {
   content: '';
   position: absolute;
@@ -321,13 +343,21 @@
 }
 
 /* LOGS */
+.nav-tabs {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+}
+
 .log-panel {
   margin-top: 20px;
 }
 
-/* Copia del css de chat/consola */
-.log-panel .nav-tabs .nav-link.active {
-  border-bottom-color: #0d1a0d;
+.log-hint {
+  padding: 10px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-style: italic;
 }
 
 .log-output {
@@ -359,9 +389,7 @@
   line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-all;
-  letter-spacing: 0.03em;
-
-  &.stderr {
-    color: #ff6b6b;
-  }
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-x: auto;
 }
