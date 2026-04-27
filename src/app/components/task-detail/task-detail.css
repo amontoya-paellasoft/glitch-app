@@ -3,7 +3,7 @@
   font-family: Inter, Arial, sans-serif;
   color: #1e293b;
   font-size: 10px;
-  background: #ffffff;
+  background: #ffffff; /* Volvemos al blanco original */
 }
 
 .main-container {
@@ -76,11 +76,25 @@
 
 .btn-close {
   border: none;
-  background: #f1f5f9;
-  width: 36px;
-  height: 36px;
+  background: #1e293b; /* Botón mucho más oscuro para que destaque */
+  color: #ffffff; /* Texto en blanco para legibilidad */
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.btn-close:hover {
+  background: #0f172a;
+  transform: scale(1.1);
 }
 
 /* USERS */

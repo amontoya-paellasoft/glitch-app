@@ -8,9 +8,6 @@
       <h2 class="todo-page-title">
         {{ 'TODO.TITLE' | translate }}
       </h2>
-      <button class="btn-retro" (click)="showForm = !showForm">
-        {{ (showForm ? 'TODO.CLOSE' : 'TODO.NEW_TASK') | translate }}
-      </button>
     </div>
 
     <div class="header-right">
@@ -100,11 +97,13 @@
                 (onViewDetails)="viewTaskDetails($event)"
                 (onMove)="moveTask($event.taskId, $event.direction)"
               >
-                <div *cdkDragPlaceholder class="ghost-placeholder">
+                <div *cdkDragPlaceholder
+                     class="ghost-placeholder"
+                     [class.mise-ghost]="column.isMiseEnPlace"
+                     [class.doing-ghost]="column.id === 'doing'">
                   <div class="ghost-sidebar"></div>
                   <div class="ghost-content">
                     <div class="ghost-title">{{ task.texto || task.title }}</div>
-                    <div class="ghost-line short"></div>
                   </div>
                 </div>
               </app-tarjetas-to-do>
@@ -114,9 +113,9 @@
       }
     </div>
 
-    @if (detailTaskId) {
+    @if (selectedTaskDetail && selectedTaskDetail.taskId) {
       <div class="task-detail-side-panel">
-        <app-task-detail [taskId]="detailTaskId" (cerrar)="closeTaskDetails()" />
+        <app-task-detail [taskId]="selectedTaskDetail.taskId" (cerrar)="closeTaskDetails()" />
       </div>
     }
   </div>
