@@ -22,9 +22,16 @@ export class TarjetasToDo {
   @Input() selectedTaskId: number | null = null;
   @Input() columnIsMiseEnPlace: boolean = false;
 
+  public isCollapsed = false;
+
   @Output() onSelect = new EventEmitter<number>();
   @Output() onViewDetails = new EventEmitter<any>();
   @Output() onMove = new EventEmitter<{ taskId: number, direction: 'prev' | 'next' }>();
+
+  toggleCollapse(event: Event) {
+    event.stopPropagation();
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   selectTask(taskId: number) {
     this.onSelect.emit(taskId);

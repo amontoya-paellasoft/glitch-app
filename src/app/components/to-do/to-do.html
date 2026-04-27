@@ -73,6 +73,11 @@
           <div class="column-header">
             <span class="column-indicator" [class]="'bg-' + column.id"></span>
             <span class="column-title">{{ ('TODO.COLUMNS.' + column.id) | translate }}</span>
+            <div class="column-actions">
+              <button class="btn-info-mini" (click)="toggleColumn(column.id)">
+                <i class="fa-solid" [class.fa-compress]="columnExpandedState[column.id]" [class.fa-expand]="!columnExpandedState[column.id]"></i>
+              </button>
+            </div>
             <span class="column-counter">({{ column.tasks.length }})</span>
           </div>
 

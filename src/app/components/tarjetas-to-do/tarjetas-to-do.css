@@ -502,6 +502,37 @@
 }
 
 /* NUEVO DISEÑO MODERN TODO CARD */
+/* Transición suave para colapso */
+.is-collapsed {
+  display: none;
+}
+
+.block-collapsed-view {
+  display: none;
+  padding: 4px 0;
+  gap: 6px;
+}
+
+.block-collapsed-view.visible {
+  display: flex;
+  flex-direction: column;
+}
+
+.collapsed-metrics {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.est-mini {
+  color: #047857;
+}
+
+.state-mini {
+  color: #c2410c;
+}
+
 .modern-todo-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -637,6 +668,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px; /* Separación de la fila inferior */
 }
 
 .assignee-area {

@@ -131,6 +131,11 @@
   gap: 8px;
 }
 
+.column-actions {
+  display: flex;
+  gap: 4px;
+}
+
 .column-indicator {
   width: 8px;
   height: 8px;

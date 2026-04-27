@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -30,6 +30,8 @@ import { TaskDetail } from '../task-detail/task-detail';
   styleUrls: ['./to-do.css']
 })
 export class TodoComponent implements OnInit {
+  @ViewChildren(TarjetasToDo) tarjetas!: QueryList<TarjetasToDo>;
+
   private todoService = inject(TodoService);
   private tareaService = inject(TareaService);
   private translate = inject(TranslateService);
@@ -42,7 +44,19 @@ export class TodoComponent implements OnInit {
   selectedTaskDetail: Task | null = null;
   taskForm = (this.todoService as any).getTaskForm ? (this.todoService as any).getTaskForm() : null;
 
+  columnExpandedState: Record<string, boolean> = {};
+
   ngOnInit() {}
+
+  toggleColumn(columnId: string) {
+    const isCurrentlyExpanded = !!this.columnExpandedState[columnId];
+    const newState = !isCurrentlyExpanded;
+    this.columnExpandedState[columnId] = newState;
+
+    this.tarjetas
+      .filter(t => t.columnId === columnId)
+      .forEach(t => t.isCollapsed = !newState);
+  }
 
   selectTask(taskId: number) {
     this.selectedTaskId = taskId;

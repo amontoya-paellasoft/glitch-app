@@ -111,10 +111,13 @@
 @let taskItem = asTask(task);
 <div class="modern-todo-card" [class.selected]="selectedTaskId === taskItem.id" (click)="$event.stopPropagation(); selectTask(taskItem.id)">
   
-  <!-- Bloque 1: Identificación -->
+  <!-- Bloque 1: Identificación (Siempre visible) -->
   <div class="block-id">
     <span class="ticket-id">#TK-{{ taskItem.taskId }}</span>
     <div class="id-actions">
+      <button class="btn-info-mini" (click)="toggleCollapse($event)">
+        <i class="fa-solid" [class.fa-chevron-up]="!isCollapsed" [class.fa-chevron-down]="isCollapsed"></i>
+      </button>
       <button class="btn-info-mini" (click)="$event.stopPropagation(); viewTaskDetails(taskItem)">
         <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW' | translate }}
       </button>
@@ -124,52 +127,64 @@
     </div>
   </div>
 
-  <!-- Bloque 2: Contexto -->
-  <div class="block-context">
+  <!-- Vista compacta (Se muestra cuando isCollapsed es true) -->
+  <div class="block-collapsed-view" [class.visible]="isCollapsed">
     <div class="task-title-bold">{{ taskItem.texto || taskItem.title }}</div>
-    <div class="task-description-soft">{{ taskItem.functionalSummary }}</div>
-    <div class="context-tags">
-      <span class="tag-context tag-blue">{{ taskItem.originType }}</span>
-      <span class="tag-context tag-gray">{{ taskItem.validationMode }}</span>
+    <div class="collapsed-metrics">
+       <span class="est-mini">Est: {{ getFormattedEstimation(taskItem) }}</span>
+       <span class="state-mini" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
     </div>
   </div>
 
-  <!-- Bloque 3: Asignación -->
-  <div class="block-assignment">
-    <div class="assignee-area">
-      <div class="mini-avatar"></div>
-      <span class="assignee-name">{{ getNombreUsuario(getAsignadaA(taskItem)) }}</span>
-    </div>
-    <span class="iteration-badge">{{ 'TODO.CARD.ITERATION_PREFIX' | translate }} {{ taskItem.currentIteration }}</span>
-  </div>
-
-  <!-- Bloque 4: Acción (Cajas Punteadas) y Métricas -->
-  <div class="block-action">
-    <div class="action-boxes">
-      <div class="action-box est-box">
-        <span class="box-label">{{ 'TODO.CARD.EST_LABEL' | translate }}</span>
-        <span class="box-value">{{ getFormattedEstimation(taskItem) }}</span>
-      </div>
-      <div class="action-box aprob-box" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">
-        <span class="box-label">{{ 'TODO.CARD.APROB_LABEL' | translate }}</span>
-        <span class="box-value">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
+  <!-- Contenido expandible (Se oculta cuando isCollapsed es true) -->
+  <div [class.is-collapsed]="isCollapsed">
+    <!-- Bloque 2: Contexto (Título + Descripción) -->
+    <div class="block-context">
+      <div class="task-title-bold">{{ taskItem.texto || taskItem.title }}</div>
+      <div class="task-description-soft">{{ taskItem.functionalSummary }}</div>
+      <div class="context-tags">
+        <span class="tag-context tag-blue">{{ taskItem.originType }}</span>
+        <span class="tag-context tag-gray">{{ taskItem.validationMode }}</span>
       </div>
     </div>
 
-    <div class="thin-separator"></div>
+    <!-- Bloque 3: Asignación -->
+    <div class="block-assignment">
+      <div class="assignee-area">
+        <div class="mini-avatar"></div>
+        <span class="assignee-name">{{ getNombreUsuario(getAsignadaA(taskItem)) }}</span>
+      </div>
+      <span class="iteration-badge">{{ 'TODO.CARD.ITERATION_PREFIX' | translate }} {{ taskItem.currentIteration }}</span>
+    </div>
 
-    <div class="technical-metrics">
-      <div class="metric-group">
-        <i class="fa-solid fa-box-open metric-icon"></i>
-        <span class="metric-label">{{ 'TODO.CARD.BUILDS_LABEL' | translate }}</span>
-        <span class="metric-value">{{ taskItem.buildCount || 0 }}</span>
+    <!-- Bloque 4: Acción (Cajas Punteadas) y Métricas -->
+    <div class="block-action">
+      <div class="action-boxes">
+        <div class="action-box est-box">
+          <span class="box-label">{{ 'TODO.CARD.EST_LABEL' | translate }}</span>
+          <span class="box-value">{{ getFormattedEstimation(taskItem) }}</span>
+        </div>
+        <div class="action-box aprob-box" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">
+          <span class="box-label">{{ 'TODO.CARD.APROB_LABEL' | translate }}</span>
+          <span class="box-value">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
+        </div>
       </div>
-      <div class="metric-group">
-        <i class="fa-solid fa-microscope metric-icon"></i>
-        <span class="metric-label">{{ 'TODO.CARD.DIAG_LABEL' | translate }}</span>
-        <span class="metric-value">{{ taskItem.healthScore || 0 }}%</span>
+
+      <div class="thin-separator"></div>
+
+      <div class="technical-metrics">
+        <div class="metric-group">
+          <i class="fa-solid fa-box-open metric-icon"></i>
+          <span class="metric-label">{{ 'TODO.CARD.BUILDS_LABEL' | translate }}</span>
+          <span class="metric-value">{{ taskItem.buildCount || 0 }}</span>
+        </div>
+        <div class="metric-group">
+          <i class="fa-solid fa-microscope metric-icon"></i>
+          <span class="metric-label">{{ 'TODO.CARD.DIAG_LABEL' | translate }}</span>
+          <span class="metric-value">{{ taskItem.healthScore || 0 }}%</span>
+        </div>
+        <span class="metric-date">{{ taskItem.createdAt | date:'d MMM yyyy' }}</span>
       </div>
-      <span class="metric-date">{{ taskItem.createdAt | date:'d MMM yyyy' }}</span>
     </div>
   </div>
 </div>
