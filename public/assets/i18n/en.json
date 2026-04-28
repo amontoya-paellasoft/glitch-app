@@ -183,7 +183,8 @@
       "STDOUT": "stdoutExcerpt",
       "STDERR": "stderrExcerpt",
       "NO_ERRORS": "(No error messages)",
-      "OPEN_HINT": "Click a tab to open the log in a floating window"
+      "OPEN_HINT": "Preview - Click the button to see the full log",
+      "BUTTON": "Full log"
     }
   },
   "STATS": {

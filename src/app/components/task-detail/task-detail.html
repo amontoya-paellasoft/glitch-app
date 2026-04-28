@@ -239,14 +239,12 @@
       <div class="log-panel">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" [class.active]="ws.logPanelTab() === 'stdout'"
-               (click)="abrirLog('stdout')" role="button">
+            <a class="nav-link" [class.active]="previewTab() === 'stdout'" (click)="previewTab.set('stdout')" role="button">
               STDOUT.LOG
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [class.active]="ws.logPanelTab() === 'stderr'"
-               (click)="abrirLog('stderr')" role="button">
+            <a class="nav-link" [class.active]="previewTab() === 'stderr'" (click)="previewTab.set('stderr')" role="button">
               STDERR.LOG
             </a>
           </li>
@@ -255,12 +253,18 @@
           {{ 'TASK_DETAIL.LOGS.OPEN_HINT' | translate }}
         </div>
 
-         <div class="log-output">
-          @if (ws.logPanelTab() === 'stdout') {
+        <div class="log-output">
+          @if (previewTab() === 'stdout') {
             <pre class="log-pre">{{ data.latestBuildLog.stdoutExcerpt }}</pre>
           } @else {
             <pre class="log-pre stderr">{{ data.latestBuildLog.stderrExcerpt || ('TASK_DETAIL.LOGS.NO_ERRORS' | translate) }}</pre>
           }
+        </div>
+        <div class="log-tabs">
+          <button class="log-btn" (click)="abrirLog(previewTab())">
+            <fa-icon [icon]="faArrowUpRightFromSquare" class="me-1"></fa-icon>
+            {{ 'TASK_DETAIL.LOGS.BUTTON' | translate }}
+          </button>
         </div>
       </div>
     </section>

@@ -183,7 +183,8 @@
       "STDOUT": "Salida estándar",
       "STDERR": "Salida de error",
       "NO_ERRORS": "(Sin mensajes de error)",
-      "OPEN_HINT": "Haz clic en una pestaña para abrir el log en ventana flotante"
+      "OPEN_HINT": "Vista previa — Usa el botón para ver el log completo",
+      "BUTTON": "Log completo"
     }
   },
   "STATS": {
