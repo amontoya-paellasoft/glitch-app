@@ -3,7 +3,7 @@
   font-family: Inter, Arial, sans-serif;
   color: #1e293b;
   background: #ffffff;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .main-container {
@@ -24,12 +24,13 @@
 }
 
 .task-id {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: bold;
+  margin-top: 0.5rem;
 }
 
 .task-title {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #475569;
   margin-top: 6px;
 }
@@ -44,7 +45,7 @@
 .badge {
   padding: 6px 10px;
   border-radius: 10px;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
@@ -128,7 +129,7 @@
 }
 
 .mini-label {
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #64748b;
 }
 
@@ -138,7 +139,7 @@
 
 .dates-box {
   text-align: right;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #64748b;
 }
 
@@ -178,7 +179,7 @@
   color: #15803d;
   padding: 7px 12px;
   border-radius: 20px;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
@@ -232,7 +233,7 @@
 }
 
 .legend-meta {
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #94a3b8;
   margin-bottom: 12px;
   padding-bottom: 10px;
@@ -253,7 +254,7 @@
 
 .timeline-time {
   color: #64748b;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
 }
 
 .timeline-line {
@@ -317,7 +318,7 @@
 .timeline-ref {
   margin-top: 7px;
   color: #94a3b8;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
 }
 
 /* BUILD */
@@ -390,7 +391,7 @@
   line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-all;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   line-height: 1.5;
   overflow-x: auto;
 }

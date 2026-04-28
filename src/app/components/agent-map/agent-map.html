@@ -14,7 +14,7 @@
       (mouseleave)="onDragFin()">
 
     <defs>
-      <!-- punta de flecha dorada-->
+      <!-- punta de flecha activa -->
       <marker
         id="arrow-gold"
         viewBox="0 0 10 10"
@@ -27,7 +27,7 @@
         <path
           d="M2 1L8 5L2 9"
           fill="none"
-          stroke="#C9A227"
+          stroke="#2563eb"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -46,7 +46,7 @@
         <path
           d="M2 1L8 5L2 9"
           fill="none"
-          stroke="#C4A882"
+          stroke="#94a3b8"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -60,20 +60,20 @@
       cy="260"
       r="190"
       fill="none"
-      stroke="#D4AF37"
+      stroke="#cbd5e1"
       stroke-width="0.5"
       stroke-dasharray="3 10"
-      opacity="0.2"
+      opacity="0.6"
     />
     <circle
       cx="340"
       cy="260"
       r="110"
       fill="none"
-      stroke="#D4AF37"
+      stroke="#cbd5e1"
       stroke-width="0.4"
       stroke-dasharray="2 8"
-      opacity="0.15"
+      opacity="0.4"
     />
 
     <!-- LINKS entre nodos -->
@@ -84,7 +84,7 @@
           <path
             [attr.d]="getLinkPath(link.source, link.target)"
             fill="none"
-            stroke="#D4AF37"
+            stroke="#2563eb"
             stroke-width="2"
             [class]="
               getSentidoMensaje(link.source, link.target) === 'hasta'
@@ -102,10 +102,10 @@
      <path
         [attr.d]="getLinkPath(mensajeActivo()!.from, target.id)"
         fill="none"
-        stroke="#D4AF37"
+        stroke="#2563eb"
         stroke-width="1.5"
         class="chevron-fwd"
-        stroke-opacity="0.6"
+        stroke-opacity="0.5"
         marker-end="url(#arrow-gold)"
       />
     }
@@ -130,9 +130,9 @@
           [attr.width]="node.w ?? NODE_W"
           [attr.height]="node.h ?? NODE_H"
           rx="7"
-          fill="#FFFBF0"
+          fill="#ffffff"
           [attr.stroke]="
-            isNodeSpeaking(node.id) ? '#C9A227' : isNodeListening(node.id) ? '#6B9E68' : '#D4C4A0'
+            isNodeSpeaking(node.id) ? '#2563eb' : isNodeListening(node.id) ? '#10b981' : '#e2e8f0'
           "
           [attr.stroke-width]="isNodeSpeaking(node.id) || isNodeListening(node.id) ? '1.5' : '1'"
         />
@@ -144,18 +144,18 @@
           [attr.clip-path]="'url(#clip-' + node.id + ')'"
           [attr.fill]="
             isConsoleOpen(node.id)
-              ? '#01FF00'
+              ? '#2563eb'
               : node.data.status === 'en línea'
-                ? '#6B9E68'
+                ? '#10b981'
                 : node.data.status === 'ocupado'
-                  ? '#C9882A'
-                  : '#B4B2A9'
+                  ? '#f59e0b'
+                  : '#94a3b8'
           "
         />
 
         <!-- badge cuando la consola del agente está abierta -->
         @if (isConsoleOpen(node.id)) {
-          <rect x="112" y="32" width="40" height="14" fill="#000" />
+          <rect x="112" y="32" width="40" height="14" rx="4" fill="#dbeafe" />
           <text
             x="132"
             y="40"
@@ -163,7 +163,7 @@
             dominant-baseline="middle"
             font-size="8.5"
             font-family="monospace"
-            fill="#01FF00"
+            fill="#1d4ed8"
             letter-spacing="0.5"
           >
           [CON]
@@ -192,11 +192,11 @@
             font-size="13"
             font-weight="bold"
             font-family="'Segoe UI', sans-serif"
-            fill="#3D3020"
+            fill="#1e293b"
           >
             {{ node.label }}
           </text>
-          <text x="60" y="50" font-size="10" font-family="'Segoe UI', sans-serif" fill="#9B7A4A">
+          <text x="60" y="50" font-size="10" font-family="'Segoe UI', sans-serif" fill="#64748b">
             {{ node.data.role | uppercase }}
           </text>
         } @else {
@@ -211,17 +211,17 @@
             rx="7"
             [attr.fill]="
               node.data.status === 'en línea'
-                ? '#EAF3DE'
+                ? '#f0fdf4'
                 : node.data.status === 'ocupado'
-                  ? '#FAEEDA'
-                  : '#F1EFE8'
+                  ? '#fffbeb'
+                  : '#f8fafc'
             "
             [attr.stroke]="
               node.data.status === 'en línea'
-                ? '#97C459'
+                ? '#10b981'
                 : node.data.status === 'ocupado'
-                  ? '#EF9F27'
-                  : '#B4B2A9'
+                  ? '#f59e0b'
+                  : '#94a3b8'
             "
             stroke-width="0.5"
           />
@@ -232,10 +232,10 @@
             r="3"
             [attr.fill]="
               node.data.status === 'en línea'
-                ? '#4A8A47'
+                ? '#10b981'
                 : node.data.status === 'ocupado'
-                  ? '#C9882A'
-                  : '#888780'
+                  ? '#f59e0b'
+                  : '#94a3b8'
             "
           />
           <!-- texto -->
@@ -248,10 +248,10 @@
             font-family="'Segoe UI', sans-serif"
             [attr.fill]="
               node.data.status === 'en línea'
-                ? '#27500A'
+                ? '#15803d'
                 : node.data.status === 'ocupado'
-                  ? '#633806'
-                  : '#5F5E5A'
+                  ? '#92400e'
+                  : '#64748b'
             "
           >
             {{ node.data.status | lowercase }}
@@ -279,9 +279,9 @@
             font-size="11"
             font-weight="bold"
             font-family="'Segoe UI', sans-serif"
-            [attr.fill]="isNodeSpeaking(node.id) ? '#5C3D00' : '#3D3020'"
+            [attr.fill]="isNodeSpeaking(node.id) ? '#1e40af' : '#1e293b'"
           >
-            {{ node.label }}
+            {{ node.label.charAt(0) }}. {{ node.label.split(' ').slice(-1)[0] }}
           </text>
 
           <!-- rol-->
@@ -290,7 +290,7 @@
             y="40"
             font-size="9"
             font-family="'Segoe UI', sans-serif"
-            fill="#9B7A4A"
+            fill="#64748b"
             letter-spacing="0.05"
           >
             {{ node.data.role | uppercase }}

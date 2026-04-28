@@ -41,13 +41,13 @@
     <div class="console-line" [class.private]="m.visibility === 'private'">
       <span class="console-time">{{ m.timeStamp | date: 'HH:mm:ss' }}</span>
 
-      <span class="console-agent">{{ tareaServ.getNombrePorMockId(m.from) }}</span>
+      <span class="console-agent">{{ tareaServ.getNombrePorMockId(m.from).charAt(0) + '. ' + tareaServ.getNombrePorMockId(m.from).split(' ').slice(-1)[0] }}</span>
       <span class="console-arrow">
-        {{ m.visibility === 'private' ? '-->' : '->' }}
+        {{ m.visibility === 'private' ? '➤' : '➜' }}
       </span>
 
       <span class="console-agent console-to">
-        {{ m.to === 'all' ? 'ALL' : tareaServ.getNombrePorMockId(m.to) }}
+        {{ m.to === 'all' ? 'ALL' : tareaServ.getNombrePorMockId(m.to).charAt(0) + '. ' + tareaServ.getNombrePorMockId(m.to).split(' ').slice(-1)[0] }}
       </span>
 
       <span class="console-sep">»</span>

@@ -7,19 +7,19 @@
 .contenedor {
   width: 100%;
   height: 100%;
-  background: #FAF7F0;
+  background: #f8fafc;
   position: relative;
   overflow: hidden;
 }
 
-/* Puntitos */
+/* Grid de puntos */
 .contenedor::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, #C9A84C 0.8px, transparent 0.8px);
+  background-image: radial-gradient(circle, #94a3b8 0.8px, transparent 0.8px);
   background-size: 24px 24px;
-  opacity: 0.3;
+  opacity: 0.25;
   pointer-events: none;
 }
 

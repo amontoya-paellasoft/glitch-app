@@ -3,8 +3,8 @@
   align-items: center;
   gap: 12px;
   padding: 10px;
-  background: #f7f4ee;
-  border-bottom: 1px solid #e5dccf;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   font-family: "Inter", sans-serif;
   color: #2c2c2c;
   position: relative;
@@ -14,8 +14,9 @@
 .status-led {
   width: 8px;
   height: 8px;
-  background: #3ecf8e;
+  background: #10b981;
   border-radius: 50%;
+  margin-left: 0.5rem;
 }
 
 .topbar-title {
@@ -23,7 +24,7 @@
 }
 
 .topbar-sub {
-  color: #8a8175;
+  color: #64748b;
   font-size: 13px;
 }
 
@@ -41,7 +42,7 @@
 
 .nav-link {
   text-decoration: none;
-  color: #8a8175;
+  color: #64748b;
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s;
@@ -50,14 +51,14 @@
 }
 
 .nav-link:hover {
-  color: #2c2c2c;
-  background: rgba(0,0,0,0.05);
+  color: #1e293b;
+  background: #f1f5f9;
 }
 
 .nav-link.active {
-  color: #2c2c2c;
+  color: #ffffff;
   font-weight: 600;
-  background: #f2ede5;
+  background: #1e293b;
 }
 
 /* Selector idioma */
@@ -74,7 +75,7 @@
 /* Botón actual */
 .lang-current {
   padding: 6px 10px;
-  border: 1px solid #e5dccf;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   background: white;
   cursor: pointer;
@@ -100,7 +101,7 @@
 
 .lang-btn {
   padding: 6px 8px;
-  border: 1px solid #e5dccf;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   background: white;
   cursor: pointer;
@@ -108,11 +109,11 @@
 }
 
 .lang-btn:hover {
-  background: #f2ede5;
+  background: #f1f5f9;
 }
 
 .lang-btn.active {
-  background: #2c2c2c;
+  background: #1e293b;
   color: white;
-  border-color: #2c2c2c;
+  border-color: #1e293b;
 }
