@@ -12,8 +12,7 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
-  imports: [UpperCasePipe, TranslatePipe, DatePipe, FaIconComponent],
+  imports: [CommonModule, TranslateModule, UpperCasePipe, TranslatePipe, DatePipe, FaIconComponent],
   templateUrl: './task-detail.html',
   styleUrl: './task-detail.css',
 })
