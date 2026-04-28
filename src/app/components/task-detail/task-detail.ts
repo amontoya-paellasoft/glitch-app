@@ -1,19 +1,16 @@
 import { Component, inject, Input, OnChanges, output, signal } from '@angular/core';
 import { TaskDetailDTO } from '../../models/altorium/task-detail-dto';
 import { MOCK_TASK_DETAIL } from '../../mock/mock-task-detail';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { DatePipe, UpperCasePipe } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { WorkspaceService } from '../../services/workspace-service';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
-  imports: [UpperCasePipe, TranslatePipe, DatePipe, FaIconComponent],
+  imports: [CommonModule, TranslateModule, UpperCasePipe, FontAwesomeModule],
   templateUrl: './task-detail.html',
   styleUrl: './task-detail.css',
 })

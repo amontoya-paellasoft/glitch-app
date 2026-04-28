@@ -132,7 +132,7 @@
     <div class="task-title-bold">{{ taskItem.texto || taskItem.title }}</div>
     <div class="collapsed-metrics">
        <span class="est-mini">{{ 'TODO.CARD.EST_LABEL' | translate }} {{ getFormattedEstimation(taskItem) }}</span>
-       <span class="state-mini" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
+       <span class="state-mini" [class]="'aprob-' + (taskItem.approvalStatus.toLowerCase() || 'none')">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <span class="box-label">{{ 'TODO.CARD.EST_LABEL' | translate }}</span>
           <span class="box-value">{{ getFormattedEstimation(taskItem) }}</span>
         </div>
-        <div class="action-box aprob-box" [class]="'aprob-' + (taskItem.approvalStatus?.toLowerCase() || 'none')">
+        <div class="action-box aprob-box" [class]="'aprob-' + (taskItem.approvalStatus.toLowerCase() || 'none')">
           <span class="box-label">{{ 'TODO.CARD.APROB_LABEL' | translate }}</span>
           <span class="box-value">{{ getApprovalLabel(taskItem.approvalStatus) }}</span>
         </div>
