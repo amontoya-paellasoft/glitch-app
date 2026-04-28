@@ -30,18 +30,11 @@ export class Busqueda {
     });
 
     const cache = this.tareaService._usuariosCache();
-    const usuariosPresentes = cache.filter(u => userIds.has(u.id));
-    
-    // Añadir usuarios que están en tareas pero no en el caché
+    const usuariosPresentes = cache.filter(u => userIds.has(u.userId));
+
     userIds.forEach(id => {
-      if (!cache.find(u => u.id === id)) {
-        usuariosPresentes.push({
-          id: id,
-          firstName: 'Usuario',
-          lastName: id.toString(),
-          image: '',
-          company: { department: '', title: '' }
-        });
+      if (!cache.find(u => u.userId === id)) {
+        usuariosPresentes.push({ userId: id, fullName: `Usuario ${id}`, email: '' });
       }
     });
 

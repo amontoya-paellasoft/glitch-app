@@ -1,24 +1,17 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { MOCK_AGENTS } from '../mock/mock-data';
+import { MOCK_AGENTS, MOCK_USERS } from '../mock/mock-data';
 import { MOCK_TASK_DATA } from '../mock/task-data';
 import { TareaInterface } from '../models/tarea-interface';
+import { UserDTO } from '../models/altorium/task-dto';
 
-export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  image: string;
-  company: { department: string; title: string };
-}
-
-const MOCK_USERS_CACHE: User[] = [
-  { id: 11, firstName: 'Sophia',  lastName: 'Brown',   image: '', company: { department: 'Management',  title: 'Project Manager' } },
-  { id: 14, firstName: 'Ana',     lastName: 'Torres',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
-  { id: 17, firstName: 'Olivia',  lastName: 'Wilson',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
-  { id: 18, firstName: 'Emily',   lastName: 'Johnson', image: '', company: { department: 'QA',          title: 'QA Engineer'     } },
-  { id: 19, firstName: 'Lucas',   lastName: 'Herrera', image: '', company: { department: 'Engineering', title: 'Developer'       } },
-  { id: 21, firstName: 'Daniel',  lastName: 'Morais',  image: '', company: { department: 'Engineering', title: 'Developer'       } },
+const MOCK_USERS_CACHE: UserDTO[] = [
+  { userId: 11, fullName: 'Sophia Brown',   email: '' },
+  { userId: 14, fullName: 'Ana Torres',     email: '' },
+  { userId: 17, fullName: 'Olivia Wilson',  email: '' },
+  { userId: 18, fullName: 'Emily Johnson',  email: '' },
+  { userId: 19, fullName: 'Lucas Herrera',  email: '' },
+  { userId: 21, fullName: 'Daniel Morais',  email: '' },
 ];
 
 const AGENT_TASK_MAP: Record<string, number[]> = {
@@ -34,11 +27,13 @@ const AGENT_TASK_MAP: Record<string, number[]> = {
   providedIn: 'root',
 })
 export class TareaService {
-  public readonly _usuariosCache = signal<User[]>(MOCK_USERS_CACHE);
+  public readonly _usuariosCache = signal<UserDTO[]>(MOCK_USERS_CACHE);
 
   getNombrePorMockId(mockId: string): string {
     const agente = MOCK_AGENTS.find(a => a.id === mockId);
-    return agente ? agente.name : mockId.toUpperCase();
+    if (!agente) return mockId.toUpperCase();
+    const usuario = MOCK_USERS.find(u => u.userId === agente.userId);
+    return usuario?.fullName ?? mockId.toUpperCase();
   }
 
   getTareasByAgenteMock(agentId: string): Observable<TareaInterface[]> {

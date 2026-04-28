@@ -57,8 +57,8 @@ export class TarjetasToDo {
     if (userId === undefined || userId === 0) {
       return this.translate.instant('TODO.DETAIL_PANEL.VALUES.SYSTEM');
     }
-    const usuario = this.tareaService._usuariosCache().find(u => u.id === userId);
-    return usuario ? `${usuario.firstName} ${usuario.lastName}` : `Usuario ${userId}`;
+    const usuario = this.tareaService._usuariosCache().find(u => u.userId === userId);
+    return usuario ? usuario.fullName : `Usuario ${userId}`;
   }
 
   getAsignadaA(item: any): number | undefined {

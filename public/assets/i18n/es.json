@@ -169,6 +169,13 @@
       "APPROVED_AT": "Aprobado el",
       "PROMO_HOURS": "Horario promocional"
     },
+    "LEGEND": {
+      "TIMELINE_EVENT": "Evento cronológico",
+      "DIAGNOSTIC": "Diagnóstico",
+      "COMMENT": "Comentario",
+      "BUILD": "Build",
+      "EVENTS": "eventos"
+    },
     "BUILD": {
       "LAST_BUILD": "Última ejecución #",
       "STARTED": "Iniciado",
@@ -179,7 +186,9 @@
     "LOGS": {
       "STDOUT": "Salida estándar",
       "STDERR": "Salida de error",
-      "NO_ERRORS": "(Sin mensajes de error)"
+      "NO_ERRORS": "(Sin mensajes de error)",
+      "OPEN_HINT": "Vista previa — Usa el botón para ver el log completo",
+      "BUTTON": "Log completo"
     }
   },
   "STATS": {

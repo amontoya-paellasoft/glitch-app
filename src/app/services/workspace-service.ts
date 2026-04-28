@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { BuildRunLogDTO } from '../models/altorium/build-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -54,5 +55,18 @@ export class WorkspaceService {
 
   cerrarStats(): void {
     this.statsAbierto.set(false);
+  }
+
+  // LOG PANEL
+  logPanelTab = signal<'stdout' | 'stderr' | null>(null);
+  logData = signal<BuildRunLogDTO | null>(null);
+
+  abrirLogPanel(tab: 'stdout' | 'stderr', data: BuildRunLogDTO): void {
+    this.logData.set(data);
+    this.logPanelTab.set(tab);
+  }
+
+  cerrarLogPanel(): void {
+    this.logPanelTab.set(null);
   }
 }
