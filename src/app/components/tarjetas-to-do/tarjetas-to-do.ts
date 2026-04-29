@@ -22,7 +22,7 @@ export class TarjetasToDo {
   @Input() selectedTaskId: number | null = null;
   @Input() columnIsMiseEnPlace: boolean = false;
 
-  public isCollapsed = false;
+  public isCollapsed = true;
 
   @Output() onSelect = new EventEmitter<number>();
   @Output() onViewDetails = new EventEmitter<any>();

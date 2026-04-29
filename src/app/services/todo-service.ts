@@ -11,34 +11,7 @@ export class TodoService {
   // ... (código existente) ...
 
   public drop(event: CdkDragDrop<any[]>) {
-    const columns = this._columns();
-    
-    // Identificar columna origen y destino
-    const sourceCol = columns.find(c => c.tasks === event.previousContainer.data);
-    const targetCol = columns.find(c => c.tasks === event.container.data);
-
-    if (!sourceCol || !targetCol) return;
-
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Bloqueo para columna 'doing' si ya tiene tarea
-      if (targetCol.id === 'doing' && targetCol.tasks.length > 0) return;
-      
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-
-    // Actualizar orderIndex de todas las tareas en la columna destino
-    targetCol.tasks.forEach((task, index) => {
-      (task as any).orderIndex = index;
-    });
-
-    this._columns.set([...columns]);
+    this.reorderTasks(event);
   }
   private tareaService = inject(TareaService);
   

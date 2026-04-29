@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo-service';
 import { TareaService } from '../../services/tarea-service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { UserDTO } from '../../models/altorium/task-dto';
 
 @Component({
   selector: 'app-busqueda',
@@ -30,7 +31,7 @@ export class Busqueda {
     });
 
     const cache = this.tareaService._usuariosCache();
-    const usuariosPresentes = cache.filter(u => userIds.has(u.userId));
+    const usuariosPresentes: UserDTO[] = cache.filter(u => userIds.has(u.userId));
 
     userIds.forEach(id => {
       if (!cache.find(u => u.userId === id)) {
