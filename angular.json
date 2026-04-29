@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "glitch-app": {
+    "altorium": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -57,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "glitch-app:build:production"
+              "buildTarget": "altorium:build:production"
             },
             "development": {
-              "buildTarget": "glitch-app:build:development"
+              "buildTarget": "altorium:build:development"
             }
           },
           "defaultConfiguration": "development"

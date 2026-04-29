@@ -9,8 +9,43 @@
 }
 
 :root {
+  /* Estructura */
   --topbar-height: 46px;
+  --control-panel-height: 52px;
+  --panel-width-main: 28rem;
+
+  /* Z-index stack */
+  --z-base: 1;
+  --z-floating: 100;
+  --z-panel: 200;
+  --z-modal: 300;
+
+  /* Paleta "agentes" */
+  --clr-bg-light: #f8fafc;
+  --clr-surface: #ffffff;
+  --clr-surface-warm: #fffbf0;
+  --clr-border-light: #e2e8f0;
+  --clr-border-warm: #d4c4a0;
+  --clr-text-primary: #1e293b;
+  --clr-text-muted: #64748b;
+
+  /* Paleta "terminal" */
+  --clr-bg-terminal: #0d0d0d;
+  --clr-bg-terminal-green: #0d1a0d;
+  --clr-terminal-text: #01ff00;
+  --clr-terminal-dim: #1f6b1f;
+
+  /* Acento unificado */
+  --clr-accent-gold: #d4af37;
+  --clr-accent-blue: #2563eb;
+  --clr-accent-orange: #f97316;
+
+  /* Estados */
+  --clr-status-online: #4a8a47;
+  --clr-status-busy: #c9882a;
+  --clr-status-absent: #888780;
 }
+
 
 html,
 body {
