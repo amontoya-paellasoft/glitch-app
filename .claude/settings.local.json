@@ -6,7 +6,8 @@
       "Bash(grep -E \"\\\\.\\(ts|html|css\\)$\")",
       "Bash(grep -E \"\\\\.\\(ts|js\\)$\")",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/assets/i18n/es.json','utf8'\\)\\); console.log\\('es.json OK'\\)\")",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/assets/i18n/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/assets/i18n/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")",
+      "Bash(npm install *)"
     ]
   }
 }
