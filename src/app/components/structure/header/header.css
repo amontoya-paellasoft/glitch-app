@@ -34,10 +34,35 @@
   gap: 12px;
 }
 
+.mobile-text {
+  display: none;
+}
+
 .nav-center {
   display: flex;
   gap: 20px;
   margin-left: 40px;
+}
+
+@media (max-width: 768px) {
+  .topbar-sub {
+    display: none;
+  }
+  
+  .full-text {
+    display: none;
+  }
+  
+  .mobile-text {
+    display: inline;
+  }
+  
+  .nav-center {
+    display: flex; /* Asegura el formato de fila */
+    flex-direction: row;
+    margin-left: 10px;
+    gap: 10px;
+  }
 }
 
 .nav-link {

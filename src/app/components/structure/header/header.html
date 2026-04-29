@@ -6,8 +6,14 @@
   </div>
 
   <nav class="nav-center">
-    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'Mapa de agentes' | translate }}</a>
-    <a class="nav-link" routerLink="/to-do" routerLinkActive="active">{{ 'TODO.TITLE' | translate }}</a>
+    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <span class="full-text">{{ 'MAP_TITLE' | translate }}</span>
+      <span class="mobile-text">{{ 'AGENT_SHORT' | translate }}</span>
+    </a>
+    <a class="nav-link" routerLink="/to-do" routerLinkActive="active">
+      <span class="full-text">{{ 'TODO.TITLE' | translate }}</span>
+      <span class="mobile-text">{{ 'TASKS_SHORT' | translate }}</span>
+    </a>
   </nav>
 
   <div class="lang-wrapper">

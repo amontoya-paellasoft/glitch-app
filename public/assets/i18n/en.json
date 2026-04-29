@@ -1,5 +1,8 @@
 {
   "APP_1001_TITLE": "ALTORIUM",
+  "MAP_TITLE": "Agent Map",
+  "AGENT_SHORT": "Agents",
+  "TASKS_SHORT": "Tasks",
   "APP_1002_SUBTITLE": "AI agent workspace simulation",
   "CTRL_2001_PANEL": "CONTROL PANEL",
   "CTRL_2002_RESTART": "[ RESTART ]",

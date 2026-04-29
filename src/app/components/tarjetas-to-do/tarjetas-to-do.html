@@ -20,7 +20,7 @@
         <div class="mise-title">{{ miseItem.texto }}</div>
       </div>
       <div class="mise-actions">
-        <button class="btn-view-small" (click)="$event.stopPropagation(); viewTaskDetails(miseItem)">
+        <button class="btn-view-small" (click)="$event.stopPropagation(); viewTaskDetails(asTask(miseItem))">
           <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW_INFO' | translate }}
         </button>
       </div>
@@ -116,7 +116,7 @@
     <span class="ticket-id">#TK-{{ taskItem.taskId }}</span>
     <div class="id-actions">
       <button class="btn-collapse" [class.collapsed]="isCollapsed" (click)="toggleCollapse($event)" [title]="(isCollapsed ? 'TODO.BUTTONS.EXPAND' : 'TODO.BUTTONS.COLLAPSE') | translate">
-        <img src="assets/imgs/bars-staggered-solid-full.svg" class="btn-icon-svg" alt="Toggle">
+        <img src="assets/imgs/angle-right-solid-full.svg" class="btn-icon-svg" alt="Toggle">
       </button>
       <button class="btn-info-mini" (click)="$event.stopPropagation(); viewTaskDetails(taskItem)">
         <i class="fa-solid fa-circle-info"></i> {{ 'TODO.BUTTONS.VIEW' | translate }}

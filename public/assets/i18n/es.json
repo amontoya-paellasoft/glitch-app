@@ -1,5 +1,8 @@
 {
   "APP_1001_TITLE": "ALTORIUM",
+  "MAP_TITLE": "Mapa de agentes",
+  "AGENT_SHORT": "Agentes",
+  "TASKS_SHORT": "Tareas",
   "APP_1002_SUBTITLE": "Simulación de trabajo entre agentes IA",
   "CTRL_2001_PANEL": "PANEL DE CONTROL",
   "CTRL_2002_RESTART": "[ REINICIAR ]",

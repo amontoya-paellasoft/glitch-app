@@ -600,10 +600,11 @@
   height: 14px;
   display: block;
   filter: brightness(0) invert(1);
+  transform: rotate(0deg);
 }
 
-.btn-collapse.collapsed img {
-  transform: rotate(180deg);
+.btn-collapse:not(.collapsed) img {
+  transform: rotate(90deg);
 }
 
 .btn-collapse:hover {

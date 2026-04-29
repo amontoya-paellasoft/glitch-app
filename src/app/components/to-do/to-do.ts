@@ -27,7 +27,7 @@ import { TaskDetail } from '../task-detail/task-detail';
     TaskDetail
   ],
   templateUrl: './to-do.html',
-  styleUrls: ['./to-do.css']
+  styleUrls: ['./to-do.css', './to-do-mobile.css']
 })
 export class TodoComponent implements OnInit {
   @ViewChildren(TarjetasToDo) tarjetas!: QueryList<TarjetasToDo>;

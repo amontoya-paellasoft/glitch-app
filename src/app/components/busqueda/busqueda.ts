@@ -11,7 +11,7 @@ import { UserDTO } from '../../models/altorium/task-dto';
   standalone: true,
   imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './busqueda.html',
-  styleUrl: './busqueda.css',
+  styleUrls: ['./busqueda.css', './busqueda-mobile.css'],
 })
 export class Busqueda {
   public todoService = inject(TodoService);
